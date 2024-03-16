@@ -5,6 +5,8 @@ const logger = require('morgan');
 
 const apiRouter = require('./routes/apiRouter');
 
+require('dotenv').config();
+
 const app = express();
 
 app.use(logger('dev'));
