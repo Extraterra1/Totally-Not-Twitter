@@ -7,10 +7,21 @@ const tweetSchema = new Schema(
       trim: true,
       required: true
     },
+    author: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: 'User'
+    },
     imgUrl: {
       type: String
     },
-    likes: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+    likes: [
+      {
+        type: mongoose.Types.ObjectId,
+        required: true,
+        ref: 'User'
+      }
+    ],
     tweetType: {
       type: String,
       enum: ['tweet', 'retweet', 'reply'],
