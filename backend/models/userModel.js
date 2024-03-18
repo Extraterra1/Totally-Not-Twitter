@@ -17,7 +17,8 @@ const userSchema = new Schema(
       type: String,
       required: true
     },
-    followers: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }]
+    followers: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
+    tweets: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Tweet' }]
   },
   { timestamps: true }
 );
