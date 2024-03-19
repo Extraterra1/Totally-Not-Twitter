@@ -21,5 +21,25 @@ exports.registerPOST = [
       const usernameExists = await User.findOne({ username: val });
       if (usernameExists) throw new Error('Username already exists');
     }),
-  body('password', 'Password must be at least 6 characters long').trim().isLength({ min: 6 })
+  body('password', 'Password must be at least 6 characters long').trim().isLength({ min: 6 }),
+  asyncHandler(async (req, res) => {
+    // Check for errors in body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(401).json({ err: errors.array(), type: 'bodyValidation' });
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newUser = new User({
+      email: req.body.email,
+      password: hashedPassword,
+      username: req.body.username
+    });
+    await newUser.save();
+
+    const cleanUser = { _id: newUser._id, email: newUser.email, username: newUser.username, friends: newUser.friends };
+
+    jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
+      if (err) return res.status(500).json({ err });
+      return res.json({ token, user: cleanUser });
+    });
+  })
 ];
