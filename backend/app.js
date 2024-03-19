@@ -8,10 +8,10 @@ const apiRouter = require('./routes/apiRouter');
 const handle404 = require('./middleware/handle404');
 const errorHandler = require('./middleware/errorHandler');
 
+require('dotenv').config();
+
 const passport = require('passport');
 const { strategy } = require('./config/passport');
-
-require('dotenv').config();
 
 const app = express();
 
