@@ -12,7 +12,8 @@
     "dotenv": "^16.4.5",
     "express": "~4.16.1",
     "mongoose": "^8.2.2",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "passport-jwt": "^4.0.1"
   },
   "main": "./bin/www",
   "devDependencies": {
