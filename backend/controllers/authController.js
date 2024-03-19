@@ -69,3 +69,7 @@ exports.loginPOST = [
     });
   })
 ];
+
+exports.protectedRoute = (req, res) => {
+  return res.json({ msg: 'Authenticated' });
+};
