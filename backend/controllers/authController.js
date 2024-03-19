@@ -44,4 +44,28 @@ exports.registerPOST = [
   })
 ];
 
-exports.loginPOST = [body('username', 'Bad request').trim().isLength({ min: 2 }), body('password', 'Bad request').isLength({ min: 1 })];
+exports.loginPOST = [
+  body('username', 'Bad request').trim().isLength({ min: 2 }),
+  body('password', 'Bad request').isLength({ min: 1 }),
+  asyncHandler(async (req, res) => {
+    // Check for errors in body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(401).json({ err: errors.array(), type: 'bodyValidation' });
+
+    const user = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.username }]
+    });
+
+    if (!user) return res.status(401).json({ err: { message: 'Wrong username/password' } });
+
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!isValidPassword) return res.status(401).json({ err: { message: 'Wrong username/password' } });
+
+    const cleanUser = { email: user.email, username: user.username, role: user.role, _id: user._id };
+
+    jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
+      if (err) return res.status(500).json({ err });
+      return res.json({ token, user: cleanUser });
+    });
+  })
+];
