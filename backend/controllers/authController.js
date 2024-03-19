@@ -43,3 +43,5 @@ exports.registerPOST = [
     });
   })
 ];
+
+exports.loginPOST = [body('username', 'Bad request').trim().isLength({ min: 2 }), body('password', 'Bad request').isLength({ min: 1 })];
