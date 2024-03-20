@@ -22,4 +22,12 @@ router.post('/register', authController.registerPOST);
 // LOGIN
 router.post('/login', authController.loginPOST);
 
+// ***************************
+// TWEETS
+//  **************************
+
+//  CREATE TWEET
+
+router.post('/tweets', passport.authenticate('jwt', { session: false }), tweetController.createTweet);
+
 module.exports = router;
