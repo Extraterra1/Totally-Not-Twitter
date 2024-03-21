@@ -4,9 +4,10 @@ const User = require('../models/userModel');
 const Tweet = require('../models/tweetModel');
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
+const path = require('path');
 
 exports.createTweet = [
-  upload.single('file'),
+  upload.single('img'),
   body('content')
     .if(body('tweetType').isIn(['tweet', 'reply']))
     .notEmpty()
@@ -25,6 +26,12 @@ exports.createTweet = [
     // Body Validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
+
+    // Validate File Extension
+    const fileExtension = req.file ? path.extname(req.file.originalname).toLowerCase() : null;
+    if (fileExtension && fileExtension !== '.jpg' && fileExtension !== '.png' && fileExtension !== '.jpeg') {
+      return res.status(400).json({ err: 'Wrong file format' });
+    }
 
     res.json({ msg: 'nice' });
   })
