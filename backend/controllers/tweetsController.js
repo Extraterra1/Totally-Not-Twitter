@@ -4,25 +4,25 @@ const User = require('../models/userModel');
 const Tweet = require('../models/tweetModel');
 
 exports.createTweet = [
-  body('content', 'Invalid Content Type')
-    .optional()
-    .isString()
+  body('content')
     .if(body('tweetType').isIn(['tweet', 'reply']))
     .notEmpty()
-    .withMessage('Tweet cannot be empty'),
+    .withMessage('Tweet cannot be empty')
+    .isString()
+    .withMessage('Invalid Content Type'),
   body('tweetType', 'Invalid Tweet Type').optional().isString().isIn(['tweet', 'retweet', 'reply']),
-  body('replyTo')
-    .optional()
-    .isMongoId()
-    .withMessage('Invalid Tweet ID')
-    .if(body('tweetType').equals('reply'))
-    .notEmpty()
-    .withMessage('Reply ID cannot be empty'),
+  body('replyTo').if(body('tweetType').equals('reply')).isMongoId().withMessage('Invalid Tweet ID').notEmpty().withMessage('Reply ID cannot be empty'),
   body('retweetedTweet')
-    .optional()
+    .if(body('tweetType').equals('retweet'))
     .isMongoId()
     .withMessage('Invalid Tweet ID')
-    .if(body('tweetType').equals('retweet'))
     .notEmpty()
-    .withMessage('Retweet ID cannot be empty')
+    .withMessage('Retweet ID cannot be empty'),
+  asyncHandler(async (req, res) => {
+    // Body Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
+
+    res.json({ msg: 'nice' });
+  })
 ];
