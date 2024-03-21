@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 const authController = require('../controllers/authController');
+const tweetsController = require('../controllers/tweetsController');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -28,6 +29,6 @@ router.post('/login', authController.loginPOST);
 
 //  CREATE TWEET
 
-router.post('/tweets', passport.authenticate('jwt', { session: false }), tweetController.createTweet);
+router.post('/tweets', passport.authenticate('jwt', { session: false }), tweetsController.createTweet);
 
 module.exports = router;
