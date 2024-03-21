@@ -2,8 +2,11 @@ const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/userModel');
 const Tweet = require('../models/tweetModel');
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
 
 exports.createTweet = [
+  upload.single('file'),
   body('content')
     .if(body('tweetType').isIn(['tweet', 'reply']))
     .notEmpty()
