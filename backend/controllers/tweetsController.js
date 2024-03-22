@@ -65,6 +65,8 @@ exports.createTweet = [
     const newTweet = new Tweet({ author, content, tweetType, replyTo, retweetedTweet, imgUrl: image ? image.url : null });
     await newTweet.save();
 
+    await User.findByIdAndUpdate(req.user._id, { $push: { tweets: newTweet._id } });
+
     return res.json({ tweet: newTweet });
   })
 ];
