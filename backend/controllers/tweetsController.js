@@ -33,6 +33,10 @@ exports.createTweet = [
       return res.status(400).json({ err: 'Wrong file format' });
     }
 
+    // Validate File Size
+    const fileSize = req.file ? req.file.size : null;
+    if (fileSize && fileSize > 800000) return res.status(400).json({ err: 'File too large, must be 800kb or smaller' });
+
     res.json({ msg: 'nice' });
   })
 ];
