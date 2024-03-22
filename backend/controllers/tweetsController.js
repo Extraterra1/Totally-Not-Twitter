@@ -82,8 +82,8 @@ exports.likeTweet = asyncHandler(async (req, res) => {
   console.log(alreadyLiked);
 
   const updatedTweet = alreadyLiked
-    ? await Tweet.findByIdAndUpdate(tweetID, { $pull: { likes: req.user._id } })
-    : await Tweet.findByIdAndUpdate(tweetID, { $push: { likes: req.user._id } });
+    ? await Tweet.findByIdAndUpdate(tweetID, { $pull: { likes: req.user._id } }, { new: true })
+    : await Tweet.findByIdAndUpdate(tweetID, { $push: { likes: req.user._id } }, { new: true });
 
   return res.json({ updatedTweet });
 });
