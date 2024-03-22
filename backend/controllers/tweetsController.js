@@ -78,6 +78,12 @@ exports.likeTweet = asyncHandler(async (req, res) => {
   const tweet = await Tweet.findById(tweetID);
   if (!tweet) return res.status(400).json({ err: 'Tweet not found' });
 
-  const updatedTweet = await Tweet.findByIdAndUpdate(tweetID, { $push: { likes: req.user._id } });
+  const alreadyLiked = await Tweet.findOne({ _id: tweetID, likes: req.user._id });
+  console.log(alreadyLiked);
+
+  const updatedTweet = alreadyLiked
+    ? await Tweet.findByIdAndUpdate(tweetID, { $pull: { likes: req.user._id } })
+    : await Tweet.findByIdAndUpdate(tweetID, { $push: { likes: req.user._id } });
+
   return res.json({ updatedTweet });
 });
