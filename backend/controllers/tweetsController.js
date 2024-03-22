@@ -71,3 +71,13 @@ exports.createTweet = [
     return res.json({ tweet: newTweet });
   })
 ];
+
+exports.likeTweet = asyncHandler(async (req, res) => {
+  const tweetID = req.params.id;
+
+  const tweet = await Tweet.findById(tweetID);
+  if (!tweet) return res.status(400).json({ err: 'Tweet not found' });
+
+  const updatedTweet = await Tweet.findByIdAndUpdate(tweetID, { $push: { likes: req.user._id } });
+  return res.json({ updatedTweet });
+});
