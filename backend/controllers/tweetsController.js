@@ -59,6 +59,12 @@ exports.createTweet = [
         })
       : null;
 
-    res.json({ msg: 'nice' });
+    const { content, tweetType, replyTo, retweetedTweet } = req.body;
+    const author = req.user._id;
+
+    const newTweet = new Tweet({ author, content, tweetType, replyTo, retweetedTweet, imgUrl: image ? image.url : null });
+    await newTweet.save();
+
+    return res.json({ tweet: newTweet });
   })
 ];

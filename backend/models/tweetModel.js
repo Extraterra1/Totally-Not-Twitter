@@ -29,13 +29,11 @@ const tweetSchema = new Schema(
     },
     replyTo: {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: 'Tweet',
       default: null
     },
     retweetedTweet: {
       type: mongoose.Types.ObjectId,
-      required: true,
       ref: 'Tweet',
       default: null
     }
