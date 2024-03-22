@@ -12,9 +12,7 @@ exports.createTweet = [
   body('content')
     .if(body('tweetType').isIn(['tweet', 'reply']))
     .notEmpty()
-    .withMessage('Tweet cannot be empty')
-    .isString()
-    .withMessage('Invalid Content Type'),
+    .withMessage('Tweet cannot be empty'),
   body('tweetType', 'Invalid Tweet Type').optional().isString().isIn(['tweet', 'retweet', 'reply']),
   body('replyTo').if(body('tweetType').equals('reply')).isMongoId().withMessage('Invalid Tweet ID').notEmpty().withMessage('Reply ID cannot be empty'),
   body('retweetedTweet')
@@ -44,6 +42,12 @@ exports.createTweet = [
       api_key: process.env.CLOUDINARY_API_KEY,
       api_secret: process.env.CLOUDINARY_API_SECRET
     });
+
+    if (req.body.tweetType === 'retweet' || req.body.tweetType === 'reply') {
+      const id = req.body.tweetType === 'retweet' ? req.body.retweetedTweet : req.body.replyTo;
+      const tweet = await Tweet.findById(id);
+      if (!tweet) return res.status(400).json({ err: 'Tweet not found' });
+    }
 
     res.json({ msg: 'nice' });
   })
