@@ -13,6 +13,7 @@ exports.createTweet = [
     .if(body('tweetType').isIn(['tweet', 'reply']))
     .notEmpty()
     .withMessage('Tweet cannot be empty'),
+  body('content').if(body('tweetType').equals('retweet')).isEmpty().withMessage('Retweets cannot have content'),
   body('tweetType', 'Invalid Tweet Type').optional().isString().isIn(['tweet', 'retweet', 'reply']),
   body('replyTo').if(body('tweetType').equals('reply')).isMongoId().withMessage('Invalid Tweet ID').notEmpty().withMessage('Reply ID cannot be empty'),
   body('retweetedTweet')

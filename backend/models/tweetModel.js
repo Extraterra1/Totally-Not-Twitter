@@ -5,7 +5,7 @@ const tweetSchema = new Schema(
     content: {
       type: String,
       trim: true,
-      required: true
+      default: null
     },
     author: {
       type: mongoose.Types.ObjectId,
