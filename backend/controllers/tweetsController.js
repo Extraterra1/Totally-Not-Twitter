@@ -5,6 +5,7 @@ const Tweet = require('../models/tweetModel');
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
 
 exports.createTweet = [
   upload.single('img'),
@@ -36,6 +37,13 @@ exports.createTweet = [
     // Validate File Size
     const fileSize = req.file ? req.file.size : null;
     if (fileSize && fileSize > 800000) return res.status(400).json({ err: 'File too large, must be 800kb or smaller' });
+
+    // cloudinary configuration
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET
+    });
 
     res.json({ msg: 'nice' });
   })
