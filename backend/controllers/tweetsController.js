@@ -49,6 +49,16 @@ exports.createTweet = [
       if (!tweet) return res.status(400).json({ err: 'Tweet not found' });
     }
 
+    const image = fileExtension
+      ? await new Promise((resolve) => {
+          cloudinary.uploader
+            .upload_stream((e, uploadResult) => {
+              return resolve(uploadResult);
+            })
+            .end(req.file.buffer);
+        })
+      : null;
+
     res.json({ msg: 'nice' });
   })
 ];
