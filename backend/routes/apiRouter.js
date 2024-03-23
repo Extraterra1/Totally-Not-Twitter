@@ -33,4 +33,10 @@ router.post('/tweets', passport.authenticate('jwt', { session: false }), tweetsC
 //  LIKE TWEET
 router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }), tweetsController.likeTweet);
 
+// ***************************
+// USERS
+//  **************************
+
+// FOLLOW USER
+router.patch('/users/:id/follow', passport.authenticate('jwt', { session: false }), usersController.followUser);
 module.exports = router;
