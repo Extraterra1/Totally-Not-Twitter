@@ -9,4 +9,8 @@ exports.followUser = asyncHandler(async (req, res) => {
 
   const user = await User.findById(userID);
   if (!user) return res.status(404).json({ err: 'User not found' });
+
+  const updatedUser = await User.findByIdAndUpdate(req.params.id, { $addToSet: { followers: req.user._id } }, { new: true });
+
+  return res.json({ updatedUser });
 });
