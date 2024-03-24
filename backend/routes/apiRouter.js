@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const authController = require('../controllers/authController');
 const tweetsController = require('../controllers/tweetsController');
+const usersController = require('../controllers/tweetsController');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
