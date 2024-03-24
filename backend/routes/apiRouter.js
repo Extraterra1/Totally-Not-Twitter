@@ -4,7 +4,7 @@ const passport = require('passport');
 
 const authController = require('../controllers/authController');
 const tweetsController = require('../controllers/tweetsController');
-const usersController = require('../controllers/tweetsController');
+const usersController = require('../controllers/usersController');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -40,4 +40,5 @@ router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }
 
 // FOLLOW USER
 router.patch('/users/:id/follow', passport.authenticate('jwt', { session: false }), usersController.followUser);
+
 module.exports = router;
