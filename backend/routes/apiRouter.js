@@ -41,4 +41,7 @@ router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }
 // FOLLOW USER
 router.patch('/users/:id/follow', passport.authenticate('jwt', { session: false }), usersController.followUser);
 
+// FOLLOW USER
+router.patch('/users/:id/unfollow', passport.authenticate('jwt', { session: false }), usersController.unfollowUser);
+
 module.exports = router;
