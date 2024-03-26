@@ -34,6 +34,9 @@ router.post('/tweets', passport.authenticate('jwt', { session: false }), tweetsC
 //  LIKE TWEET
 router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }), tweetsController.likeTweet);
 
+// GET TWEETS BY USER
+router.get('/users/:id/tweets', passport.authenticate('jwt', { session: false }), tweetsController.getTweetsByUser);
+
 // ***************************
 // USERS
 //  **************************
@@ -41,7 +44,7 @@ router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }
 // FOLLOW USER
 router.patch('/users/:id/follow', passport.authenticate('jwt', { session: false }), usersController.followUser);
 
-// FOLLOW USER
+// UNFOLLOW USER
 router.patch('/users/:id/unfollow', passport.authenticate('jwt', { session: false }), usersController.unfollowUser);
 
 module.exports = router;
