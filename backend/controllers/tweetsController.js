@@ -94,7 +94,7 @@ exports.getTweetsByUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) return res.status(404).json({ err: 'User not found' });
 
-  const tweets = await Tweet.find({ author: req.params.id }).populate('author replyTo retweetedTweet');
+  const tweets = await Tweet.find({ author: req.params.id }).populate('replyTo retweetedTweet').populate('author', 'username profilePic');
 
   return res.json({ tweets, count: tweets.length });
 });
