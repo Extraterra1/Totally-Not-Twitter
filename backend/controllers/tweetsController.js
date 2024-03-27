@@ -5,6 +5,7 @@ const Tweet = require('../models/tweetModel');
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 const path = require('path');
+const { isValidObjectId } = require('mongoose');
 const cloudinary = require('cloudinary').v2;
 
 exports.createTweet = [
@@ -76,7 +77,7 @@ exports.likeTweet = asyncHandler(async (req, res) => {
   const tweetID = req.params.id;
 
   const tweet = await Tweet.findById(tweetID);
-  if (!tweet) return res.status(400).json({ err: 'Tweet not found' });
+  if (!tweet) return res.status(404).json({ err: 'Tweet not found' });
 
   const alreadyLiked = await Tweet.findOne({ _id: tweetID, likes: req.user._id });
 
@@ -85,4 +86,11 @@ exports.likeTweet = asyncHandler(async (req, res) => {
   });
 
   return res.json({ updatedTweet });
+});
+
+exports.getTweetsByUser = asyncHandler(async (req, res) => {
+  if (!isValidObjectId(req.params.id)) return res.status(404).json({ err: 'User not found' });
+
+  const user = await User.findById(req.params.id);
+  if (!user) return res.status(404).json({ err: 'User not found' });
 });
