@@ -38,7 +38,7 @@ router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }
 router.get('/users/:id/tweets', tweetsController.getTweetsByUser);
 
 // SEARCH TWEETS
-router.get('/tweets/search/:query', tweetsController.searchTweets);
+router.get('/tweets/search', tweetsController.searchTweets);
 
 // ***************************
 // USERS

@@ -102,7 +102,7 @@ exports.getTweetsByUser = asyncHandler(async (req, res) => {
 });
 
 exports.searchTweets = asyncHandler(async (req, res) => {
-  const query = req.params.query.trim();
+  const query = req.query.q.trim();
   if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
 
   const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } });
