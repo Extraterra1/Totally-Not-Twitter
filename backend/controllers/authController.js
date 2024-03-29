@@ -61,7 +61,7 @@ exports.loginPOST = [
     const isValidPassword = await bcrypt.compare(req.body.password, user.password);
     if (!isValidPassword) return res.status(401).json({ err: { message: 'Wrong username/password' } });
 
-    const cleanUser = { email: user.email, username: user.username, role: user.role, _id: user._id };
+    const cleanUser = { email: user.email, username: user.username, role: user.role, _id: user._id, profilePic: user.profilePic };
 
     jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
       if (err) return res.status(500).json({ err });
