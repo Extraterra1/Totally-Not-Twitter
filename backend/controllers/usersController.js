@@ -71,11 +71,15 @@ exports.updateUser = [
     .if(body('newPassword').isEmpty())
     .bail(),
   asyncHandler(async (req, res) => {
-    const { displayName, password } = req.body;
+    const { displayName, password, newPassword } = req.body;
+    const { id } = req.params;
 
     // Body Validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
+
+    // Check if cookie belongs to the same user
+    if (req.user._id.toString() !== id) return res.status(401).json({ err: 'Unauthorized' });
 
     // Validate File Extension
     const fileExtension = req.file ? path.extname(req.file.originalname).toLowerCase() : null;
@@ -97,16 +101,18 @@ exports.updateUser = [
         })
       : null;
 
-    const user = await User.findById(req.user._id);
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    if (password && !isValidPassword) return res.status(401).json({ err: { message: 'Wrong password' } });
-
     const itemsToUpdate = {};
     if (displayName) itemsToUpdate.displayName = displayName;
     if (image) itemsToUpdate.profilePic = image.url;
-    if (isValidPassword) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      itemsToUpdate.password = hashedPassword;
+    if (password) {
+      const user = await User.findById(req.user._id);
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      if (password && !isValidPassword) return res.status(401).json({ err: { message: 'Wrong password' } });
+
+      if (isValidPassword) {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        itemsToUpdate.password = hashedPassword;
+      }
     }
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, itemsToUpdate, { new: true });
