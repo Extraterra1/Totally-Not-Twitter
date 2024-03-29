@@ -35,18 +35,28 @@ exports.unfollowUser = asyncHandler(async (req, res) => {
 
 exports.updateUser = [
   upload.single('img'),
-  body('displayName').optional().trim().isString().isLength({ max: 15 }).withMessage('Display Name cannot be longer than 15 characters'),
+  body('displayName')
+    .optional()
+    .trim()
+    .isString()
+    .notEmpty()
+    .withMessage('Display name cannot be empty')
+    .isLength({ max: 15 })
+    .withMessage('Display Name cannot be longer than 15 characters'),
   body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
   body('confirmPassword')
-    .optional()
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters long')
-    .if(body('password'))
+    .if(body('password').notEmpty())
     .notEmpty()
     .withMessage('Confirm Password cannot be empty')
     .equals(body('password').value)
-    .withMessage('Passwords do not match'),
+    .withMessage('Passwords do not match')
+    .if(body('password').isEmpty())
+    .bail(),
   asyncHandler(async (req, res) => {
+    // Body Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
+
     return res.json({ msg: 'nice' });
   })
 ];
