@@ -43,13 +43,22 @@ exports.updateUser = [
     .withMessage('Display name cannot be empty')
     .isLength({ max: 15 })
     .withMessage('Display Name cannot be longer than 15 characters'),
+
   body('newPassword').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
   body('confirmPassword')
     .if(body('newPassword').notEmpty())
     .notEmpty()
     .withMessage('Confirm Password cannot be empty')
-    .equals(body('newPassword').value)
+    .custom((value, { req }) => {
+      return value === req.body.newPassword;
+    })
     .withMessage('Passwords do not match')
+    .if(body('newPassword').isEmpty())
+    .bail(),
+  body('password', 'Password must be a string')
+    .if(body('newPassword').notEmpty())
+    .notEmpty()
+    .withMessage('Password cannot be empty')
     .if(body('newPassword').isEmpty())
     .bail(),
   asyncHandler(async (req, res) => {
