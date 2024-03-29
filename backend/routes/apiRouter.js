@@ -50,4 +50,7 @@ router.patch('/users/:id/follow', passport.authenticate('jwt', { session: false 
 // UNFOLLOW USER
 router.patch('/users/:id/unfollow', passport.authenticate('jwt', { session: false }), usersController.unfollowUser);
 
+// UPDATE USER
+router.patch('/users/:id', passport.authenticate('jwt', { session: false }), usersController.updateUser);
+
 module.exports = router;
