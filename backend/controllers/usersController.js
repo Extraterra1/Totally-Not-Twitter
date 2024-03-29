@@ -66,6 +66,16 @@ exports.updateUser = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
+    // Validate File Extension
+    const fileExtension = req.file ? path.extname(req.file.originalname).toLowerCase() : null;
+    if (fileExtension && fileExtension !== '.jpg' && fileExtension !== '.png' && fileExtension !== '.jpeg') {
+      return res.status(400).json({ err: 'Wrong file format' });
+    }
+
+    // Validate File Size
+    const fileSize = req.file ? req.file.size : null;
+    if (fileSize && fileSize > 800000) return res.status(400).json({ err: 'File too large, must be 800kb or smaller' });
+
     const { displayName } = req.body;
 
     const itemsToUpdate = {};
