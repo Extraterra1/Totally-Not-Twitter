@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/userModel');
 
+require('dotenv').config();
 // cloudinary configuration
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
