@@ -104,7 +104,13 @@ exports.updateUser = [
     const itemsToUpdate = {};
     if (displayName) itemsToUpdate.displayName = displayName;
     if (image) itemsToUpdate.profilePic = image.url;
+    if (isValidPassword) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      itemsToUpdate.password = hashedPassword;
+    }
 
-    return res.json({ msg: 'nice' });
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, itemsToUpdate, { new: true });
+
+    return res.json({ updatedUser });
   })
 ];
