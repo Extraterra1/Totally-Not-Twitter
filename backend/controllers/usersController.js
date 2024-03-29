@@ -66,7 +66,10 @@ exports.updateUser = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
-    // const user = await User.findByIdAndUpdate(req.user._id, )
+    const { displayName } = req.body;
+
+    const itemsToUpdate = {};
+    if (displayName) itemsToUpdate.displayName = displayName;
 
     return res.json({ msg: 'nice' });
   })
