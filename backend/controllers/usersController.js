@@ -5,6 +5,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 const cloudinary = require('cloudinary').v2;
 const path = require('path');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+
 const User = require('../models/userModel');
 
 // cloudinary configuration
@@ -69,6 +71,8 @@ exports.updateUser = [
     .if(body('newPassword').isEmpty())
     .bail(),
   asyncHandler(async (req, res) => {
+    const { displayName, password } = req.body;
+
     // Body Validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
@@ -93,7 +97,9 @@ exports.updateUser = [
         })
       : null;
 
-    const { displayName } = req.body;
+    const user = await User.findById(req.user._id);
+    const isValidPassword = await bcrypt.compare(password, user.password);
+    if (password && !isValidPassword) return res.status(401).json({ err: { message: 'Wrong password' } });
 
     const itemsToUpdate = {};
     if (displayName) itemsToUpdate.displayName = displayName;
