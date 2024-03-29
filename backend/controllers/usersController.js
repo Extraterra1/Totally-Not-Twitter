@@ -1,5 +1,10 @@
 const asyncHandler = require('express-async-handler');
 const isValidObjectID = require('mongoose').Types.ObjectId.isValid;
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+const cloudinary = require('cloudinary').v2;
+const path = require('path');
+const { body, validationResult } = require('express-validator');
 const User = require('../models/userModel');
 
 exports.followUser = asyncHandler(async (req, res) => {
@@ -27,3 +32,21 @@ exports.unfollowUser = asyncHandler(async (req, res) => {
 
   return res.json({ updatedUser });
 });
+
+exports.updateUser = [
+  upload.single('img'),
+  body('displayName').optional().trim().isString().isLength({ max: 15 }).withMessage('Display Name cannot be longer than 15 characters'),
+  body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+  body('confirmPassword')
+    .optional()
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 characters long')
+    .if(body('password'))
+    .notEmpty()
+    .withMessage('Confirm Password cannot be empty')
+    .equals(body('password').value)
+    .withMessage('Passwords do not match'),
+  asyncHandler(async (req, res) => {
+    return res.json({ msg: 'nice' });
+  })
+];
