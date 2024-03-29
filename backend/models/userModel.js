@@ -12,6 +12,12 @@ const userSchema = new Schema(
       type: String,
       default: null
     },
+    displayName: {
+      type: String,
+      default: function () {
+        return this.username;
+      }
+    },
     email: {
       type: String,
       trim: true,
