@@ -7,6 +7,13 @@ const path = require('path');
 const { body, validationResult } = require('express-validator');
 const User = require('../models/userModel');
 
+// cloudinary configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 exports.followUser = asyncHandler(async (req, res) => {
   const userID = req.params.id;
 
@@ -76,10 +83,21 @@ exports.updateUser = [
     const fileSize = req.file ? req.file.size : null;
     if (fileSize && fileSize > 800000) return res.status(400).json({ err: 'File too large, must be 800kb or smaller' });
 
+    const image = fileExtension
+      ? await new Promise((resolve) => {
+          cloudinary.uploader
+            .upload_stream((e, uploadResult) => {
+              return resolve(uploadResult);
+            })
+            .end(req.file.buffer);
+        })
+      : null;
+
     const { displayName } = req.body;
 
     const itemsToUpdate = {};
     if (displayName) itemsToUpdate.displayName = displayName;
+    if (image) itemsToUpdate.profilePic = image.url;
 
     return res.json({ msg: 'nice' });
   })
