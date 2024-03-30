@@ -53,4 +53,7 @@ router.patch('/users/:id/unfollow', passport.authenticate('jwt', { session: fals
 // UPDATE USER
 router.patch('/users/:id', passport.authenticate('jwt', { session: false }), usersController.updateUser);
 
+// GET TIMELINE
+router.get('/users/:id/timeline', passport.authenticate('jwt', { session: false }), usersController.getTimeline);
+
 module.exports = router;
