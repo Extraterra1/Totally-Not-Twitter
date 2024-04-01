@@ -26,6 +26,7 @@ exports.followUser = asyncHandler(async (req, res) => {
   if (!user) return res.status(404).json({ err: 'User not found' });
 
   const updatedUser = await User.findByIdAndUpdate(req.params.id, { $addToSet: { followers: req.user._id } }, { new: true });
+  await User.findByIdAndUpdate(req.user.id, { $addToSet: { following: req.params.id } });
 
   return res.json({ updatedUser });
 });
@@ -39,6 +40,7 @@ exports.unfollowUser = asyncHandler(async (req, res) => {
   if (!user) return res.status(404).json({ err: 'User not found' });
 
   const updatedUser = await User.findByIdAndUpdate(req.params.id, { $pull: { followers: req.user._id } }, { new: true });
+  await User.findByIdAndUpdate(req.user.id, { $pull: { following: req.params.id } });
 
   return res.json({ updatedUser });
 });
