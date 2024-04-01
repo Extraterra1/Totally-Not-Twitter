@@ -109,3 +109,12 @@ exports.searchTweets = asyncHandler(async (req, res) => {
 
   return res.json({ count: tweets.length, tweets });
 });
+
+exports.getTimeline = [
+  body('offset', 'Offset must be a number').optional().trim().isNumeric(),
+  asyncHandler(async (req, res) => {
+    // Body Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
+  })
+];
