@@ -97,7 +97,6 @@ exports.getTweetsByUser = asyncHandler(async (req, res) => {
   const tweets = await Tweet.find({ author: req.params.id })
     .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id username profilePic' } })
     .populate('author', 'username profilePic');
-
   return res.json({ tweets, count: tweets.length });
 });
 
@@ -131,3 +130,5 @@ exports.getTimeline = [
     return res.json({ count: tweets.length, tweets });
   })
 ];
+
+exports.tweetDetail = asyncHandler(async (req, res) => {});

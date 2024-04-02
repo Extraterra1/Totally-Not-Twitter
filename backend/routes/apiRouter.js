@@ -31,6 +31,9 @@ router.post('/login', authController.loginPOST);
 //  CREATE TWEET
 router.post('/tweets', passport.authenticate('jwt', { session: false }), tweetsController.createTweet);
 
+// GET TWEET DETAIL
+router.get('/tweets/:id', tweetsController.tweetDetail);
+
 //  LIKE TWEET
 router.patch('/tweets/:id/like', passport.authenticate('jwt', { session: false }), tweetsController.likeTweet);
 
