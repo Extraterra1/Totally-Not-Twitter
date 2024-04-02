@@ -116,5 +116,11 @@ exports.getTimeline = [
     // Body Validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
+
+    const user = await User.findById(req.user._id).select('following');
+
+    const tweets = await Tweet.find({ author: { $in: user.following } });
+
+    return res.json({ tweets });
   })
 ];
