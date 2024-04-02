@@ -48,6 +48,8 @@ exports.createTweet = [
     if (req.body.tweetType === 'retweet' || req.body.tweetType === 'reply') {
       const id = req.body.tweetType === 'retweet' ? req.body.retweetedTweet : req.body.replyTo;
       const tweet = await Tweet.findById(id);
+
+      if (req.body.tweetType === 'reply' && tweet.tweetType === 'retweet') return res.status(400).json({ err: 'You cannot reply to a retweet' });
       if (!tweet) return res.status(400).json({ err: 'Tweet not found' });
     }
 
