@@ -124,7 +124,9 @@ exports.getTimeline = [
 
     const tweets = await Tweet.find({ author: { $in: user.following } })
       .skip(offset)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id username profilePic' } })
+      .populate('author', 'username profilePic');
 
     return res.json({ count: tweets.length, tweets });
   })
