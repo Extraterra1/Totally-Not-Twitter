@@ -117,9 +117,13 @@ exports.getTimeline = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
+    const offset = req.body.offset || null;
+
     const user = await User.findById(req.user._id).select('following');
 
-    const tweets = await Tweet.find({ author: { $in: user.following } });
+    const tweets = await Tweet.find({ author: { $in: user.following } })
+      .skip(offset)
+      .sort({ createdAt: -1 });
 
     return res.json({ tweets });
   })
