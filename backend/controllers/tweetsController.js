@@ -95,8 +95,8 @@ exports.getTweetsByUser = asyncHandler(async (req, res) => {
   if (!user) return res.status(404).json({ err: 'User not found' });
 
   const tweets = await Tweet.find({ author: req.params.id })
-    .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id username profilePic' } })
-    .populate('author', 'username profilePic');
+    .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } })
+    .populate('author', 'displayName username profilePic');
   return res.json({ tweets, count: tweets.length });
 });
 
@@ -124,8 +124,8 @@ exports.getTimeline = [
     const tweets = await Tweet.find({ author: { $in: user.following } })
       .skip(offset)
       .sort({ createdAt: -1 })
-      .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id username profilePic' } })
-      .populate('author', 'username profilePic');
+      .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } })
+      .populate('author', 'displayName username profilePic');
 
     return res.json({ count: tweets.length, tweets });
   })
@@ -137,8 +137,12 @@ exports.tweetDetail = asyncHandler(async (req, res) => {
   if (!isValidObjectId(tweetId)) return res.status(404).json({ err: 'Tweet not found' });
 
   const tweet = await Tweet.findById(tweetId)
-    .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id username profilePic' } })
-    .populate('author', 'username profilePic');
+    .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } })
+    .populate('author', 'displayName username profilePic');
 
-  return res.json({ tweet });
+  const repliesId = tweet.tweetType !== 'retweet' ? tweet._id : tweet.retweetedTweet;
+
+  const replies = await Tweet.find({ replyTo: repliesId }).populate('author', 'displayName username profilePic');
+
+  return res.json({ tweet, replies });
 });
