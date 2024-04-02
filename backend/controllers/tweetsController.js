@@ -140,6 +140,8 @@ exports.tweetDetail = asyncHandler(async (req, res) => {
     .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } })
     .populate('author', 'displayName username profilePic');
 
+  if (!tweet) return res.status(404).json({ err: 'Tweet not found' });
+
   const repliesId = tweet.tweetType !== 'retweet' ? tweet._id : tweet.retweetedTweet;
 
   const replies = await Tweet.find({ replyTo: repliesId }).populate('author', 'displayName username profilePic');
