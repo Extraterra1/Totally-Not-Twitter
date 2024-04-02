@@ -131,4 +131,8 @@ exports.getTimeline = [
   })
 ];
 
-exports.tweetDetail = asyncHandler(async (req, res) => {});
+exports.tweetDetail = asyncHandler(async (req, res) => {
+  const tweetId = req.params.id;
+
+  if (!isValidObjectId(tweetId)) return res.status(404).json({ err: 'Tweet not found' });
+});
