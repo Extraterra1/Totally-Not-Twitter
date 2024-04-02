@@ -120,13 +120,12 @@ exports.getTimeline = [
     if (req.user._id.toString() !== req.params.id) return res.status(401).json({ err: 'Token does not match provided id' });
 
     const offset = req.body.offset || null;
-
     const user = await User.findById(req.user._id).select('following');
 
     const tweets = await Tweet.find({ author: { $in: user.following } })
       .skip(offset)
       .sort({ createdAt: -1 });
 
-    return res.json({ tweets });
+    return res.json({ count: tweets.length, tweets });
   })
 ];
