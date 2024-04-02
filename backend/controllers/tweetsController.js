@@ -117,6 +117,8 @@ exports.getTimeline = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
+    if (req.user._id.toString() !== req.params.id) return res.status(401).json({ err: 'Token does not match provided id' });
+
     const offset = req.body.offset || null;
 
     const user = await User.findById(req.user._id).select('following');
