@@ -109,7 +109,7 @@ exports.searchTweets = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
-    const query = req.query.q;
+    const { q: query } = req.query;
     const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } });
 
     return res.json({ count: tweets.length, tweets });
@@ -123,7 +123,7 @@ exports.searchUsers = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
-    const query = req.query.q;
+    const { q: query } = req.query;
 
     const users = await User.find({ $or: [{ username: { $regex: query, $options: 'i' } }, { displayName: { $regex: query, $options: 'i' } }] }).select(
       'username displayName ProfilePic'
@@ -170,4 +170,10 @@ exports.tweetDetail = asyncHandler(async (req, res) => {
   const replies = await Tweet.find({ replyTo: repliesId }).populate('author', 'displayName username profilePic');
 
   return res.json({ tweet, replies });
+});
+
+exports.getExplore = asyncHandler(async (req, res) => {
+  const tweets = await Tweet.find({ tweetType: 'tweet' }).limit(100).sort({ createdAt: -1 });
+
+  return res.json({ tweets });
 });
