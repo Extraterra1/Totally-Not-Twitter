@@ -105,9 +105,11 @@ exports.getTweetsByUser = asyncHandler(async (req, res) => {
 exports.searchTweets = [
   query('q', 'You need to provide a search term!').trim().notEmpty(),
   asyncHandler(async (req, res) => {
-    const query = req.query.q.trim();
-    if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
+    // Query Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
+    const query = req.query.q;
     const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } });
 
     return res.json({ count: tweets.length, tweets });
@@ -121,8 +123,7 @@ exports.searchUsers = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
-    const query = req.query.q.trim();
-    if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
+    const query = req.query.q;
 
     const users = await User.find({ $or: [{ username: { $regex: query, $options: 'i' } }, { displayName: { $regex: query, $options: 'i' } }] }).select(
       'username displayName ProfilePic'
