@@ -43,6 +43,9 @@ router.get('/users/:id/tweets', tweetsController.getTweetsByUser);
 // SEARCH TWEETS
 router.get('/tweets/search', tweetsController.searchTweets);
 
+// SEARCH USERS
+router.get('/tweets/search/users', tweetsController.searchUsers);
+
 // GET TIMELINE
 router.get('/users/:id/timeline', passport.authenticate('jwt', { session: false }), tweetsController.getTimeline);
 
