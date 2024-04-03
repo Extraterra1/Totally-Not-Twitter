@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { body, validationResult } = require('express-validator');
+const { body, validationResult, query } = require('express-validator');
 const User = require('../models/userModel');
 const Tweet = require('../models/tweetModel');
 const multer = require('multer');
@@ -114,6 +114,9 @@ exports.searchTweets = asyncHandler(async (req, res) => {
 exports.searchUsers = asyncHandler(async (req, res) => {
   const query = req.query.q.trim();
   if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
+
+  const users = await Tweet.find({ $or: [{ username: { $regex: query, $options: 'i' }, displayName: { $regex: query, $options: 'i' } }] });
+  return res.json({ users });
 });
 
 exports.getTimeline = [
