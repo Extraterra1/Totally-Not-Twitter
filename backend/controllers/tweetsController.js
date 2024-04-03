@@ -180,6 +180,13 @@ exports.getExplore = asyncHandler(async (req, res) => {
 });
 
 exports.getLikedTweets = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  if (!isValidObjectId(id)) return res.status(404).json({ err: 'User not found' });
+  const { id: userID } = req.params;
+  if (!isValidObjectId(userID)) return res.status(404).json({ err: 'User not found' });
+
+  const user = await User.findById(userID);
+  if (!user) return res.status(404).json({ err: 'User not found' });
+
+  const tweets = await Tweet.find({ likes: userID });
+
+  return res.json({ count: tweets.length, tweets });
 });
