@@ -111,13 +111,20 @@ exports.searchTweets = asyncHandler(async (req, res) => {
   return res.json({ count: tweets.length, tweets });
 });
 
-exports.searchUsers = asyncHandler(async (req, res) => {
-  const query = req.query.q.trim();
-  if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
+exports.searchUsers = [
+  query('q', 'You need to provide a search term!').trim().notEmpty(),
+  asyncHandler(async (req, res) => {
+    // Query Validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
-  const users = await Tweet.find({ $or: [{ username: { $regex: query, $options: 'i' }, displayName: { $regex: query, $options: 'i' } }] });
-  return res.json({ users });
-});
+    const query = req.query.q.trim();
+    if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
+
+    const users = await Tweet.find({ $or: [{ username: { $regex: query, $options: 'i' }, displayName: { $regex: query, $options: 'i' } }] });
+    return res.json({ users });
+  })
+];
 
 exports.getTimeline = [
   body('offset', 'Offset must be a number').optional().trim().isNumeric(),
