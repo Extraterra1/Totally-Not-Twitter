@@ -110,7 +110,7 @@ exports.searchTweets = [
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
     const { q: query } = req.query;
-    const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } });
+    const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } }).sort({ createdAt: -1 });
 
     return res.json({ count: tweets.length, tweets });
   })
