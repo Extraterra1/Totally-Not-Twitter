@@ -123,3 +123,9 @@ exports.updateUser = [
     return res.json({ updatedUser });
   })
 ];
+
+exports.getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().limit(10).sort({ createdAt: -1 }).select('username displayName profilePic');
+
+  return res.json(users);
+});
