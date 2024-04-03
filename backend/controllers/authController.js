@@ -21,6 +21,7 @@ exports.registerPOST = [
       const usernameExists = await User.findOne({ username: val });
       if (usernameExists) throw new Error('Username already exists');
     }),
+  body('displayName').trim().isLength({ min: 2, max: 15 }).withMessage('Display Name must be between 2 and 15 characters long').optional(),
   body('password', 'Password must be at least 6 characters long').trim().isLength({ min: 6 }),
   asyncHandler(async (req, res) => {
     // Check for errors in body
@@ -31,11 +32,12 @@ exports.registerPOST = [
     const newUser = new User({
       email: req.body.email,
       password: hashedPassword,
-      username: req.body.username
+      username: req.body.username,
+      displayName: req.body.displayName
     });
     await newUser.save();
 
-    const cleanUser = { _id: newUser._id, email: newUser.email, username: newUser.username, friends: newUser.friends };
+    const cleanUser = { _id: newUser._id, email: newUser.email, username: newUser.username, friends: newUser.friends, displayName: newUser.displayName };
 
     jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
       if (err) return res.status(500).json({ err });
