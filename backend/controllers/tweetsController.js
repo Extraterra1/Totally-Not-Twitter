@@ -111,6 +111,11 @@ exports.searchTweets = asyncHandler(async (req, res) => {
   return res.json({ count: tweets.length, tweets });
 });
 
+exports.searchUsers = asyncHandler(async (req, res) => {
+  const query = req.query.q.trim();
+  if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
+});
+
 exports.getTimeline = [
   body('offset', 'Offset must be a number').optional().trim().isNumeric(),
   asyncHandler(async (req, res) => {
