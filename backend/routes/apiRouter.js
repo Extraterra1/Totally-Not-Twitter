@@ -68,4 +68,7 @@ router.patch('/users/:id/unfollow', passport.authenticate('jwt', { session: fals
 // UPDATE USER
 router.patch('/users/:id', passport.authenticate('jwt', { session: false }), usersController.updateUser);
 
+// GET RECOMMENDED USERS
+router.get('/users/', passport.authenticate('jwt', { session: false }), usersController.getUsers);
+
 module.exports = router;
