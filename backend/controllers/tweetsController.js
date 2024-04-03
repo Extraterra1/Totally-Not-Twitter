@@ -167,7 +167,7 @@ exports.tweetDetail = asyncHandler(async (req, res) => {
 
   const repliesId = tweet.tweetType !== 'retweet' ? tweet._id : tweet.retweetedTweet;
 
-  const replies = await Tweet.find({ replyTo: repliesId }).populate('author', 'displayName username profilePic');
+  const replies = await Tweet.find({ replyTo: repliesId }).populate('author', 'displayName username profilePic').sort({ createdAt: -1 });
 
   return res.json({ tweet, replies });
 });
