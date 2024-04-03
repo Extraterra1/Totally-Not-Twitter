@@ -186,7 +186,9 @@ exports.getLikedTweets = asyncHandler(async (req, res) => {
   const user = await User.findById(userID);
   if (!user) return res.status(404).json({ err: 'User not found' });
 
-  const tweets = await Tweet.find({ likes: userID });
+  const tweets = await Tweet.find({ likes: userID })
+    .populate({ path: 'replyTo', populate: { path: 'author', select: '_id displayName username profilePic' } })
+    .populate('author', 'displayName username profilePic');
 
   return res.json({ count: tweets.length, tweets });
 });
