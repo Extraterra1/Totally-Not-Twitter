@@ -188,7 +188,8 @@ exports.getLikedTweets = asyncHandler(async (req, res) => {
 
   const tweets = await Tweet.find({ likes: userID })
     .populate({ path: 'replyTo', populate: { path: 'author', select: '_id displayName username profilePic' } })
-    .populate('author', 'displayName username profilePic');
+    .populate('author', 'displayName username profilePic')
+    .sort({ createdAt: -1 });
 
   return res.json({ count: tweets.length, tweets });
 });
