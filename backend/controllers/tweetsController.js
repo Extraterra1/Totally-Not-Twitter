@@ -121,7 +121,9 @@ exports.searchUsers = [
     const query = req.query.q.trim();
     if (!query) return res.status(400).json({ err: 'You need to provide a search term!' });
 
-    const users = await Tweet.find({ $or: [{ username: { $regex: query, $options: 'i' }, displayName: { $regex: query, $options: 'i' } }] });
+    const users = await User.find({ $or: [{ username: { $regex: query, $options: 'i' } }, { displayName: { $regex: query, $options: 'i' } }] }).select(
+      'username displayName ProfilePic'
+    );
     return res.json({ users });
   })
 ];
