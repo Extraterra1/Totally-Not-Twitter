@@ -1,5 +1,29 @@
+@font-face {
+  font-family: 'Chirp';
+  src: url('/fonts/ChirpRegular.ttf') format('truetype');
+  font-weight: normal; /* or 400 */
+}
+
+@font-face {
+  font-family: 'Chirp';
+  src: url('/fonts/ChirpMedium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Chirp';
+  src: url('/fonts/ChirpBold.ttf') format('truetype');
+  font-weight: bold; /* or 700 */
+}
+
+@font-face {
+  font-family: 'Chirp';
+  src: url('/fonts/ChirpHeavy.ttf') format('truetype');
+  font-weight: 900;
+}
+
 :root {
-  font-family: 'Montserrat', system-ui, Helvetica, Arial, sans-serif;
+  font-family: 'Chirp', system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   font-size: 10px;
