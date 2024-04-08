@@ -21,6 +21,11 @@
   src: url('/fonts/ChirpHeavy.ttf') format('truetype');
   font-weight: 900;
 }
+@font-face {
+  font-family: 'ChirpExtended';
+  src: url('/fonts/ChirpExtendedHeavy.ttf') format('truetype');
+  font-weight: 900;
+}
 
 :root {
   font-family: 'Chirp', system-ui, Helvetica, Arial, sans-serif;
