@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import createStore from 'react-auth-kit/createStore';
+import AuthProvider from 'react-auth-kit';
 import './index.css';
 
 import App from './App.jsx';
@@ -15,6 +16,8 @@ const store = createStore({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <AuthProvider store={store}>
+      <Router />
+    </AuthProvider>
   </React.StrictMode>
 );
