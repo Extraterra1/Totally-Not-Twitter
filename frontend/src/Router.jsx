@@ -1,24 +1,16 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import Landing from './components/Landing';
+
 const Router = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: (
-        <RequireAuth fallbackPath="/login">
-          <Landing />
-        </RequireAuth>
-      )
-    },
-    {
-      path: '/login',
-      element: <Login />
-    },
-    {
-      path: '/register',
-      element: <Register />
+      element: <Landing />
     }
   ]);
+
+  return <RouterProvider router={router} />;
 };
 
 export default Router;
