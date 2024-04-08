@@ -66,6 +66,7 @@
   --link-decoration: none;
   --link-hover-decoration: underline;
   --chat-background: #11273d;
+  --black: #000;
 }
 
 * {
