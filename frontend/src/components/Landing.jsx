@@ -9,6 +9,9 @@ const Landing = () => {
           <h1>Happening Now</h1>
           <h2>Join today.</h2>
         </div>
+        <div className="actions">
+          <Button>Sign up with GitHub</Button>
+        </div>
       </div>
     </Wrapper>
   );
@@ -40,4 +43,13 @@ const Wrapper = styled.main`
       }
     }
   }
+`;
+
+const Button = styled.button`
+  padding: 1.5rem 5rem;
+  background-color: var(--light);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--black);
+  border-radius: 3rem;
 `;
