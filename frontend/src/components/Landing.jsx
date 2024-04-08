@@ -25,6 +25,7 @@ const Landing = () => {
               <span>Or</span>
               <Line />
             </div>
+            <Button $primary>Create Account</Button>
           </div>
         </div>
       </div>
@@ -93,7 +94,7 @@ const Button = styled.a`
   background-color: ${(props) => (props.$primary ? 'var(--twitter-blue)' : 'var(--white)')};
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--black);
+  color: ${(props) => (props.$primary ? 'var(--light)' : 'var(--black)')};
   border-radius: 3rem;
 
   & > .btn-icon {
