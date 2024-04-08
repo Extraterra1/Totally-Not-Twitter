@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 const Landing = () => {
   return (
@@ -10,7 +11,10 @@ const Landing = () => {
           <h2>Join today.</h2>
         </div>
         <div className="actions">
-          <Button>Sign up with GitHub</Button>
+          <Button>
+            <Icon className="btn-icon" icon="ph:github-logo-fill" />
+            Sign up with GitHub
+          </Button>
         </div>
       </div>
     </Wrapper>
@@ -46,10 +50,18 @@ const Wrapper = styled.main`
 `;
 
 const Button = styled.button`
-  padding: 1.5rem 5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 1rem 5rem;
   background-color: var(--light);
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--black);
   border-radius: 3rem;
+
+  & > .btn-icon {
+    font-size: 3rem;
+  }
 `;
