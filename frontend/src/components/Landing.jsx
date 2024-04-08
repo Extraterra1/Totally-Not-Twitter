@@ -11,14 +11,21 @@ const Landing = () => {
           <h2>Join today.</h2>
         </div>
         <div className="actions">
-          <Button>
-            <Icon className="btn-icon" icon="ph:github-logo-fill" />
-            Sign up with GitHub
-          </Button>
-          <Button>
-            <Icon className="btn-icon" icon="ph:google-logo-fill" />
-            Sign up with Google
-          </Button>
+          <div className="buttons">
+            <Button>
+              <Icon className="btn-icon" icon="ph:github-logo-fill" />
+              Sign up with GitHub
+            </Button>
+            <Button>
+              <Icon className="btn-icon" icon="ph:google-logo-fill" />
+              Sign up with Google
+            </Button>
+            <div className="separator">
+              <Line />
+              <span>Or</span>
+              <Line />
+            </div>
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -56,7 +63,21 @@ const Wrapper = styled.main`
       flex-direction: column;
       align-items: start;
 
-      gap: 2rem;
+      & .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      & .separator {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 2rem;
+
+        align-self: stretch;
+        font-size: 1.5rem;
+      }
     }
   }
 `;
@@ -78,4 +99,9 @@ const Button = styled.a`
   & > .btn-icon {
     font-size: 3rem;
   }
+`;
+
+const Line = styled.div`
+  height: 1px;
+  background-color: var(--gray);
 `;
