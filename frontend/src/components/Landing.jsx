@@ -15,6 +15,10 @@ const Landing = () => {
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
             Sign up with GitHub
           </Button>
+          <Button>
+            <Icon className="btn-icon" icon="ph:google-logo-fill" />
+            Sign up with Google
+          </Button>
         </div>
       </div>
     </Wrapper>
@@ -46,16 +50,26 @@ const Wrapper = styled.main`
         font-size: 3rem;
       }
     }
+
+    & .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+
+      gap: 2rem;
+    }
   }
 `;
 
-const Button = styled.button`
+const Button = styled.a`
   display: flex;
   align-items: center;
+  flex-grow: 0;
+
   gap: 1rem;
 
   padding: 1rem 5rem;
-  background-color: var(--light);
+  background-color: ${(props) => (props.$primary ? 'var(--twitter-blue)' : 'var(--white)')};
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--black);
