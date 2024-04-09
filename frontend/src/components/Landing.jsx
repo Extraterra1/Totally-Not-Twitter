@@ -26,6 +26,10 @@ const Landing = () => {
               <Line />
             </div>
             <Button $primary>Create Account</Button>
+            <div className="sign-in">
+              <span>Already have an account?</span>
+              <Button $negative>Sign in</Button>
+            </div>
           </div>
         </div>
       </div>
@@ -79,6 +83,17 @@ const Wrapper = styled.main`
         align-self: stretch;
         font-size: 1.5rem;
       }
+
+      & .sign-in {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        & span {
+          font-size: 1.3rem;
+          font-weight: 700;
+        }
+      }
     }
   }
 `;
@@ -92,12 +107,14 @@ const Button = styled.a`
   gap: 1rem;
 
   padding: 1rem 5rem;
-  background-color: ${(props) => (props.$primary ? 'var(--twitter-blue)' : 'var(--white)')};
+  background-color: ${(props) => (props.$primary ? 'var(--twitter-blue)' : props.$negative ? 'var(--black)' : 'var(--white)')};
   font-size: 1.5rem;
   font-weight: 700;
-  color: ${(props) => (props.$primary ? 'var(--light)' : 'var(--black)')};
+  color: ${(props) => (props.$primary ? 'var(--light)' : props.$negative ? 'var(--twitter-blue)' : 'var(--black)')};
   border-radius: 3rem;
   cursor: pointer;
+  transition: all 0.3s;
+  border: ${(props) => (props.$negative ? '1px solid var(--gray)' : null)};
 
   & > .btn-icon {
     font-size: 3rem;
@@ -114,6 +131,5 @@ const Line = styled.div`
 `;
 
 // TODOS
-// HOVER COLOR
 // SIGN IN BUTTON
 // SMALL LETTERS
