@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import TTNLogo from '../assets/ttn-logo.png';
 
 const Landing = () => {
   return (
     <Wrapper>
-      <div className="logo-container"></div>
+      <div className="logo-container">
+        <img src={TTNLogo} alt="TTN Logo" />
+      </div>
       <div className="actions-container">
         <div className="cta">
           <h1>Happening Now</h1>
@@ -68,6 +71,16 @@ const Wrapper = styled.main`
 
   background-color: var(--black);
   color: var(--light);
+
+  & .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & img {
+      max-width: 30vw;
+    }
+  }
 
   & > .actions-container {
     & .cta {
