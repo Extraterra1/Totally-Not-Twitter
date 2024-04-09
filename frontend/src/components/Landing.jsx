@@ -22,7 +22,7 @@ const Landing = () => {
             </Button>
             <div className="separator">
               <Line />
-              <span>Or</span>
+              <span>or</span>
               <Line />
             </div>
             <Button $primary>Create Account</Button>
@@ -97,9 +97,14 @@ const Button = styled.a`
   font-weight: 700;
   color: ${(props) => (props.$primary ? 'var(--light)' : 'var(--black)')};
   border-radius: 3rem;
+  cursor: pointer;
 
   & > .btn-icon {
     font-size: 3rem;
+  }
+
+  &:hover {
+    background-color: ${(props) => (props.$primary ? 'var(--twitter-blue-hover)' : '#eaeaea')};
   }
 `;
 
@@ -107,3 +112,8 @@ const Line = styled.div`
   height: 1px;
   background-color: var(--gray);
 `;
+
+// TODOS
+// HOVER COLOR
+// SIGN IN BUTTON
+// SMALL LETTERS
