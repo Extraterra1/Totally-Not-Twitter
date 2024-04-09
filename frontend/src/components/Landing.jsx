@@ -33,6 +33,26 @@ const Landing = () => {
           </div>
         </div>
       </div>
+      <div className="small-print">
+        <span>About</span>
+        <span>Download the TTN App</span>
+        <span>Help Center</span>
+        <span>Terms of Service</span>
+        <span>Privacy Policy</span>
+        <span>Cookie Policy</span>
+        <span>Accesibility</span>
+        <span>Ads Info</span>
+        <span>Blog</span>
+        <span>Careers</span>
+        <span>Brand Resources</span>
+        <span>Advertising</span>
+        <span>Marketing</span>
+        <span>TTN for Business</span>
+        <span>Developers</span>
+        <span>Directory</span>
+        <span>Settings</span>
+        <span>© 2024 TTN Corp.</span>
+      </div>
     </Wrapper>
   );
 };
@@ -42,6 +62,7 @@ export default Landing;
 const Wrapper = styled.main`
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
 
   align-items: center;
 
@@ -94,6 +115,22 @@ const Wrapper = styled.main`
           font-weight: 700;
         }
       }
+    }
+  }
+
+  & > .small-print {
+    display: flex;
+    grid-column: span 2;
+
+    gap: 1.5rem;
+    justify-content: center;
+    padding: 1rem;
+    color: #71767b;
+
+    & > span:not(:last-child):hover {
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 0.2rem;
     }
   }
 `;
