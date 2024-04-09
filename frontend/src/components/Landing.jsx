@@ -121,7 +121,7 @@ const Button = styled.a`
   }
 
   &:hover {
-    background-color: ${(props) => (props.$primary ? 'var(--twitter-blue-hover)' : '#eaeaea')};
+    background-color: ${(props) => (props.$primary ? 'var(--twitter-blue-hover)' : props.$negative ? 'rgba(29,155,240,0.09)' : '#eaeaea')};
   }
 `;
 
@@ -131,5 +131,4 @@ const Line = styled.div`
 `;
 
 // TODOS
-// SIGN IN BUTTON
 // SMALL LETTERS
