@@ -181,4 +181,4 @@ const Line = styled.div`
 `;
 
 // TODOS
-// SMALL LETTERS
+// MODALS
