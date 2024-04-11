@@ -1,62 +1,75 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import TTNLogo from '../assets/ttn-logo.png';
+import { useState } from 'react';
+
+import Modal from './Modal';
 
 const Landing = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const openModal = () => setModalIsOpen(true);
+
   return (
-    <Wrapper>
-      <div className="logo-container">
-        <img src={TTNLogo} alt="TTN Logo" />
-      </div>
-      <div className="actions-container">
-        <div className="cta">
-          <h1>Happening Now</h1>
-          <h2>Join today.</h2>
+    <>
+      <Modal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
+        <h1>heyyy</h1>
+      </Modal>
+      <Wrapper>
+        <div className="logo-container">
+          <img src={TTNLogo} alt="TTN Logo" />
         </div>
-        <div className="actions">
-          <div className="buttons">
-            <Button>
-              <Icon className="btn-icon" icon="ph:github-logo-fill" />
-              Sign up with GitHub
-            </Button>
-            <Button>
-              <Icon className="btn-icon" icon="ph:google-logo-fill" />
-              Sign up with Google
-            </Button>
-            <div className="separator">
-              <Line />
-              <span>or</span>
-              <Line />
-            </div>
-            <Button $primary>Create Account</Button>
-            <div className="sign-in">
-              <span>Already have an account?</span>
-              <Button $negative>Sign in</Button>
+        <div className="actions-container">
+          <div className="cta">
+            <h1>Happening Now</h1>
+            <h2>Join today.</h2>
+          </div>
+          <div className="actions">
+            <div className="buttons">
+              <Button>
+                <Icon className="btn-icon" icon="ph:github-logo-fill" />
+                Sign up with GitHub
+              </Button>
+              <Button>
+                <Icon className="btn-icon" icon="ph:google-logo-fill" />
+                Sign up with Google
+              </Button>
+              <div className="separator">
+                <Line />
+                <span>or</span>
+                <Line />
+              </div>
+              <Button onClick={openModal} $primary>
+                Create Account
+              </Button>
+              <div className="sign-in">
+                <span>Already have an account?</span>
+                <Button $negative>Sign in</Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="small-print">
-        <span>About</span>
-        <span>Download the TTN App</span>
-        <span>Help Center</span>
-        <span>Terms of Service</span>
-        <span>Privacy Policy</span>
-        <span>Cookie Policy</span>
-        <span>Accesibility</span>
-        <span>Ads Info</span>
-        <span>Blog</span>
-        <span>Careers</span>
-        <span>Brand Resources</span>
-        <span>Advertising</span>
-        <span>Marketing</span>
-        <span>TTN for Business</span>
-        <span>Developers</span>
-        <span>Directory</span>
-        <span>Settings</span>
-        <span>© 2024 TTN Corp.</span>
-      </div>
-    </Wrapper>
+        <div className="small-print">
+          <span>About</span>
+          <span>Download the TTN App</span>
+          <span>Help Center</span>
+          <span>Terms of Service</span>
+          <span>Privacy Policy</span>
+          <span>Cookie Policy</span>
+          <span>Accesibility</span>
+          <span>Ads Info</span>
+          <span>Blog</span>
+          <span>Careers</span>
+          <span>Brand Resources</span>
+          <span>Advertising</span>
+          <span>Marketing</span>
+          <span>TTN for Business</span>
+          <span>Developers</span>
+          <span>Directory</span>
+          <span>Settings</span>
+          <span>© 2024 TTN Corp.</span>
+        </div>
+      </Wrapper>
+    </>
   );
 };
 
