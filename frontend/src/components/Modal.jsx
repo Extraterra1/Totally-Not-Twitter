@@ -14,12 +14,12 @@ const customStyles = {
   }
 };
 
-const Modal = ({ children, isOpen, setIsOpen }) => {
+const Modal = ({ children, isOpen, setIsOpen, ...props }) => {
   const closeModal = () => setIsOpen(false);
 
   return (
     <>
-      <ReactModal style={customStyles} isOpen={isOpen} onRequestClose={closeModal}>
+      <ReactModal style={customStyles} isOpen={isOpen} onRequestClose={closeModal} {...props}>
         {children}
       </ReactModal>
     </>

@@ -11,7 +11,7 @@ const Landing = () => {
 
   return (
     <>
-      <Modal isOpen={modalIsOpen} setIsOpen={setModalIsOpen}>
+      <Modal isOpen={modalIsOpen} setIsOpen={setModalIsOpen} shouldCloseOnOverlayClick={false}>
         <h1>heyyy</h1>
       </Modal>
       <Wrapper>
