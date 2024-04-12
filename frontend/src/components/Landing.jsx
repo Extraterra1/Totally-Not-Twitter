@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import TTNLogo from '../assets/ttn-logo.png';
+import TNTLogo from '../assets/ttn-logo.png';
 import { useState } from 'react';
 
 import Modal from './Modal';
@@ -16,7 +16,7 @@ const Landing = () => {
       </Modal>
       <Wrapper>
         <div className="logo-container">
-          <img src={TTNLogo} alt="TTN Logo" />
+          <img src={TNTLogo} alt="TNT Logo" />
         </div>
         <div className="actions-container">
           <div className="cta">
@@ -50,7 +50,7 @@ const Landing = () => {
         </div>
         <div className="small-print">
           <span>About</span>
-          <span>Download the TTN App</span>
+          <span>Download the TNT App</span>
           <span>Help Center</span>
           <span>Terms of Service</span>
           <span>Privacy Policy</span>
@@ -62,11 +62,11 @@ const Landing = () => {
           <span>Brand Resources</span>
           <span>Advertising</span>
           <span>Marketing</span>
-          <span>TTN for Business</span>
+          <span>TNT for Business</span>
           <span>Developers</span>
           <span>Directory</span>
           <span>Settings</span>
-          <span>© 2024 TTN Corp.</span>
+          <span>© 2024 TNT Corp.</span>
         </div>
       </Wrapper>
     </>
