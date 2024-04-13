@@ -16,7 +16,7 @@ const customStyles = {
     padding: '0'
   },
   overlay: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'var(--modal-overlay-bg)'
   }
 };
 

@@ -74,6 +74,7 @@
   --black: #000;
   --twitter-blue: #1d9bf0;
   --twitter-blue-hover: #1a8edb;
+  --modal-overlay-bg: rgba(91, 112, 131, 0.4);
 }
 
 * {
