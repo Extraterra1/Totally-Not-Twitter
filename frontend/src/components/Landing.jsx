@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Modal from './Modal';
 import Actions from './Actions';
 import SmallPrint from './SmallPrint';
+import Register from './Register';
 
 const Landing = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -14,7 +15,7 @@ const Landing = () => {
   return (
     <>
       <Modal isOpen={modalIsOpen} setIsOpen={setModalIsOpen} shouldCloseOnOverlayClick={false}>
-        <h1>heyyy</h1>
+        <Register />
       </Modal>
       <Wrapper>
         <div className="logo-container">
