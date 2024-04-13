@@ -4,6 +4,7 @@ import TNTLogo from '../assets/ttn-logo.png';
 import { useState } from 'react';
 
 import Modal from './Modal';
+import Actions from './Actions';
 
 const Landing = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -18,36 +19,7 @@ const Landing = () => {
         <div className="logo-container">
           <img src={TNTLogo} alt="TNT Logo" />
         </div>
-        <div className="actions-container">
-          <div className="cta">
-            <h1>Happening Now</h1>
-            <h2>Join today.</h2>
-          </div>
-          <div className="actions">
-            <div className="buttons">
-              <Button>
-                <Icon className="btn-icon" icon="ph:github-logo-fill" />
-                Sign up with GitHub
-              </Button>
-              <Button>
-                <Icon className="btn-icon" icon="ph:google-logo-fill" />
-                Sign up with Google
-              </Button>
-              <div className="separator">
-                <Line />
-                <span>or</span>
-                <Line />
-              </div>
-              <Button onClick={openModal} $primary>
-                Create Account
-              </Button>
-              <div className="sign-in">
-                <span>Already have an account?</span>
-                <Button $negative>Sign in</Button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Actions openModal={openModal} />
         <div className="small-print">
           <span>About</span>
           <span>Download the TNT App</span>
