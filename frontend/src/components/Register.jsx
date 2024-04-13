@@ -1,13 +1,16 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import styled from 'styled-components';
 
+import { useModal } from './Modal';
+
 import TNTLogo from '../assets/ttn-logo.png';
 
 const Register = () => {
+  const { closeModal } = useModal();
   return (
     <Wrapper>
       <Header>
-        <Icon className="close-icon" icon="ph:x-bold" />
+        <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <div className="img">
           <img src={TNTLogo} alt="TNT Logo" />
         </div>

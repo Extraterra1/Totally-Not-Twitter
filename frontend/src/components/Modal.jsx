@@ -1,5 +1,27 @@
 import ReactModal from 'react-modal';
-import { useState } from 'react';
+import React, { createContext, useContext } from 'react';
+
+const ModalContext = createContext();
+
+export const useModal = () => {
+  return useContext(ModalContext);
+};
+
+const Modal = ({ children, isOpen, setIsOpen, ...props }) => {
+  const closeModal = () => setIsOpen(false);
+
+  return (
+    <>
+      <ModalContext.Provider value={{ closeModal }}>
+        <ReactModal style={customStyles} isOpen={isOpen} onRequestClose={closeModal} {...props}>
+          {children}
+        </ReactModal>
+      </ModalContext.Provider>
+    </>
+  );
+};
+
+export default Modal;
 
 ReactModal.setAppElement('#root');
 
@@ -19,17 +41,3 @@ const customStyles = {
     backgroundColor: 'var(--modal-overlay-bg)'
   }
 };
-
-const Modal = ({ children, isOpen, setIsOpen, ...props }) => {
-  const closeModal = () => setIsOpen(false);
-
-  return (
-    <>
-      <ReactModal style={customStyles} isOpen={isOpen} onRequestClose={closeModal} {...props}>
-        {children}
-      </ReactModal>
-    </>
-  );
-};
-
-export default Modal;
