@@ -7,13 +7,13 @@ export const useModal = () => {
   return useContext(ModalContext);
 };
 
-const Modal = ({ children, isOpen, setIsOpen, ...props }) => {
+const Modal = ({ children, setIsOpen, ...props }) => {
   const closeModal = () => setIsOpen(false);
 
   return (
     <>
       <ModalContext.Provider value={{ closeModal }}>
-        <ReactModal style={customStyles} isOpen={isOpen} onRequestClose={closeModal} {...props}>
+        <ReactModal style={customStyles} onRequestClose={closeModal} {...props}>
           {children}
         </ReactModal>
       </ModalContext.Provider>

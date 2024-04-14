@@ -16,7 +16,9 @@ const Register = () => {
         </div>
       </Header>
       <Content>
-        <h1>HEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY</h1>
+        <div className="title">
+          <h1>Create your account</h1>
+        </div>
       </Content>
     </Wrapper>
   );
@@ -31,6 +33,8 @@ const Wrapper = styled.div`
   padding: 1rem;
   border-radius: 1rem;
   gap: 2rem;
+
+  color: var(--light);
 `;
 
 const Header = styled.div`
@@ -61,4 +65,8 @@ const Header = styled.div`
 
 const Content = styled.div`
   padding: 0 5rem;
+
+  & > .title {
+    font-size: 1.4rem;
+  }
 `;
