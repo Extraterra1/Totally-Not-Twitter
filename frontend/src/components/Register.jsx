@@ -2,10 +2,10 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import styled from 'styled-components';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
+import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
 
 import { useModal } from './Modal';
-import { Button } from './Actions';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
@@ -13,6 +13,16 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 const Register = () => {
   const { closeModal } = useModal();
+  const [{ loading }, executeRegister] = useAxios({ url: `${import.meta.env.VITE_API_URL}/register`, method: 'POST' }, { manual: true });
+
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+    try {
+      const res = await executeRegister({ data: { username: values.username, email: values.email, password: values.password } });
+      setSubmitting(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Wrapper>
@@ -48,14 +58,14 @@ const Register = () => {
               .min(6, 'Must be at least 6 characters long')
               .oneOf([Yup.ref('password'), null], 'Passwords must match')
           })}
-          onSubmit={() => console.log('xd')}
+          onSubmit={() => console.log('xdd')}
         >
           <Form className="register-form">
             <Input label="Username" name="username" type="text" />
             <Input label="Email" name="email" type="email" />
             <Input label="Password" name="password" type="password" />
             <Input label="Confirm Password" name="confirmPassword" type="password" />
-            <SubmitButton>Register</SubmitButton>
+            <SubmitButton type="submit">{loading ? <ClipLoader /> : 'Register'}</SubmitButton>
           </Form>
         </Formik>
       </Content>
@@ -230,8 +240,41 @@ const Content = styled.div`
     font-size: 1.4rem;
     margin-bottom: 2rem;
   }
+
+  & > .register-form {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
-const SubmitButton = styled(Button)`
-  margin: 10rem 0 4rem 0;
+const ActualButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+
+  gap: 1rem;
+
+  padding: 1rem 5rem;
+  background-color: ${(props) => (props.$primary ? 'var(--twitter-blue)' : props.$negative ? 'var(--black)' : 'var(--white)')};
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: ${(props) => (props.$primary ? 'var(--light)' : props.$negative ? 'var(--twitter-blue)' : 'var(--black)')};
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: ${(props) => (props.$negative ? '1px solid var(--gray)' : null)};
+
+  & > .btn-icon {
+    font-size: 3rem;
+  }
+
+  &:hover {
+    background-color: ${(props) => (props.$primary ? 'var(--twitter-blue-hover)' : props.$negative ? 'rgba(29,155,240,0.09)' : '#eaeaea')};
+  }
+`;
+
+const SubmitButton = styled(ActualButton)`
+  margin: 8rem 0 4rem 0;
+  padding: 1.5rem 5rem;
 `;
