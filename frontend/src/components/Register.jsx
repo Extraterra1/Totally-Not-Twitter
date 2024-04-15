@@ -55,8 +55,8 @@ const Register = () => {
           onSubmit={() => console.log('xd')}
         >
           <Form className="register-form">
-            <Input label="Username" name="username" type="text" placeholder="JohnDoe" />
-            <Input label="Email" name="email" type="email" placeholder="johndoe@gmail.com" />
+            <Input label="Username" name="username" type="text" />
+            <Input label="Email" name="email" type="email" />
             <Input label="Password" name="password" type="password" />
             <Input label="Confirm Password" name="confirmPassword" type="password" />
           </Form>
@@ -71,25 +71,58 @@ export default Register;
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+
   margin-bottom: 2rem;
-  font-family: 'Montserrat';
   letter-spacing: 1px;
+  border-radius: 0.25rem;
+  position: relative;
+  min-height: 5rem;
+
+  &:has(input:focus) {
+    outline: 3px solid var(--twitter-blue);
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    & label {
+      position: relative;
+      transform: none;
+      font-size: 1rem;
+
+      top: 0;
+      left: 0;
+
+      margin-left: 0.5rem;
+    }
+
+    & input {
+      border: none;
+      font-size: 1.5rem;
+      padding: 0 0.5rem;
+    }
+  }
 
   & label {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    bottom: auto;
+    transform: translate(0, -50%);
+
+    color: var(--gray);
   }
 
   & input {
-    background-color: #fff;
-    padding: 1rem 2rem;
+    background-color: transparent;
+    padding: 1rem 0.5rem;
     border: 1px solid var(--dark);
     border-radius: 0.25rem;
-    color: var(--dark);
-    font-family: 'Montserrat';
+    color: var(--light);
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 2rem;
     min-width: 30rem;
+    position: relative;
+    outline: none;
   }
 `;
 
@@ -101,7 +134,7 @@ const Input = ({ label, ...props }) => {
       <FormGroup>
         <label htmlFor={props.id || props.name}>{label}</label>
         <input {...field} {...props} />
-        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
+        {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
       </FormGroup>
     </>
   );
