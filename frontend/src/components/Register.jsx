@@ -267,7 +267,7 @@ const Content = styled.div`
   }
 `;
 
-const ActualButton = styled.button`
+export const ActualButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,7 +294,7 @@ const ActualButton = styled.button`
   }
 `;
 
-const SubmitButton = styled(ActualButton)`
+export const SubmitButton = styled(ActualButton)`
   margin: 8rem 0 4rem 0;
   padding: 1.5rem 5rem;
 `;

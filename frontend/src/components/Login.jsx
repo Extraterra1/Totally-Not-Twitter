@@ -9,12 +9,13 @@ import { Navigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import { useModal } from './Modal';
+import { ActualButton } from './Register';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
 const Login = () => {
   const { closeModal } = useModal();
-  const [{ loading }, executeRegister] = useAxios({ url: `${import.meta.env.VITE_API_URL}/register`, method: 'POST' }, { manual: true });
+  const [{ loading }, executeRegister] = useAxios({ url: `${import.meta.env.VITE_API_URL}/login`, method: 'POST' }, { manual: true });
   const signIn = useSignIn();
   const isAuthenticated = useIsAuthenticated();
 
@@ -53,38 +54,25 @@ const Login = () => {
         </Header>
         <Content>
           <div className="title">
-            <h1>Log In</h1>
+            <h1>Sign in to TTN</h1>
           </div>
           <Formik
+            validateOnBlur={false}
+            validateOnChange={false}
             initialValues={{
               username: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-              month: '',
-              day: '',
-              year: ''
+              password: ''
             }}
             validationSchema={Yup.object({
-              username: Yup.string()
-                .required('Required')
-                .min(3, 'Username must be at least 3 characters long')
-                .max(20, 'Username must be less than 20 characters long'),
-              email: Yup.string().required('Required').email('Must be a valid email address'),
-              password: Yup.string().required('Required').min(6, 'Must be at least 6 characters long'),
-              confirmPassword: Yup.string()
-                .required('Required')
-                .min(6, 'Must be at least 6 characters long')
-                .oneOf([Yup.ref('password'), null], 'Passwords must match')
+              username: Yup.string().required('Required'),
+              password: Yup.string().required('Required')
             })}
             onSubmit={handleSubmit}
           >
             <Form className="register-form">
-              <Input label="Username" name="username" type="text" />
-              <Input label="Email" name="email" type="email" />
+              <Input label="Username or Email" name="username" type="text" />
               <Input label="Password" name="password" type="password" />
-              <Input label="Confirm Password" name="confirmPassword" type="password" />
-              <SubmitButton type="submit">{loading ? <ClipLoader /> : 'Register'}</SubmitButton>
+              <SubmitButton type="submit">{loading ? <ClipLoader /> : 'Login'}</SubmitButton>
             </Form>
           </Formik>
         </Content>
@@ -266,35 +254,7 @@ const Content = styled.div`
     flex-direction: column;
   }
 `;
-
-const ActualButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-grow: 0;
-
-  gap: 1rem;
-
-  padding: 1rem 5rem;
-  background-color: ${(props) => (props.$primary ? 'var(--twitter-blue)' : props.$negative ? 'var(--black)' : 'var(--white)')};
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: ${(props) => (props.$primary ? 'var(--light)' : props.$negative ? 'var(--twitter-blue)' : 'var(--black)')};
-  border-radius: 3rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: ${(props) => (props.$negative ? '1px solid var(--gray)' : null)};
-
-  & > .btn-icon {
-    font-size: 3rem;
-  }
-
-  &:hover {
-    background-color: ${(props) => (props.$primary ? 'var(--twitter-blue-hover)' : props.$negative ? 'rgba(29,155,240,0.09)' : '#eaeaea')};
-  }
-`;
-
 const SubmitButton = styled(ActualButton)`
-  margin: 8rem 0 4rem 0;
+  margin: 4rem 0;
   padding: 1.5rem 5rem;
 `;
