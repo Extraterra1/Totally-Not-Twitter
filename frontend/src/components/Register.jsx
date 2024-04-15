@@ -18,8 +18,16 @@ const Register = () => {
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const res = await executeRegister({ data: { username: values.username, email: values.email, password: values.password } });
+      console.log(res);
       setSubmitting(false);
     } catch (err) {
+      if (err?.response && err?.response.data.type === 'bodyValidation') {
+        const errors = {};
+        err.response.data.err.forEach((el) => {
+          errors[el.path] = el.msg;
+        });
+        setErrors(errors);
+      }
       console.log(err);
     }
   };
@@ -58,7 +66,7 @@ const Register = () => {
               .min(6, 'Must be at least 6 characters long')
               .oneOf([Yup.ref('password'), null], 'Passwords must match')
           })}
-          onSubmit={() => console.log('xdd')}
+          onSubmit={handleSubmit}
         >
           <Form className="register-form">
             <Input label="Username" name="username" type="text" />
