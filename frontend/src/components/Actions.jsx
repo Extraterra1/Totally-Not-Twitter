@@ -86,7 +86,7 @@ const Container = styled.div`
     }
   }
 `;
-const Button = styled.a`
+export const Button = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
