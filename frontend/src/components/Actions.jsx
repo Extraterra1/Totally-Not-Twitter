@@ -115,7 +115,7 @@ export const Button = styled.a`
   }
 `;
 
-const Line = styled.div`
+export const Line = styled.div`
   height: 1px;
   background-color: var(--gray);
 `;

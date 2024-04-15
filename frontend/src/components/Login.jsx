@@ -10,6 +10,7 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import { useModal } from './Modal';
 import { ActualButton } from './Register';
+import { Line } from './Actions';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
@@ -55,6 +56,11 @@ const Login = () => {
         <Content>
           <div className="title">
             <h1>Sign in to TTN</h1>
+          </div>
+          <div className="separator">
+            <Line />
+            <span>or</span>
+            <Line />
           </div>
           <Formik
             validateOnBlur={false}
@@ -265,6 +271,21 @@ const Content = styled.div`
       color: var(--twitter-blue);
       font-weight: 700;
       cursor: pointer;
+    }
+  }
+
+  & > .separator {
+    margin-bottom: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+
+    align-self: stretch;
+    font-size: 1.5rem;
+
+    & > div {
+      background-color: var(--gray-dark);
     }
   }
 `;
