@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import styled from 'styled-components';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
+import { useState } from 'react';
 
 import { useModal } from './Modal';
 import { Button } from './Actions';
@@ -72,7 +73,7 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   letter-spacing: 1px;
   border-radius: 0.25rem;
   position: relative;
@@ -100,7 +101,6 @@ const FormGroup = styled.div`
       padding: 0 0.5rem;
     }
   }
-
   & label {
     font-size: 1.5rem;
     position: absolute;
@@ -123,27 +123,36 @@ const FormGroup = styled.div`
     min-width: 30rem;
     position: relative;
     outline: none;
+
+    &.has-text {
+      background-color: var(--black);
+      font-size: 1.5rem;
+    }
   }
 `;
 
 const Input = ({ label, ...props }) => {
   const [field, meta] = useField(props);
+  const [hasText, setHasText] = useState(false);
 
   return (
     <>
       <FormGroup>
         <label htmlFor={props.id || props.name}>{label}</label>
-        <input {...field} {...props} />
-        {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
+        <input className={field.value ? 'has-text' : null} {...field} {...props} />
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
       </FormGroup>
     </>
   );
 };
 
-const ErrorMessage = styled.div`
+const ErrorMessage = styled.span`
   color: var(--danger);
   font-size: 1.2rem;
   font-weight: 500;
+  position: absolute;
+  top: calc(100% + 3px);
+  letter-spacing: 0.5px;
 `;
 
 const Wrapper = styled.div`
