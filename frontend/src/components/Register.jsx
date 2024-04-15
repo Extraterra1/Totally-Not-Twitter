@@ -4,21 +4,30 @@ import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
 import useAxios from 'axios-hooks';
 import { ClipLoader } from 'react-spinners';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import { Navigate } from 'react-router-dom';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import { useModal } from './Modal';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 const Register = () => {
   const { closeModal } = useModal();
   const [{ loading }, executeRegister] = useAxios({ url: `${import.meta.env.VITE_API_URL}/register`, method: 'POST' }, { manual: true });
+  const signIn = useSignIn();
+  const isAuthenticated = useIsAuthenticated();
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
       const res = await executeRegister({ data: { username: values.username, email: values.email, password: values.password } });
-      console.log(res);
+      signIn({
+        auth: {
+          token: res.data.token,
+          type: 'Bearer'
+        },
+        userState: res.data.user
+      });
       setSubmitting(false);
     } catch (err) {
       if (err?.response && err?.response.data.type === 'bodyValidation') {
@@ -33,51 +42,54 @@ const Register = () => {
   };
 
   return (
-    <Wrapper>
-      <Header>
-        <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
-        <div className="img">
-          <img src={TNTLogo} alt="TNT Logo" />
-        </div>
-      </Header>
-      <Content>
-        <div className="title">
-          <h1>Create your account</h1>
-        </div>
-        <Formik
-          initialValues={{
-            username: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            month: '',
-            day: '',
-            year: ''
-          }}
-          validationSchema={Yup.object({
-            username: Yup.string()
-              .required('Required')
-              .min(3, 'Username must be at least 3 characters long')
-              .max(20, 'Username must be less than 20 characters long'),
-            email: Yup.string().required('Required').email('Must be a valid email address'),
-            password: Yup.string().required('Required').min(6, 'Must be at least 6 characters long'),
-            confirmPassword: Yup.string()
-              .required('Required')
-              .min(6, 'Must be at least 6 characters long')
-              .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          })}
-          onSubmit={handleSubmit}
-        >
-          <Form className="register-form">
-            <Input label="Username" name="username" type="text" />
-            <Input label="Email" name="email" type="email" />
-            <Input label="Password" name="password" type="password" />
-            <Input label="Confirm Password" name="confirmPassword" type="password" />
-            <SubmitButton type="submit">{loading ? <ClipLoader /> : 'Register'}</SubmitButton>
-          </Form>
-        </Formik>
-      </Content>
-    </Wrapper>
+    <>
+      {isAuthenticated && <Navigate to="/timeline" />}
+      <Wrapper>
+        <Header>
+          <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
+          <div className="img">
+            <img src={TNTLogo} alt="TNT Logo" />
+          </div>
+        </Header>
+        <Content>
+          <div className="title">
+            <h1>Create your account</h1>
+          </div>
+          <Formik
+            initialValues={{
+              username: '',
+              email: '',
+              password: '',
+              confirmPassword: '',
+              month: '',
+              day: '',
+              year: ''
+            }}
+            validationSchema={Yup.object({
+              username: Yup.string()
+                .required('Required')
+                .min(3, 'Username must be at least 3 characters long')
+                .max(20, 'Username must be less than 20 characters long'),
+              email: Yup.string().required('Required').email('Must be a valid email address'),
+              password: Yup.string().required('Required').min(6, 'Must be at least 6 characters long'),
+              confirmPassword: Yup.string()
+                .required('Required')
+                .min(6, 'Must be at least 6 characters long')
+                .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            })}
+            onSubmit={handleSubmit}
+          >
+            <Form className="register-form">
+              <Input label="Username" name="username" type="text" />
+              <Input label="Email" name="email" type="email" />
+              <Input label="Password" name="password" type="password" />
+              <Input label="Confirm Password" name="confirmPassword" type="password" />
+              <SubmitButton type="submit">{loading ? <ClipLoader /> : 'Register'}</SubmitButton>
+            </Form>
+          </Formik>
+        </Content>
+      </Wrapper>
+    </>
   );
 };
 

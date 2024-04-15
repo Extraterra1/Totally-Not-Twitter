@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import TNTLogo from '../assets/ttn-logo.png';
 import { useState } from 'react';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { Navigate } from 'react-router-dom';
 
 import Modal from './Modal';
 import Actions from './Actions';
@@ -11,9 +12,11 @@ import Register from './Register';
 const Landing = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const openModal = () => setModalIsOpen(true);
+  const isAuthenticated = useIsAuthenticated();
 
   return (
     <>
+      {isAuthenticated && <Navigate to="/timeline" />}
       <Modal isOpen={modalIsOpen} setIsOpen={setModalIsOpen} shouldCloseOnOverlayClick={false}>
         <Register />
       </Modal>
@@ -50,6 +53,3 @@ const Wrapper = styled.main`
     }
   }
 `;
-
-// TODOS
-// MODALS
