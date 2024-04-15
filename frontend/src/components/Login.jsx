@@ -16,13 +16,13 @@ import TNTLogo from '../assets/ttn-logo.png';
 
 const Login = () => {
   const { closeModal } = useModal();
-  const [{ loading }, executeRegister] = useAxios({ url: `${import.meta.env.VITE_API_URL}/login`, method: 'POST' }, { manual: true });
+  const [{ loading }, executeLogin] = useAxios({ url: `${import.meta.env.VITE_API_URL}/login`, method: 'POST' }, { manual: true });
   const signIn = useSignIn();
   const isAuthenticated = useIsAuthenticated();
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      const res = await executeRegister({ data: { username: values.username, email: values.email, password: values.password } });
+      const res = await executeLogin({ data: { username: values.username, password: values.password } });
       signIn({
         auth: {
           token: res.data.token,
@@ -32,16 +32,15 @@ const Login = () => {
       });
       setSubmitting(false);
     } catch (err) {
-      if (err?.response && err?.response.data.type === 'bodyValidation') {
-        const errors = {};
-        err.response.data.err.forEach((el) => {
-          errors[el.path] = el.msg;
-        });
+      if (err?.response) {
+        const errors = { username: 'Wrong Username/Password', password: 'Wrong Username/Password' };
         setErrors(errors);
       }
       console.log(err);
     }
   };
+
+  // TODO GITHUB LOGIN
 
   return (
     <>
@@ -63,8 +62,6 @@ const Login = () => {
             <Line />
           </div>
           <Formik
-            validateOnBlur={false}
-            validateOnChange={false}
             initialValues={{
               username: '',
               password: ''
