@@ -10,15 +10,19 @@ import SmallPrint from './SmallPrint';
 import Register from './Register';
 
 const Landing = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const openModal = () => setModalIsOpen(true);
+  const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const openModal = () => setRegisterModalIsOpen(true);
   const isAuthenticated = useIsAuthenticated();
 
   return (
     <>
       {isAuthenticated && <Navigate to="/timeline" />}
-      <Modal isOpen={modalIsOpen} setIsOpen={setModalIsOpen} shouldCloseOnOverlayClick={false}>
+      <Modal isOpen={registerModalIsOpen} setIsOpen={setRegisterModalIsOpen} shouldCloseOnOverlayClick={false}>
         <Register />
+      </Modal>
+      <Modal isOpen={loginModalIsOpen} setIsOpen={setLoginModalIsOpen} shouldCloseOnOverlayClick={false}>
+        <Login />
       </Modal>
       <Wrapper>
         <div className="logo-container">
