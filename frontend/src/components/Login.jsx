@@ -75,6 +75,9 @@ const Login = () => {
               <SubmitButton type="submit">{loading ? <ClipLoader /> : 'Login'}</SubmitButton>
             </Form>
           </Formik>
+          <span className="register-link">
+            Don't have an account? <a onClick={closeModal}>Sign up</a>
+          </span>
         </Content>
       </Wrapper>
     </>
@@ -252,6 +255,17 @@ const Content = styled.div`
   & > .register-form {
     display: flex;
     flex-direction: column;
+  }
+
+  & > .register-link {
+    color: var(--gray);
+    font-size: 1.3rem;
+
+    & > a {
+      color: var(--twitter-blue);
+      font-weight: 700;
+      cursor: pointer;
+    }
   }
 `;
 const SubmitButton = styled(ActualButton)`
