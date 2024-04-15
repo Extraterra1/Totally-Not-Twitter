@@ -79,10 +79,34 @@ const FormGroup = styled.div`
   position: relative;
   min-height: 5rem;
 
+  &:has(input.has-text) {
+    display: grid;
+    grid-template-rows: auto 1fr;
+
+    & label {
+      position: relative;
+      transform: none;
+      font-size: 1rem;
+
+      top: 0;
+      left: 0;
+
+      margin-left: 0.5rem;
+    }
+  }
+
   &:has(input:focus) {
     outline: 3px solid var(--twitter-blue);
     display: grid;
     grid-template-rows: auto 1fr;
+
+    &:has(span) {
+      outline-color: var(--danger);
+
+      & label {
+        color: var(--danger);
+      }
+    }
 
     & label {
       position: relative;
@@ -101,6 +125,16 @@ const FormGroup = styled.div`
       padding: 0 0.5rem;
     }
   }
+
+  &:has(span) {
+    color: var(--danger);
+    outline: 3px solid var(--danger);
+
+    & input {
+      border: none;
+    }
+  }
+
   & label {
     font-size: 1.5rem;
     position: absolute;
@@ -127,6 +161,7 @@ const FormGroup = styled.div`
     &.has-text {
       background-color: var(--black);
       font-size: 1.5rem;
+      flex-grow: 1;
     }
   }
 `;
