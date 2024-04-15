@@ -8,11 +8,13 @@ import Modal from './Modal';
 import Actions from './Actions';
 import SmallPrint from './SmallPrint';
 import Register from './Register';
+import Login from './Login';
 
 const Landing = () => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const openModal = () => setRegisterModalIsOpen(true);
+  const openRegisterModal = () => setRegisterModalIsOpen(true);
+  const openLoginModal = () => setLoginModalIsOpen(true);
   const isAuthenticated = useIsAuthenticated();
 
   return (
@@ -28,7 +30,7 @@ const Landing = () => {
         <div className="logo-container">
           <img src={TNTLogo} alt="TNT Logo" />
         </div>
-        <Actions openModal={openModal} />
+        <Actions openRegisterModal={openRegisterModal} openLoginModal={openLoginModal} />
         <SmallPrint />
       </Wrapper>
     </>

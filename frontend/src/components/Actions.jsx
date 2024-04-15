@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-const Actions = ({ openModal }) => {
+const Actions = ({ openRegisterModal, openLoginModal }) => {
   return (
     <Container>
       <div className="cta">
@@ -23,12 +23,14 @@ const Actions = ({ openModal }) => {
             <span>or</span>
             <Line />
           </div>
-          <Button onClick={openModal} $primary>
+          <Button onClick={openRegisterModal} $primary>
             Create Account
           </Button>
           <div className="sign-in">
             <span>Already have an account?</span>
-            <Button $negative>Sign in</Button>
+            <Button onClick={openLoginModal} $negative>
+              Sign in
+            </Button>
           </div>
         </div>
       </div>
