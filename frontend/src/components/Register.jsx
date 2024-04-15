@@ -2,15 +2,18 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import styled from 'styled-components';
 import { Formik, Form, useField } from 'formik';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { ClipLoader } from 'react-spinners';
 
 import { useModal } from './Modal';
 import { Button } from './Actions';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 const Register = () => {
   const { closeModal } = useModal();
+
   return (
     <Wrapper>
       <Header>
@@ -43,15 +46,7 @@ const Register = () => {
             confirmPassword: Yup.string()
               .required('Required')
               .min(6, 'Must be at least 6 characters long')
-              .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-            month: Yup.string()
-              .required('Required')
-              .oneOf(
-                ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-                'Invalid Month'
-              ),
-            day: Yup.number().required('Required').min(0, 'Invalid day').max(31, 'Invalid day'),
-            year: Yup.number().required('Required').min(1900, 'Invalid year').max(new Date().getFullYear(), 'Invalid year')
+              .oneOf([Yup.ref('password'), null], 'Passwords must match')
           })}
           onSubmit={() => console.log('xd')}
         >
@@ -60,6 +55,7 @@ const Register = () => {
             <Input label="Email" name="email" type="email" />
             <Input label="Password" name="password" type="password" />
             <Input label="Confirm Password" name="confirmPassword" type="password" />
+            <SubmitButton>Register</SubmitButton>
           </Form>
         </Formik>
       </Content>
@@ -154,9 +150,10 @@ const FormGroup = styled.div`
     color: var(--light);
     font-weight: 400;
     font-size: 2rem;
-    min-width: 30rem;
+    min-width: 35rem;
     position: relative;
     outline: none;
+    flex-grow: 1;
 
     &.has-text {
       background-color: var(--black);
@@ -168,7 +165,6 @@ const FormGroup = styled.div`
 
 const Input = ({ label, ...props }) => {
   const [field, meta] = useField(props);
-  const [hasText, setHasText] = useState(false);
 
   return (
     <>
@@ -228,9 +224,14 @@ const Header = styled.div`
 `;
 
 const Content = styled.div`
-  padding: 0 5rem;
+  padding: 0 8rem;
 
   & > .title {
     font-size: 1.4rem;
+    margin-bottom: 2rem;
   }
+`;
+
+const SubmitButton = styled(Button)`
+  margin: 10rem 0 4rem 0;
 `;
