@@ -4,11 +4,11 @@ import { useState } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { Navigate } from 'react-router-dom';
 
-import Modal from './Modal';
-import Actions from './Actions';
-import SmallPrint from './SmallPrint';
-import Register from './Register';
-import Login from './Login';
+import Modal from '../components/Modal';
+import Actions from '../components/Actions';
+import SmallPrint from '../components/SmallPrint';
+import Register from '../components/Register';
+import Login from '../components/Login';
 
 const Landing = () => {
   const [registerModalIsOpen, setRegisterModalIsOpen] = useState(false);

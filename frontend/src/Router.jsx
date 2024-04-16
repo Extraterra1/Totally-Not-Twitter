@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet';
 
-import Landing from './components/Landing';
+import Landing from './views/Landing';
 import Actions from './components/Actions';
 
 const Router = () => {
