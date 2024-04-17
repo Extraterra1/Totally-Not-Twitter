@@ -24,6 +24,9 @@ router.post('/register', authController.registerPOST);
 // LOGIN
 router.post('/login', authController.loginPOST);
 
+// GITHUB LOGIN
+router.post('/githubLogin', authController.githubLoginPOST);
+
 // ***************************
 // TWEETS
 //  **************************

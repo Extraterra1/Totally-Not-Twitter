@@ -79,6 +79,15 @@ exports.loginPOST = [
   })
 ];
 
+exports.githubLoginPOST = [
+  body('code', 'GitHub code is required').notEmpty(),
+  asyncHandler(async (req, res) => {
+    // Check for errors in body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(401).json({ err: errors.array(), type: 'bodyValidation' });
+  })
+];
+
 exports.protectedRoute = (req, res) => {
   return res.json({ msg: 'Authenticated' });
 };
