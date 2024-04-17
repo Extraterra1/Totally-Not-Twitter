@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 exports.registerPOST = [
   body('email')
@@ -85,6 +86,20 @@ exports.githubLoginPOST = [
     // Check for errors in body
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(401).json({ err: errors.array(), type: 'bodyValidation' });
+
+    // const params = '?client_id=' + process.env.GITHUB_CLIENT_ID + '&client_secret=' + process.env.GITHUB_CLIENT_SECRET + '&code=' + req.body.code;
+
+    const response = await axios.post(
+      'https://github.com/login/oauth/access_token',
+      {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code: req.body.code
+      },
+      { headers: { Accept: 'application/json' } }
+    );
+
+    return res.json({ res: response.data });
   })
 ];
 
