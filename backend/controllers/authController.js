@@ -89,7 +89,7 @@ exports.githubLoginPOST = [
 
     // const params = '?client_id=' + process.env.GITHUB_CLIENT_ID + '&client_secret=' + process.env.GITHUB_CLIENT_SECRET + '&code=' + req.body.code;
 
-    const response = await axios.post(
+    const tokenRequest = await axios.post(
       'https://github.com/login/oauth/access_token',
       {
         client_id: process.env.GITHUB_CLIENT_ID,
@@ -99,7 +99,12 @@ exports.githubLoginPOST = [
       { headers: { Accept: 'application/json' } }
     );
 
-    return res.json({ res: response.data });
+    const token = tokenRequest.data?.access_token;
+    if (!token) return res.status(400).json({ err: 'no token' });
+
+    const userDataRequest = await axios.get('https://api.github.com/user', { headers: { Authorization: 'Bearer ' + token } });
+
+    return res.json({ userData: userDataRequest.data, userId: userDataRequest.data.id, tokenRequest: tokenRequest.data, token });
   })
 ];
 
