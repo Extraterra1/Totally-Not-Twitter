@@ -105,12 +105,13 @@ exports.githubLoginPOST = [
     let user = await User.findOne({ githubID }).select('email username profilePic displayName');
 
     if (!user) {
-      const hashedPassword = await bcrypt.hash(githubID, 10);
+      const hashedPassword = await bcrypt.hash(githubID.toString(), 10);
 
       const newUser = new User({
-        email: githubID + '@gmail.com',
+        email: `${githubID}@gmail.com`,
         password: hashedPassword,
-        username: userData.login
+        username: userData.login,
+        githubID
       });
       await newUser.save();
 
