@@ -38,7 +38,7 @@ exports.registerPOST = [
     });
     await newUser.save();
 
-    const cleanUser = { _id: newUser._id, email: newUser.email, username: newUser.username, friends: newUser.friends, displayName: newUser.displayName };
+    const cleanUser = { _id: newUser._id, email: newUser.email, username: newUser.username, displayName: newUser.displayName };
 
     jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
       if (err) return res.status(500).json({ err });
@@ -99,18 +99,28 @@ exports.githubLoginPOST = [
     const token = tokenRequest.data?.access_token;
     if (!token) return res.status(400).json({ err: 'Bad token' });
 
-    const userDataRequest = await axios.get('https://api.github.com/user', { headers: { Authorization: 'Bearer ' + token } });
-    const githubID = userDataRequest.data.id;
+    const { data: userData } = await axios.get('https://api.github.com/user', { headers: { Authorization: 'Bearer ' + token } });
+    const githubID = userData.id;
 
-    const user = await User.findOne({ githubID }).select('email username profilePic displayName');
+    let user = await User.findOne({ githubID }).select('email username profilePic displayName');
 
-    if (user)
-      jwt.sign({ user, exp: moment().add(3, 'days').unix(), sub: user._id }, process.env.JWT_SECRET, (err, token) => {
-        if (err) return res.status(500).json({ err });
-        return res.json({ token, user });
+    if (!user) {
+      const hashedPassword = await bcrypt.hash(githubID, 10);
+
+      const newUser = new User({
+        email: githubID + '@gmail.com',
+        password: hashedPassword,
+        username: userData.login
       });
+      await newUser.save();
 
-    return res.json({ userData: userDataRequest.data, githubID, token });
+      user = { _id: newUser._id, email: newUser.email, username: newUser.username, displayName: newUser.displayName, profilePic: newUser.profilePic };
+    }
+
+    jwt.sign({ user, exp: moment().add(3, 'days').unix(), sub: user._id }, process.env.JWT_SECRET, (err, token) => {
+      if (err) return res.status(500).json({ err });
+      return res.json({ token, user });
+    });
   })
 ];
 
