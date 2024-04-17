@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import TNTLogo from '../assets/ttn-logo.png';
 import { useState, useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { Navigate, useSearchParams } from 'react-router-dom';
 import useAxios from 'axios-hooks';
 import { Toaster, toast } from 'react-hot-toast';
@@ -20,6 +21,7 @@ const Landing = () => {
 
   const isAuthenticated = useIsAuthenticated();
   const [searchParams, setSearchParams] = useSearchParams();
+  const signIn = useSignIn();
 
   const [, executeGithubLogin] = useAxios({ url: import.meta.env.VITE_API_URL + '/githubLogin', method: 'POST' }, { manual: true, autoCancel: true });
 
@@ -37,7 +39,7 @@ const Landing = () => {
             },
             { id: 'login' }
           );
-          console.log(res);
+          signIn({ auth: { token: res.data.token, type: 'Bearer' }, userState: res.data.user });
         }
       } catch (err) {
         console.log(err);
