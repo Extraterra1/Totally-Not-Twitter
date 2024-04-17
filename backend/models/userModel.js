@@ -29,7 +29,8 @@ const userSchema = new Schema(
     },
     followers: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
     following: [{ type: mongoose.Types.ObjectId, required: true, ref: 'User' }],
-    tweets: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Tweet' }]
+    tweets: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Tweet' }],
+    githubID: { type: Number, unique: true }
   },
   { timestamps: true }
 );

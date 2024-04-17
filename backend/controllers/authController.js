@@ -67,7 +67,6 @@ exports.loginPOST = [
     const cleanUser = {
       email: user.email,
       username: user.username,
-      role: user.role,
       _id: user._id,
       profilePic: user.profilePic,
       displayName: user.displayName
@@ -87,8 +86,6 @@ exports.githubLoginPOST = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(401).json({ err: errors.array(), type: 'bodyValidation' });
 
-    // const params = '?client_id=' + process.env.GITHUB_CLIENT_ID + '&client_secret=' + process.env.GITHUB_CLIENT_SECRET + '&code=' + req.body.code;
-
     const tokenRequest = await axios.post(
       'https://github.com/login/oauth/access_token',
       {
@@ -100,11 +97,20 @@ exports.githubLoginPOST = [
     );
 
     const token = tokenRequest.data?.access_token;
-    if (!token) return res.status(400).json({ err: 'no token' });
+    if (!token) return res.status(400).json({ err: 'Bad token' });
 
     const userDataRequest = await axios.get('https://api.github.com/user', { headers: { Authorization: 'Bearer ' + token } });
+    const githubID = userDataRequest.data.id;
 
-    return res.json({ userData: userDataRequest.data, userId: userDataRequest.data.id, tokenRequest: tokenRequest.data, token });
+    const user = await User.findOne({ githubID }).select('email username profilePic displayName');
+
+    if (user)
+      jwt.sign({ user, exp: moment().add(3, 'days').unix(), sub: user._id }, process.env.JWT_SECRET, (err, token) => {
+        if (err) return res.status(500).json({ err });
+        return res.json({ token, user });
+      });
+
+    return res.json({ userData: userDataRequest.data, githubID, token });
   })
 ];
 
