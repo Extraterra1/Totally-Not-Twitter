@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-const Actions = ({ openRegisterModal, openLoginModal }) => {
+const Actions = ({ openRegisterModal, openLoginModal, redirect }) => {
   return (
     <Container>
       <div className="cta">
@@ -10,7 +10,7 @@ const Actions = ({ openRegisterModal, openLoginModal }) => {
       </div>
       <div className="actions">
         <div className="buttons">
-          <Button>
+          <Button onClick={redirect}>
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
             Sign up with GitHub
           </Button>

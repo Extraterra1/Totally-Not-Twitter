@@ -15,7 +15,10 @@ const Landing = () => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const openRegisterModal = () => setRegisterModalIsOpen(true);
   const openLoginModal = () => setLoginModalIsOpen(true);
+
   const isAuthenticated = useIsAuthenticated();
+
+  const redirectToGithub = () => window.location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
 
   return (
     <>
@@ -30,7 +33,7 @@ const Landing = () => {
         <div className="logo-container">
           <img src={TNTLogo} alt="TNT Logo" />
         </div>
-        <Actions openRegisterModal={openRegisterModal} openLoginModal={openLoginModal} />
+        <Actions openRegisterModal={openRegisterModal} openLoginModal={openLoginModal} redirect={redirectToGithub} />
         <SmallPrint />
       </Wrapper>
     </>
