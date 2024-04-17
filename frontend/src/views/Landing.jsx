@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import TNTLogo from '../assets/ttn-logo.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useSearchParams } from 'react-router-dom';
+import useAxios from 'axios-hooks';
+import { Toaster, toast } from 'react-hot-toast';
 
 import Modal from '../components/Modal';
 import Actions from '../components/Actions';
@@ -17,8 +19,32 @@ const Landing = () => {
   const openLoginModal = () => setLoginModalIsOpen(true);
 
   const isAuthenticated = useIsAuthenticated();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const redirectToGithub = () => window.location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
+  const [, executeGithubLogin] = useAxios({ url: import.meta.env.VITE_API_URL + '/githubLogin', method: 'POST' }, { manual: true, autoCancel: true });
+
+  useEffect(() => {
+    const login = async () => {
+      try {
+        const code = searchParams.get('code');
+        if (code) {
+          const res = await toast.promise(
+            executeGithubLogin({ data: { code } }),
+            {
+              loading: 'Logging in with GitHub...',
+              success: 'Logged in! Redirecting...',
+              error: 'Something went wrong'
+            },
+            { id: 'login' }
+          );
+          console.log(res);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    login();
+  }, []);
 
   return (
     <>
@@ -33,9 +59,10 @@ const Landing = () => {
         <div className="logo-container">
           <img src={TNTLogo} alt="TNT Logo" />
         </div>
-        <Actions openRegisterModal={openRegisterModal} openLoginModal={openLoginModal} redirect={redirectToGithub} />
+        <Actions openRegisterModal={openRegisterModal} openLoginModal={openLoginModal} />
         <SmallPrint />
       </Wrapper>
+      <Toaster position="top-center" />
     </>
   );
 };

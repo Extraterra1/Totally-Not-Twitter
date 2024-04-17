@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-const Actions = ({ openRegisterModal, openLoginModal, redirect }) => {
+const redirectToGithub = () => window.location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
+
+const Actions = ({ openRegisterModal, openLoginModal }) => {
   return (
     <Container>
       <div className="cta">
@@ -10,7 +12,7 @@ const Actions = ({ openRegisterModal, openLoginModal, redirect }) => {
       </div>
       <div className="actions">
         <div className="buttons">
-          <Button onClick={redirect}>
+          <Button onClick={redirectToGithub}>
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
             Sign up with GitHub
           </Button>
