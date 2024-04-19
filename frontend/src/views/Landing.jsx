@@ -97,7 +97,7 @@ const Wrapper = styled.main`
       margin-top: 2rem;
 
       & img {
-        max-width: 10vw;
+        max-width: 15vw;
       }
     }
   }

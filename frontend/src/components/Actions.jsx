@@ -89,6 +89,36 @@ const Container = styled.div`
       }
     }
   }
+  @media screen and (max-width: 800px) {
+    align-self: start;
+    padding: 2rem;
+
+    display: grid;
+    align-items: center;
+    grid-template-rows: auto 1fr;
+
+    & .cta {
+      line-height: 8rem;
+      padding-top: 3rem;
+      & > h1 {
+        font-size: 5rem;
+      }
+    }
+
+    & .actions {
+      align-self: flex-start;
+      margin-top: 10rem;
+      & .buttons {
+        align-self: stretch;
+      }
+
+      & .sign-in {
+        & span {
+          font-size: 1.5rem;
+        }
+      }
+    }
+  }
 `;
 export const Button = styled.a`
   display: flex;
