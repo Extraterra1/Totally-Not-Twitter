@@ -73,7 +73,7 @@ export default Landing;
 
 const Wrapper = styled.main`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
 
   align-items: center;
@@ -89,5 +89,21 @@ const Wrapper = styled.main`
     & img {
       max-width: 30vw;
     }
+
+    @media screen and (max-width: 800px) {
+      grid-column: span 2;
+      justify-self: start;
+      margin-left: 2rem;
+      margin-top: 2rem;
+
+      & img {
+        max-width: 10vw;
+      }
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    justify-items: center;
+    grid-template-rows: auto 1fr auto;
   }
 `;
