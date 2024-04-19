@@ -41,4 +41,8 @@ const Container = styled.div`
     text-decoration: underline;
     text-underline-offset: 0.2rem;
   }
+
+  @media screen and (max-width: 1300px) {
+    flex-wrap: wrap;
+  }
 `;
