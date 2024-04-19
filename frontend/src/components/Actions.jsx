@@ -89,6 +89,22 @@ const Container = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 1100px) {
+    & .cta {
+      & > h1 {
+        font-size: 5rem;
+      }
+    }
+  }
+  @media screen and (max-width: 900px) {
+    & .cta {
+      & > h1 {
+        font-size: 4rem;
+      }
+    }
+  }
+
   @media screen and (max-width: 800px) {
     align-self: start;
     padding: 2rem;
