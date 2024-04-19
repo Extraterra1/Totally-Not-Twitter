@@ -73,7 +73,7 @@ export default Landing;
 
 const Wrapper = styled.main`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr auto;
 
   align-items: center;
@@ -104,6 +104,7 @@ const Wrapper = styled.main`
 
   @media screen and (max-width: 800px) {
     justify-items: center;
+    grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
   }
 `;
