@@ -16,10 +16,7 @@ const Actions = ({ openRegisterModal, openLoginModal }) => {
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
             Sign up with GitHub
           </Button>
-          <Button>
-            <Icon className="btn-icon" icon="ph:google-logo-fill" />
-            Sign up with Google
-          </Button>
+
           <div className="separator">
             <Line />
             <span>or</span>
