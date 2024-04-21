@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet';
 
 import Landing from './views/Landing';
-import Actions from './components/Actions';
+import Timeline from './views/Timeline';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -15,7 +15,7 @@ const Router = () => {
       children: [
         {
           path: '/timeline',
-          element: <Actions />
+          element: <Timeline />
         }
       ]
     }
