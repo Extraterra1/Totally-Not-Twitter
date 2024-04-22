@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router-dom';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import TTNLogo from '../assets/ttn-logo.png';
 import { Button as BaseButton } from '../components/Actions';
 
 const Timeline = () => {
+  const auth = useAuthUser();
   return (
     <>
       <Wrapper>
@@ -35,6 +37,7 @@ const Timeline = () => {
               </div>
             </Link>
             <Button $primary>Post</Button>
+            <UserCard user={auth} />
           </div>
         </SidebarContainer>
       </Wrapper>
@@ -98,7 +101,5 @@ const SidebarContainer = styled.div`
 `;
 
 const Button = styled(BaseButton)`
-  /* background-color: var(--twitter-blue);
-  color: var(--white); */
   align-self: stretch;
 `;
