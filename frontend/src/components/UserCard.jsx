@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
+import defaultPP from '../assets/profilePic.jpg';
+
 const UserCard = ({ user }) => {
   return (
     <Container>
-      <div className="profile-pic"></div>
+      <div className="profile-pic">
+        <img src={user.profilePic || defaultPP} alt="Your profile picture" />
+      </div>
       <div className="username-container">
         <div className="username">
           <span className="displayName">{user.displayName}</span>
@@ -28,6 +32,20 @@ const Container = styled.div`
   transition: all 0.3s;
   padding: 1rem;
   cursor: pointer;
+  gap: 1rem;
+
+  & > .profile-pic {
+    display: flex;
+    align-items: center;
+    max-width: 3rem;
+    overflow: hidden;
+
+    & img {
+      border-radius: 50%;
+      max-width: inherit;
+      object-fit: contain;
+    }
+  }
 
   & > .username-container {
     flex-grow: 1;
