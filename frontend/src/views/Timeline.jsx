@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import TTNLogo from '../assets/ttn-logo.png';
+import UserCard from '../components/UserCard';
 import { Button as BaseButton } from '../components/Actions';
 
 const Timeline = () => {
@@ -59,6 +60,7 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   align-items: end;
   gap: 1rem;
+  height: 100vh;
 
   & > .sidebar {
     display: flex;
@@ -66,6 +68,7 @@ const SidebarContainer = styled.div`
     gap: 1rem;
     align-items: start;
     min-width: 20rem;
+    height: inherit;
 
     color: var(--light);
 
