@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useState, useRef, useEffect } from 'react';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import { useNavigate } from 'react-router-dom';
 
 import defaultPP from '../assets/profilePic.jpg';
 
 const UserCard = ({ user }) => {
+  const signOut = useSignOut();
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const popupRef = useRef(null);
   const containerRef = useRef(null);
@@ -30,6 +35,11 @@ const UserCard = ({ user }) => {
     };
   }, [open]);
 
+  const logUserOut = () => {
+    signOut();
+    navigate('/');
+  };
+
   return (
     <>
       <Wrapper>
@@ -46,7 +56,7 @@ const UserCard = ({ user }) => {
           </div>
         </Container>
         {open && (
-          <Popup ref={popupRef}>
+          <Popup ref={popupRef} onClick={logUserOut}>
             <Icon className="logout-icon" icon="ph:door-open-bold" />
             <span>Log Out @{user.username}</span>
           </Popup>
