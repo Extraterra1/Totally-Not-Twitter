@@ -22,7 +22,7 @@ const Wrapper = styled.main`
   background-color: var(--black);
 
   display: grid;
-  grid-template-columns: 5fr 3fr 5fr;
+  grid-template-columns: 5fr 4fr 5fr;
 
   gap: 3rem;
 `;
