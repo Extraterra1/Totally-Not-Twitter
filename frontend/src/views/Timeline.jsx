@@ -12,7 +12,7 @@ const Timeline = () => {
   return (
     <>
       <Wrapper>
-        <SidebarContainer>
+        <MenuSidebar>
           <div className="sidebar">
             <Link to="/timeline">
               <div className="logo">
@@ -40,7 +40,7 @@ const Timeline = () => {
             <Button $primary>Post</Button>
             <UserCard user={auth} />
           </div>
-        </SidebarContainer>
+        </MenuSidebar>
       </Wrapper>
     </>
   );
@@ -55,7 +55,7 @@ const Wrapper = styled.main`
   grid-template-columns: 5fr 3fr 5fr;
 `;
 
-const SidebarContainer = styled.div`
+const MenuSidebar = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
