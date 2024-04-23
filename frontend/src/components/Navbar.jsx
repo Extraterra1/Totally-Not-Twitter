@@ -77,7 +77,7 @@ const Sidebar = styled.div`
 
       font-size: 2rem;
       transition: all 0.3s;
-      padding: 1rem;
+      padding: 1rem 3rem 1rem 1rem;
       border-radius: 5rem;
       cursor: pointer;
 
