@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 
 import Navbar from '../components/Navbar';
+import Feed from '../components/Feed';
+import Discover from '../components/Discover';
 
 const Timeline = () => {
   return (
     <>
       <Wrapper>
         <Navbar />
+        <Feed />
+        <Discover />
       </Wrapper>
     </>
   );
