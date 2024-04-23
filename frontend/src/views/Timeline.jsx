@@ -23,4 +23,6 @@ const Wrapper = styled.main`
 
   display: grid;
   grid-template-columns: 5fr 3fr 5fr;
+
+  gap: 3rem;
 `;

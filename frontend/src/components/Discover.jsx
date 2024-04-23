@@ -11,5 +11,6 @@ const Discover = () => {
 export default Discover;
 
 const Wrapper = styled.div`
-  border: 1px solid var(--gray);
+  border-left: 1px solid var(--gray-dark);
+  border-right: 1px solid var(--gray-dark);
 `;
