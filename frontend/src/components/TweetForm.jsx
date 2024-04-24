@@ -47,14 +47,14 @@ const FormGroup = styled.div`
   & input {
     background-color: transparent;
     padding: 1rem 0.5rem;
-    border: 1px solid var(--dark);
-    border-radius: 0.25rem;
+
     color: var(--light);
     font-weight: 400;
     font-size: 2rem;
 
     position: relative;
     outline: none;
+    border: none;
   }
 `;
 
