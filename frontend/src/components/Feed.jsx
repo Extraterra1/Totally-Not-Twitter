@@ -6,54 +6,6 @@ const Feed = () => {
       <Wrapper>
         <h1>HEYYYYYYYYY</h1>
         <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
       </Wrapper>
     </>
   );
