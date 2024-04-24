@@ -30,13 +30,18 @@ export default TweetForm;
 
 const Wrapper = styled.div`
   border-bottom: 1px solid var(--gray-dark);
+
+  & > .register-form {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
 
-  margin-bottom: 3rem;
+  /* margin-bottom: 3rem; */
   letter-spacing: 1px;
   border-radius: 0.25rem;
   position: relative;
@@ -44,13 +49,15 @@ const FormGroup = styled.div`
   & label {
   }
 
-  & input {
+  & textarea {
     background-color: transparent;
     padding: 1rem 0.5rem;
+    resize: none;
+    font-family: 'Chirp';
 
     color: var(--light);
     font-weight: 400;
-    font-size: 2rem;
+    font-size: 1.7rem;
 
     position: relative;
     outline: none;
@@ -64,9 +71,8 @@ const Input = ({ label, ...props }) => {
   return (
     <>
       <FormGroup>
-        <label htmlFor={props.id || props.name}>{label}</label>
-        <input className={field.value ? 'has-text' : null} {...field} {...props} />
-        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
+        <textarea className={field.value ? 'has-text' : null} {...field} {...props} resi />
+        {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
       </FormGroup>
     </>
   );
@@ -82,6 +88,6 @@ const ErrorMessage = styled.span`
 `;
 
 const SubmitButton = styled(ActualButton)`
-  margin: 4rem 0;
-  padding: 1.5rem 5rem;
+  padding: 1rem 2rem;
+  /* max-width: 20rem; */
 `;
