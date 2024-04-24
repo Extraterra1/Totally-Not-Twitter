@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
+import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
 
 const TweetForm = () => {
+  const auth = useAuthUser();
   return (
     <Wrapper>
       <Formik
@@ -18,8 +21,15 @@ const TweetForm = () => {
         onSubmit={() => console.log('xd')}
       >
         <Form className="register-form">
-          <Input label="Tweet" name="tweet" type="text" placeholder="What is happening?!" />
-          <SubmitButton type="submit">Post</SubmitButton>
+          <div className="tweet-field">
+            <div className="profile-pic">
+              <img src={auth.profilePic || defaultPP} alt="Profile Picture" />
+            </div>
+            <Input label="Tweet" name="tweet" type="text" placeholder="What is happening?!" />
+          </div>
+          <div className="buttons">
+            <SubmitButton type="submit">Post</SubmitButton>
+          </div>
         </Form>
       </Formik>
     </Wrapper>
@@ -34,6 +44,25 @@ const Wrapper = styled.div`
   & > .register-form {
     display: flex;
     flex-direction: column;
+
+    & > .tweet-field {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      gap: 2rem;
+      & > .profile-pic {
+        display: flex;
+        align-items: center;
+        max-width: 3rem;
+        overflow: hidden;
+
+        & img {
+          border-radius: 50%;
+          max-width: inherit;
+          object-fit: contain;
+        }
+      }
+    }
   }
 `;
 
@@ -41,7 +70,6 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* margin-bottom: 3rem; */
   letter-spacing: 1px;
   border-radius: 0.25rem;
   position: relative;
