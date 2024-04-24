@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { useRef } from 'react';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
@@ -70,6 +71,8 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: column;
 
+  flex-grow: 1;
+
   letter-spacing: 1px;
   border-radius: 0.25rem;
   position: relative;
@@ -90,16 +93,28 @@ const FormGroup = styled.div`
     position: relative;
     outline: none;
     border: none;
+
+    overflow: auto;
   }
 `;
 
 const Input = ({ label, ...props }) => {
   const [field, meta] = useField(props);
+  const textareaRef = useRef(null);
+
+  const handleChange = (e) => {
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    textareaRef.current.addEventListener('input', (event) => {
+      event.target.style.height = 'auto';
+      event.target.style.height = `${event.target.scrollHeight}px`;
+    });
+    field.onChange(e);
+  };
 
   return (
     <>
       <FormGroup>
-        <textarea className={field.value ? 'has-text' : null} {...field} {...props} resi />
+        <textarea ref={textareaRef} {...field} {...props} onChange={handleChange} />
         {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
       </FormGroup>
     </>
