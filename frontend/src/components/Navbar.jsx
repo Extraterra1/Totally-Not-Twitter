@@ -9,42 +9,56 @@ import { Button as BaseButton } from '../components/Actions';
 
 const Navbar = () => {
   const auth = useAuthUser();
+
   return (
-    <Sidebar>
-      <div className="sidebar">
-        <Link to="/timeline">
-          <div className="logo">
-            <img src={TTNLogo} alt="TTN Logo" />
+    <>
+      <Wrapper>
+        <Sidebar>
+          <div className="sidebar">
+            <Link to="/timeline">
+              <div className="logo">
+                <img src={TTNLogo} alt="TTN Logo" />
+              </div>
+            </Link>
+            <Link to="/timeline">
+              <div className="item">
+                <Icon icon="ph-house-fill" />
+                <span>Home</span>
+              </div>
+            </Link>
+            <Link to="/explore">
+              <div className="item">
+                <Icon icon="ph:magnifying-glass-bold" />
+                <span>Explore</span>
+              </div>
+            </Link>
+            <Link to="/profile">
+              <div className="item">
+                <Icon icon="ph:user-fill" />
+                <span>Profile</span>
+              </div>
+            </Link>
+            <Button $primary>Post</Button>
+            <UserCard user={auth} />
           </div>
-        </Link>
-        <Link to="/timeline">
-          <div className="item">
-            <Icon icon="ph-house-fill" />
-            <span>Home</span>
-          </div>
-        </Link>
-        <Link to="/explore">
-          <div className="item">
-            <Icon icon="ph:magnifying-glass-bold" />
-            <span>Explore</span>
-          </div>
-        </Link>
-        <Link to="/profile">
-          <div className="item">
-            <Icon icon="ph:user-fill" />
-            <span>Profile</span>
-          </div>
-        </Link>
-        <Button $primary>Post</Button>
-        <UserCard user={auth} />
-      </div>
-    </Sidebar>
+        </Sidebar>
+      </Wrapper>
+    </>
   );
 };
 
 export default Navbar;
 
+const Wrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
 const Sidebar = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: end;
