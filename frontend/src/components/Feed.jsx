@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
+import TweetForm from './TweetForm';
+
 const Feed = () => {
   return (
     <>
       <Wrapper>
-        <h1>HEYYYYYYYYY</h1>
-        <h1>HEYYYYYYYYY</h1>
+        <TweetForm />
       </Wrapper>
     </>
   );
