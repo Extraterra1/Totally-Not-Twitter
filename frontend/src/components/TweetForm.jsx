@@ -6,6 +6,8 @@ import { useRef, useEffect } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import toast from 'react-hot-toast';
+import useAxios from 'axios-hooks';
+import { BeatLoader } from 'react-spinners';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
@@ -14,11 +16,20 @@ const TweetForm = () => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
 
+  const [{ loading }, sendTweet] = useAxios(
+    {
+      url: `${import.meta.env.VITE_API_URL}/tweets`,
+      method: 'POST'
+    },
+    { manual: true }
+  );
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const formData = new FormData();
-      if (values.file) formData.append('file', values.file[0]);
-      formData.append('tweet', values.tweet);
+      if (values.file) formData.append('img', values.file[0]);
+      formData.append('content', values.tweet);
+      formData.append('tweetType', 'tweet');
 
       const res = await sendTweet({
         data: formData,
@@ -70,7 +81,7 @@ const TweetForm = () => {
               <FileInput name="file" id="file" />
             </div>
             <SubmitButton $primary type="submit">
-              Post
+              {loading ? <BeatLoader loading={loading} size={5} color="var(--light)" /> : 'Post'}
             </SubmitButton>
           </div>
         </Form>
