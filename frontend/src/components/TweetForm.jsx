@@ -173,6 +173,10 @@ const FormGroup = styled.div`
   border-radius: 0.25rem;
   position: relative;
 
+  &:has(textarea:focus) {
+    border-bottom: 1px solid var(--gray-dark);
+  }
+
   & label {
     cursor: pointer;
   }
