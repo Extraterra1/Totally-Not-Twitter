@@ -31,7 +31,7 @@ const TweetForm = () => {
           </div>
           <div className="buttons">
             <div>
-              <Icon className="image-icon" icon="ph:image-square" />
+              <FileInput name="file" id="file" />
             </div>
             <SubmitButton $primary type="submit">
               Post
@@ -111,6 +111,7 @@ const FormGroup = styled.div`
   position: relative;
 
   & label {
+    cursor: pointer;
   }
 
   & textarea {
@@ -129,7 +130,27 @@ const FormGroup = styled.div`
 
     overflow: auto;
   }
+
+  & input[type='file'] {
+    display: none;
+  }
 `;
+
+const FileInput = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      <FormGroup>
+        <label htmlFor={props.id || props.name}>
+          <Icon className="image-icon" icon="ph:image-square" />
+        </label>
+        <input type="file" {...field} {...props} />
+        {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
+      </FormGroup>
+    </>
+  );
+};
 
 const Input = ({ label, ...props }) => {
   const [field, meta] = useField(props);
