@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import toast from 'react-hot-toast';
@@ -175,6 +175,10 @@ const FormGroup = styled.div`
 const FileInput = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
+  useEffect(() => {
+    if (meta.error) toast.error(meta.error);
+  }, [meta.error]);
+
   return (
     <>
       <FormGroup>
@@ -193,7 +197,6 @@ const FileInput = ({ label, ...props }) => {
             }
           }}
         />
-        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
       </FormGroup>
     </>
   );
