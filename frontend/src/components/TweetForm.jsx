@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import toast from 'react-hot-toast';
@@ -15,6 +15,15 @@ import { ActualButton } from './Register';
 const TweetForm = () => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const [isFinished, setIsFinished] = useState(false);
+
+  const delayedFinish = () => {
+    setIsFinished(true);
+
+    setTimeout(() => {
+      setIsFinished(false);
+    }, 1000);
+  };
 
   const [{ loading }, sendTweet] = useAxios(
     {
@@ -37,6 +46,7 @@ const TweetForm = () => {
       });
       setSubmitting(false);
       resetForm();
+      delayedFinish();
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +59,7 @@ const TweetForm = () => {
           tweet: ''
         }}
         validationSchema={Yup.object({
-          tweet: Yup.string().required('Required').max(144, 'Must be less than 144 chars'),
+          tweet: Yup.string().required('Tweet cannot be empty').max(144, 'Must be less than 144 chars'),
           file: Yup.mixed()
             .test('fileType', 'Bad Image Format', (value) => {
               if (value && value[0]) {
@@ -81,7 +91,13 @@ const TweetForm = () => {
               <FileInput name="file" id="file" />
             </div>
             <SubmitButton $primary type="submit">
-              {loading ? <BeatLoader loading={loading} size={5} color="var(--light)" /> : 'Post'}
+              {loading ? (
+                <BeatLoader loading={loading} size={5} color="var(--light)" />
+              ) : isFinished ? (
+                <Icon className="done-icon" icon="ph:check-bold" />
+              ) : (
+                'Post'
+              )}
             </SubmitButton>
           </div>
         </Form>
@@ -226,11 +242,14 @@ const Input = ({ label, ...props }) => {
     field.onChange(e);
   };
 
+  useEffect(() => {
+    if (meta.touched && meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
+  }, [meta]);
+
   return (
     <>
       <FormGroup>
         <textarea ref={textareaRef} {...field} {...props} onChange={handleChange} />
-        {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
       </FormGroup>
     </>
   );
@@ -247,5 +266,10 @@ const ErrorMessage = styled.span`
 
 const SubmitButton = styled(ActualButton)`
   padding: 1rem 2rem;
+  width: 20%;
+
+  & .done-icon {
+    font-size: 2rem;
+  }
   /* max-width: 20rem; */
 `;
