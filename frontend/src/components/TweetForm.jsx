@@ -3,6 +3,7 @@ import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useRef } from 'react';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
@@ -29,7 +30,12 @@ const TweetForm = () => {
             <Input label="Tweet" name="tweet" type="text" placeholder="What is happening?!" />
           </div>
           <div className="buttons">
-            <SubmitButton type="submit">Post</SubmitButton>
+            <div>
+              <Icon className="image-icon" icon="ph:image-square" />
+            </div>
+            <SubmitButton $primary type="submit">
+              Post
+            </SubmitButton>
           </div>
         </Form>
       </Formik>
@@ -62,6 +68,33 @@ const Wrapper = styled.div`
           max-width: inherit;
           object-fit: contain;
         }
+      }
+    }
+
+    & > .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+
+      & > div {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        transition: all 0.3s;
+        text-align: center;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+          background-color: rgba(29, 155, 240, 0.5);
+        }
+      }
+
+      & .image-icon {
+        font-size: 2rem;
+        color: var(--twitter-blue);
       }
     }
   }
