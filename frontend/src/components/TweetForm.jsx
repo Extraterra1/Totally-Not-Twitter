@@ -40,14 +40,14 @@ const TweetForm = () => {
         validationSchema={Yup.object({
           tweet: Yup.string().required('Required').max(144, 'Must be less than 144 chars'),
           file: Yup.mixed()
-            .test('fileType', 'Bad Format', (value) => {
+            .test('fileType', 'Bad Image Format', (value) => {
               if (value && value[0]) {
                 return value[0].type === 'image/jpeg' || value[0].type === 'image/jpg' || value[0].type === 'image/png';
               } else {
                 return true;
               }
             })
-            .test('fileSize', 'Too Big', (value) => {
+            .test('fileSize', 'Image Too Big', (value) => {
               if (value && value[0]) {
                 // 800 kb
                 return value[0].size < 800 * 1000;
@@ -176,8 +176,8 @@ const FileInput = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   useEffect(() => {
-    if (meta.error) toast.error(meta.error);
-  }, [meta.error]);
+    if (meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
+  }, [meta]);
 
   return (
     <>

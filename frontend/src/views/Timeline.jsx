@@ -25,4 +25,11 @@ const Wrapper = styled.main`
   grid-template-columns: 5fr 4fr 5fr;
 
   gap: 3rem;
+
+  & .error-toast {
+    background-color: var(--danger-dark);
+    border-radius: 2rem;
+    color: var(--light);
+    font-size: 1.6rem;
+  }
 `;
