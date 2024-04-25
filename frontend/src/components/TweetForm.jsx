@@ -5,6 +5,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useRef } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import toast from 'react-hot-toast';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
@@ -172,7 +173,7 @@ const FormGroup = styled.div`
 `;
 
 const FileInput = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
+  const [field, meta, helpers] = useField(props);
 
   return (
     <>
@@ -180,8 +181,19 @@ const FileInput = ({ label, ...props }) => {
         <label htmlFor={props.id || props.name}>
           <Icon className="image-icon" icon="ph:image-square" />
         </label>
-        <input type="file" accept="image/png, image/jpeg" {...field} {...props} />
-        {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          {...field}
+          {...props}
+          value={undefined}
+          onChange={(event) => {
+            if (event.currentTarget.files) {
+              helpers.setValue(event.currentTarget.files);
+            }
+          }}
+        />
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
       </FormGroup>
     </>
   );
