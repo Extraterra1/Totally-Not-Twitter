@@ -37,7 +37,23 @@ const TweetForm = () => {
           tweet: ''
         }}
         validationSchema={Yup.object({
-          tweet: Yup.string().required('Required').max(144, 'Must be less than 144 chars')
+          tweet: Yup.string().required('Required').max(144, 'Must be less than 144 chars'),
+          file: Yup.mixed()
+            .test('fileType', 'Bad Format', (value) => {
+              if (value && value[0]) {
+                return value[0].type === 'image/jpeg' || value[0].type === 'image/jpg' || value[0].type === 'image/png';
+              } else {
+                return true;
+              }
+            })
+            .test('fileSize', 'Too Big', (value) => {
+              if (value && value[0]) {
+                // 800 kb
+                return value[0].size < 800 * 1000;
+              } else {
+                return true;
+              }
+            })
         })}
         onSubmit={handleSubmit}
       >
