@@ -145,7 +145,7 @@ const FileInput = ({ label, ...props }) => {
         <label htmlFor={props.id || props.name}>
           <Icon className="image-icon" icon="ph:image-square" />
         </label>
-        <input type="file" {...field} {...props} />
+        <input type="file" accept="image/png, image/jpeg" {...field} {...props} />
         {/* {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null} */}
       </FormGroup>
     </>
