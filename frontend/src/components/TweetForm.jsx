@@ -4,23 +4,42 @@ import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useRef } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
 
 const TweetForm = () => {
   const auth = useAuthUser();
+  const authHeader = useAuthHeader();
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const formData = new FormData();
+      if (values.file) formData.append('file', values.file[0]);
+      formData.append('tweet', values.tweet);
+
+      const res = await sendTweet({
+        data: formData,
+        headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`, Authorization: authHeader, Accept: 'application/json' }
+      });
+      setSubmitting(false);
+      resetForm();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Wrapper>
       <Formik
         initialValues={{
-          tweet: '',
-          file: ''
+          tweet: ''
         }}
         validationSchema={Yup.object({
           tweet: Yup.string().required('Required').max(144, 'Must be less than 144 chars')
         })}
-        onSubmit={() => console.log('xd')}
+        onSubmit={handleSubmit}
       >
         <Form className="register-form">
           <div className="tweet-field">

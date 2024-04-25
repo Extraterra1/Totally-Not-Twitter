@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import { Toaster } from 'react-hot-toast';
 
 import TweetForm from './TweetForm';
 
 const Feed = () => {
   return (
     <>
+      <Toaster position="top center" />
       <Wrapper>
         <TweetForm />
       </Wrapper>
