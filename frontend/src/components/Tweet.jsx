@@ -11,6 +11,7 @@ const Tweet = ({ tweet }) => {
   const auth = useAuthUser();
   const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
   const [isRetweeted, setIsRetweeted] = useState(false);
+
   return (
     <>
       <Container>
@@ -42,6 +43,7 @@ const Tweet = ({ tweet }) => {
             </span>
             <span>
               <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
+              <span>{tweet.likes.length || null}</span>
             </span>
           </div>
         </div>
@@ -103,6 +105,16 @@ const Container = styled.div`
       margin-top: 1rem;
       font-size: 1.6rem;
       color: var(--gray);
+
+      & > span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        & > span {
+          font-size: 1.4rem;
+        }
+      }
 
       & .replies-icon,
       .retweet-icon,
