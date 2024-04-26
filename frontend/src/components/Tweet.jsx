@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import defaultPP from '../assets/profilePic.jpg';
 
 const Tweet = ({ tweet }) => {
@@ -12,7 +13,14 @@ const Tweet = ({ tweet }) => {
         </div>
         <div className="content">
           <div className="username">
-            <span>{tweet.author.displayName}</span>·<span>@{tweet.author.username}</span>
+            <Link to={`/${tweet.author.username}`}>
+              <div>
+                <span>{tweet.author.displayName}</span>
+                <span>@{tweet.author.username}</span>
+                <span>·</span>
+                <span>{getTimeSinceTweet(tweet.createdAt)}</span>
+              </div>
+            </Link>
           </div>
           <div className="text">{tweet.content}</div>
         </div>
@@ -49,15 +57,22 @@ const Container = styled.div`
   & > .content {
     margin-left: 1rem;
     & > .username {
-      display: flex;
-      gap: 0.5rem;
+      & div {
+        display: flex;
+        gap: 0.5rem;
 
-      & > span:first-child {
-        font-weight: 700;
-      }
+        & > span:first-child {
+          font-weight: 700;
 
-      & > span:not(:first-child) {
-        color: var(--gray-dark);
+          &:hover {
+            text-decoration: underline;
+            text-underline-offset: 2px;
+          }
+        }
+
+        & > span:not(:first-child) {
+          color: var(--gray-dark);
+        }
       }
     }
   }
