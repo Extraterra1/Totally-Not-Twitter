@@ -6,6 +6,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import TweetForm from './TweetForm';
+import Tweet from './Tweet';
 
 const Feed = () => {
   const authHeader = useAuthHeader();
@@ -29,9 +30,11 @@ const Feed = () => {
       <Toaster position="top center" />
       <Wrapper>
         <TweetForm />
-        {tweets.map((e) => (
-          <h1 key={e._id}>{e.content}</h1>
-        ))}
+        <TweetsContainer>
+          {tweets.map((e) => (
+            <Tweet tweet={e} />
+          ))}
+        </TweetsContainer>
       </Wrapper>
     </>
   );
@@ -42,4 +45,9 @@ export default Feed;
 const Wrapper = styled.div`
   border-left: 1px solid var(--gray-dark);
   border-right: 1px solid var(--gray-dark);
+`;
+
+const TweetsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
