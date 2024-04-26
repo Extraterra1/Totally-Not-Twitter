@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { useState } from 'react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import defaultPP from '../assets/profilePic.jpg';
 
 const Tweet = ({ tweet }) => {
+  const auth = useAuthUser();
+  const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
   return (
     <>
       <Container>
@@ -36,7 +40,7 @@ const Tweet = ({ tweet }) => {
               <Icon className="retweet-icon" icon="bx:repost" />
             </span>
             <span>
-              <Icon className="like-icon" icon="bx:heart" />
+              <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
             </span>
           </div>
         </div>
@@ -104,6 +108,10 @@ const Container = styled.div`
       .like-icon {
         transition: all 0.3s;
         cursor: pointer;
+      }
+
+      & .like-icon.fill {
+        color: var(--like-red);
       }
 
       & .replies-icon:hover {
