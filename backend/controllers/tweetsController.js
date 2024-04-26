@@ -145,7 +145,7 @@ exports.getTimeline = [
     const offset = req.body.offset || null;
     const user = await User.findById(req.user._id).select('following');
 
-    const tweets = await Tweet.find({ author: { $in: user.following } })
+    const tweets = await Tweet.find({ author: { $in: [...user.following, user._id] } })
       .skip(offset)
       .sort({ createdAt: -1 })
       .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } })
