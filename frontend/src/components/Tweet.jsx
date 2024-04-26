@@ -27,9 +27,15 @@ const Tweet = ({ tweet }) => {
           </div>
           <div className="text">{tweet.content}</div>
           <div className="actions">
-            <Icon icon="system-uicons:speech-bubble" />
-            <Icon icon="system-uicons:retweet" />
-            <Icon icon="system-uicons:heart" />
+            <span>
+              <Icon className="replies-icon" icon="system-uicons:speech-bubble" />
+            </span>
+            <span>
+              <Icon className="retweet-icon" icon="system-uicons:retweet" />
+            </span>
+            <span>
+              <Icon className="like-icon" icon="system-uicons:heart" />
+            </span>
           </div>
         </div>
       </Container>
@@ -90,6 +96,23 @@ const Container = styled.div`
       margin-top: 1rem;
       font-size: 2rem;
       color: var(--gray);
+
+      & .replies-icon,
+      .retweet-icon,
+      .like-icon {
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+
+      & .replies-icon:hover {
+        color: var(--twitter-blue);
+      }
+      & .retweet-icon:hover {
+        color: var(--success);
+      }
+      & .like-icon:hover {
+        color: var(--like-red);
+      }
     }
   }
 `;
