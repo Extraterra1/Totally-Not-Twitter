@@ -8,9 +8,11 @@ const Tweet = ({ tweet }) => {
   return (
     <>
       <Container>
-        <div className="profile-pic">
-          <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
-        </div>
+        <Link to={`/${tweet.author.username}`}>
+          <div className="profile-pic">
+            <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
+          </div>
+        </Link>
         <div className="content">
           <div className="username">
             <Link to={`/${tweet.author.username}`}>
@@ -41,7 +43,7 @@ const Container = styled.div`
   color: var(--light);
   font-size: 1.5rem;
 
-  & > .profile-pic {
+  & .profile-pic {
     display: flex;
     align-items: start;
     max-width: 3rem;
