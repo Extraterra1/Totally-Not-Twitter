@@ -4,13 +4,18 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { useState } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
+import Modal from './Modal';
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
+import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const Tweet = ({ tweet }) => {
   const auth = useAuthUser();
   const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
   const [isRetweeted, setIsRetweeted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
 
   return (
     <>
@@ -39,7 +44,19 @@ const Tweet = ({ tweet }) => {
               </span>
             </Link>
             <span>
-              <Icon className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+              <Icon onClick={openModal} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+
+              {isOpen && (
+                <Modal isOpen={isOpen} setIsOpen={setIsOpen} style={modalStyles}>
+                  <ModalContainer>
+                    <h4>Are you sure you want to retweet that?</h4>
+                    <div className="buttons">
+                      <Button>Retweet</Button>
+                      <Button $cancel>Cancel</Button>
+                    </div>
+                  </ModalContainer>
+                </Modal>
+              )}
             </span>
             <span>
               <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
@@ -53,6 +70,48 @@ const Tweet = ({ tweet }) => {
 };
 
 export default Tweet;
+
+const Button = styled(BaseButton)`
+  background-color: ${(props) => (props.$cancel ? 'var(--danger)' : 'var(--twitter-blue)')};
+  color: var(--light);
+
+  &:hover {
+    background-color: ${(props) => (props.$cancel ? 'var(--like-red)' : 'var(--twitter-blue-hover)')};
+  }
+`;
+
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    border: 0,
+    backgroundColor: 'var(--black)',
+    padding: '0',
+    boxShadow: 'rgba(255, 255, 255, 0.2) 0px 0px 15px 0px,rgba(255, 255, 255, 0.15) 0px 0px 3px 1px'
+  },
+  overlay: {
+    backgroundColor: 'transparent'
+  }
+};
+
+const ModalContainer = styled.div`
+  padding: 3rem;
+  background-color: var(--black);
+  font-size: 2rem;
+  color: var(--light);
+  border-radius: 2rem;
+
+  & > .buttons {
+    display: flex;
+    justify-content: space-around;
+
+    margin-top: 2rem;
+  }
+`;
 
 const Container = styled.div`
   border-bottom: 1px solid var(--gray-dark);

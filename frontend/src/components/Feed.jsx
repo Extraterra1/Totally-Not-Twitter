@@ -32,7 +32,7 @@ const Feed = () => {
         <TweetForm />
         <TweetsContainer>
           {tweets.map((e) => (
-            <Tweet tweet={e} />
+            <Tweet key={e._id} tweet={e} />
           ))}
         </TweetsContainer>
       </Wrapper>
