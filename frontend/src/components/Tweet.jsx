@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import defaultPP from '../assets/profilePic.jpg';
@@ -25,6 +26,11 @@ const Tweet = ({ tweet }) => {
             </Link>
           </div>
           <div className="text">{tweet.content}</div>
+          <div className="actions">
+            <Icon icon="system-uicons:speech-bubble" />
+            <Icon icon="system-uicons:retweet" />
+            <Icon icon="system-uicons:heart" />
+          </div>
         </div>
       </Container>
     </>
@@ -73,9 +79,17 @@ const Container = styled.div`
         }
 
         & > span:not(:first-child) {
-          color: var(--gray-dark);
+          color: var(--gray);
         }
       }
+    }
+    & > .actions {
+      display: flex;
+      justify-content: space-around;
+
+      margin-top: 1rem;
+      font-size: 2rem;
+      color: var(--gray);
     }
   }
 `;
