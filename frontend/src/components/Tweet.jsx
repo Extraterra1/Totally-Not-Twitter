@@ -10,6 +10,7 @@ import defaultPP from '../assets/profilePic.jpg';
 const Tweet = ({ tweet }) => {
   const auth = useAuthUser();
   const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
+  const [isRetweeted, setIsRetweeted] = useState(false);
   return (
     <>
       <Container>
@@ -37,7 +38,7 @@ const Tweet = ({ tweet }) => {
               </span>
             </Link>
             <span>
-              <Icon className="retweet-icon" icon="bx:repost" />
+              <Icon className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
             </span>
             <span>
               <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
@@ -112,6 +113,9 @@ const Container = styled.div`
 
       & .like-icon.fill {
         color: var(--like-red);
+      }
+      & .retweet-icon.fill {
+        color: var(--success);
       }
 
       & .replies-icon:hover {
