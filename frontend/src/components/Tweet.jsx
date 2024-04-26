@@ -27,14 +27,16 @@ const Tweet = ({ tweet }) => {
           </div>
           <div className="text">{tweet.content}</div>
           <div className="actions">
+            <Link to={`/tweets/${tweet._id}`}>
+              <span>
+                <Icon className="replies-icon" icon="bx:message-rounded" />
+              </span>
+            </Link>
             <span>
-              <Icon className="replies-icon" icon="system-uicons:speech-bubble" />
+              <Icon className="retweet-icon" icon="bx:repost" />
             </span>
             <span>
-              <Icon className="retweet-icon" icon="system-uicons:retweet" />
-            </span>
-            <span>
-              <Icon className="like-icon" icon="system-uicons:heart" />
+              <Icon className="like-icon" icon="bx:heart" />
             </span>
           </div>
         </div>
@@ -94,7 +96,7 @@ const Container = styled.div`
       justify-content: space-around;
 
       margin-top: 1rem;
-      font-size: 2rem;
+      font-size: 1.6rem;
       color: var(--gray);
 
       & .replies-icon,
