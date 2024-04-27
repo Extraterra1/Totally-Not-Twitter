@@ -16,6 +16,7 @@ const Tweet = ({ tweet }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   return (
     <>
@@ -52,7 +53,9 @@ const Tweet = ({ tweet }) => {
                     <h4>Are you sure you want to retweet that?</h4>
                     <div className="buttons">
                       <Button>Retweet</Button>
-                      <Button $cancel>Cancel</Button>
+                      <Button $cancel onClick={closeModal}>
+                        Cancel
+                      </Button>
                     </div>
                   </ModalContainer>
                 </Modal>
