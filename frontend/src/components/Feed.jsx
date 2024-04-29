@@ -4,6 +4,7 @@ import useAxios from 'axios-hooks';
 import { useState, useEffect } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { ClipLoader } from 'react-spinners';
 
 import TweetForm from './TweetForm';
 import Tweet from './Tweet';
@@ -34,6 +35,7 @@ const Feed = () => {
           {tweets.map((e) => (
             <Tweet key={e._id} tweet={e} />
           ))}
+          <ClipLoader loading={loading} size={35} color="var(--twitter-blue)" cssOverride={{ margin: '2rem auto' }} />
         </TweetsContainer>
       </Wrapper>
     </>
