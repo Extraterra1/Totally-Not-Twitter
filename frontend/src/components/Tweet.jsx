@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useAxios from 'axios-hooks';
 
 import Modal from './Modal';
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
@@ -11,6 +13,8 @@ import defaultPP from '../assets/profilePic.jpg';
 
 const Tweet = ({ tweet }) => {
   const auth = useAuthUser();
+  const authHeader = useAuthHeader();
+
   const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
   const [isRetweeted, setIsRetweeted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -19,8 +23,20 @@ const Tweet = ({ tweet }) => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const [, executeLike] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
+
   const handleRetweet = () => {
     closeModal();
+  };
+
+  const handleLike = async () => {
+    const url = import.meta.env.VITE_API_URL + `/tweets/${tweet._id}/like`;
+    const res = await executeLike({ url });
+
+    setLikes(res.data.updatedTweet.likes.length);
+    setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
+
+    console.log(likes);
   };
 
   useEffect(() => {
@@ -71,7 +87,7 @@ const Tweet = ({ tweet }) => {
               )}
             </span>
             <span>
-              <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
+              <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} onClick={handleLike} />
               <span>{likes || null}</span>
             </span>
           </div>
