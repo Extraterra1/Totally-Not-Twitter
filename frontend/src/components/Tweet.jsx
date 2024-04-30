@@ -35,13 +35,11 @@ const Tweet = ({ tweet }) => {
 
     setLikes(res.data.updatedTweet.likes.length);
     setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
-
-    console.log(likes);
   };
 
   useEffect(() => {
     setLikes(tweet.likes.length);
-  });
+  }, []);
 
   return (
     <>
