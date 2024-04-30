@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import Modal from './Modal';
@@ -14,6 +14,7 @@ const Tweet = ({ tweet }) => {
   const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
   const [isRetweeted, setIsRetweeted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [likes, setLikes] = useState(null);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
@@ -21,6 +22,10 @@ const Tweet = ({ tweet }) => {
   const handleRetweet = () => {
     closeModal();
   };
+
+  useEffect(() => {
+    setLikes(tweet.likes.length);
+  });
 
   return (
     <>
@@ -67,7 +72,7 @@ const Tweet = ({ tweet }) => {
             </span>
             <span>
               <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
-              <span>{tweet.likes.length || null}</span>
+              <span>{likes || null}</span>
             </span>
           </div>
         </div>
