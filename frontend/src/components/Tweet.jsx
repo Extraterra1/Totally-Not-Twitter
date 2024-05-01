@@ -35,6 +35,8 @@ const Tweet = ({ tweet }) => {
 
     setLikes(res.data.updatedTweet.likes.length);
     setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
+
+    // TODO: LIKE COUNT POSITIONING
   };
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const Tweet = ({ tweet }) => {
             </span>
             <span>
               <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} onClick={handleLike} />
-              <span>{likes || null}</span>
+              <span className="like-count">{likes || null}</span>
             </span>
           </div>
         </div>
@@ -199,6 +201,10 @@ const Container = styled.div`
         & > span {
           font-size: 1.4rem;
         }
+      }
+
+      & .like-count {
+        min-width: 3ch;
       }
 
       & .replies-icon,
