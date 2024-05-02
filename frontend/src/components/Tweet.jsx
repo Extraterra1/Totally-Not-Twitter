@@ -21,7 +21,7 @@ const Tweet = ({ tweet }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState(null);
 
-  const openModal = () => setIsOpen(true);
+  const openModal = () => (isRetweeted ? toast.error('You have already retweeted that') : setIsOpen(true));
   const closeModal = () => setIsOpen(false);
 
   const [, executeLike] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
@@ -38,8 +38,6 @@ const Tweet = ({ tweet }) => {
     }
 
     const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: tweet._id } });
-
-    console.log('xd');
 
     setIsRetweeted(true);
 
