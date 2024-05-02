@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAxios from 'axios-hooks';
+import toast from 'react-hot-toast';
 
 import Modal from './Modal';
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
@@ -30,7 +31,11 @@ const Tweet = ({ tweet }) => {
   );
 
   const handleRetweet = async () => {
-    if (isRetweeted) return;
+    if (isRetweeted) {
+      toast.error('You have already retweeted that');
+      closeModal();
+      return;
+    }
 
     const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: tweet._id } });
 
