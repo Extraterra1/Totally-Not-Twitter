@@ -2,13 +2,16 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { useState } from 'react';
 
 import TTNLogo from '../assets/ttn-logo.png';
 import UserCard from '../components/UserCard';
 import { Button as BaseButton } from '../components/Actions';
+import PopUpTweetForm from './PopUpTweetForm';
 
 const Navbar = () => {
   const auth = useAuthUser();
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -43,6 +46,7 @@ const Navbar = () => {
           </div>
         </Sidebar>
       </Wrapper>
+      <PopUpTweetForm setIsOpen={setIsOpen} />
     </>
   );
 };
