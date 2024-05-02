@@ -13,6 +13,8 @@ const Navbar = () => {
   const auth = useAuthUser();
   const [isOpen, setIsOpen] = useState(false);
 
+  const openModal = () => setIsOpen(true);
+
   return (
     <>
       <Wrapper>
@@ -41,12 +43,14 @@ const Navbar = () => {
                 <span>Profile</span>
               </div>
             </Link>
-            <Button $primary>Post</Button>
+            <Button onClick={openModal} $primary>
+              Post
+            </Button>
             <UserCard user={auth} />
           </div>
         </Sidebar>
       </Wrapper>
-      <PopUpTweetForm setIsOpen={setIsOpen} />
+      <PopUpTweetForm setIsOpen={setIsOpen} isOpen={isOpen} />
     </>
   );
 };
