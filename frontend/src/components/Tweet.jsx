@@ -24,8 +24,20 @@ const Tweet = ({ tweet }) => {
   const closeModal = () => setIsOpen(false);
 
   const [, executeLike] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
+  const [, executeRetweet] = useAxios(
+    { url: `${import.meta.env.VITE_API_URL}/tweets`, method: 'POST', headers: { Authorization: authHeader } },
+    { manual: true }
+  );
 
-  const handleRetweet = () => {
+  const handleRetweet = async () => {
+    if (isRetweeted) return;
+
+    const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: tweet._id } });
+
+    console.log('xd');
+
+    setIsRetweeted(true);
+
     closeModal();
   };
 
@@ -35,8 +47,6 @@ const Tweet = ({ tweet }) => {
 
     setLikes(res.data.updatedTweet.likes.length);
     setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
-
-    // TODO: LIKE COUNT POSITIONING
   };
 
   useEffect(() => {
