@@ -3,12 +3,36 @@ import styled from 'styled-components';
 import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useAxios from 'axios-hooks';
+import { useState } from 'react';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Input, FileInput, SubmitButton } from './TweetForm';
 
 const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
   const auth = useAuthUser();
+  const authHeader = useAuthHeader();
+
+  const [isFinished, setIsFinished] = useState(false);
+
+  const delayedFinish = () => {
+    setIsFinished(true);
+
+    setTimeout(() => {
+      setIsFinished(false);
+    }, 1000);
+  };
+
+  const [{ loading }, sendTweet] = useAxios(
+    {
+      url: `${import.meta.env.VITE_API_URL}/tweets`,
+      method: 'POST',
+      headers: { Authorization: authHeader }
+    },
+    { manual: true }
+  );
+
   return (
     <Modal setIsOpen={setIsOpen} isOpen={isOpen}>
       <Formik
