@@ -7,13 +7,16 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAxios from 'axios-hooks';
 import { useState } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { BeatLoader } from 'react-spinners';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Input, FileInput, SubmitButton } from './TweetForm';
+import { useTimeline } from '../views/Timeline';
 
-const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
+const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const { setTweets } = useTimeline();
 
   const [isFinished, setIsFinished] = useState(false);
 
@@ -35,6 +38,28 @@ const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
     },
     { manual: true }
   );
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const tweetType = replyTo ? 'replyTo' : 'tweet';
+      const formData = new FormData();
+      if (values.file) formData.append('img', values.file[0]);
+      formData.append('content', values.tweet);
+      formData.append('tweetType', tweetType);
+
+      const res = await sendTweet({
+        data: formData,
+        headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`, Authorization: authHeader, Accept: 'application/json' }
+      });
+      setSubmitting(false);
+      resetForm();
+      delayedFinish();
+      setTweets((tweets) => [res.data.tweet, ...tweets]);
+      closeModal();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
@@ -63,7 +88,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
                 }
               })
           })}
-          onSubmit={() => console.log('xd')}
+          onSubmit={handleSubmit}
         >
           <Form className="tweet-form">
             <div className="tweet-field">
