@@ -39,7 +39,9 @@ const Timeline = () => {
         <Wrapper>
           <Toaster
             position="top center"
-            toastOptions={{ success: { style: { background: 'var(--twitter-blue)', color: 'var(--light)', fontSize: '1.5rem', fontWeight: 400 } } }}
+            toastOptions={{
+              success: { style: { background: 'var(--twitter-blue)', color: 'var(--light)', fontSize: '1.5rem', fontWeight: 400 }, position: 'bottom-center' }
+            }}
           />
           <Navbar />
           <Feed />
