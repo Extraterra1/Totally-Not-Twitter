@@ -11,11 +11,13 @@ import { BeatLoader } from 'react-spinners';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
+import { useTimeline } from '../views/Timeline';
 
 const TweetForm = () => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const [isFinished, setIsFinished] = useState(false);
+  const { setTweets } = useTimeline();
 
   const delayedFinish = () => {
     setIsFinished(true);
@@ -47,6 +49,7 @@ const TweetForm = () => {
       setSubmitting(false);
       resetForm();
       delayedFinish();
+      setTweets((tweets) => [res.data.tweet, ...tweets]);
     } catch (err) {
       console.log(err);
     }
