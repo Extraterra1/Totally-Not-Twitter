@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import { Toaster } from 'react-hot-toast';
+import useAxios from 'axios-hooks';
+import { useState, useEffect } from 'react';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import Navbar from '../components/Navbar';
 import Feed from '../components/Feed';
@@ -8,6 +13,7 @@ const Timeline = () => {
   return (
     <>
       <Wrapper>
+        <Toaster position="top center" />
         <Navbar />
         <Feed />
         <Discover />

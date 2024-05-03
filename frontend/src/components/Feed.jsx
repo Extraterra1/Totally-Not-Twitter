@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Toaster } from 'react-hot-toast';
 import useAxios from 'axios-hooks';
 import { useState, useEffect } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
@@ -28,7 +27,6 @@ const Feed = () => {
 
   return (
     <>
-      <Toaster position="top center" />
       <Wrapper>
         <TweetForm />
         <TweetsContainer>
