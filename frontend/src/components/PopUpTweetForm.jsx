@@ -34,7 +34,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
   );
 
   return (
-    <Modal setIsOpen={setIsOpen} isOpen={isOpen}>
+    <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
       <Wrapper>
         <Formik
           initialValues={{
@@ -153,3 +153,20 @@ const Wrapper = styled.div`
     }
   }
 `;
+
+const modalStyles = {
+  content: {
+    top: '15%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    border: 0,
+    backgroundColor: 'transparent',
+    padding: '0'
+  },
+  overlay: {
+    backgroundColor: 'var(--modal-overlay-bg)'
+  }
+};
