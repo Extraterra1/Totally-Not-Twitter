@@ -2,10 +2,13 @@ import Modal from './Modal';
 import styled from 'styled-components';
 import { Form, useField, Formik } from 'formik';
 import * as Yup from 'yup';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import defaultPP from '../assets/profilePic.jpg';
+import { Input, FileInput, SubmitButton } from './TweetForm';
 
 const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
+  const auth = useAuthUser();
   return (
     <Modal setIsOpen={setIsOpen} isOpen={isOpen}>
       <Formik
@@ -61,99 +64,3 @@ const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
 };
 
 export default PopUpTweetForm;
-
-const FileInput = ({ label, ...props }) => {
-  const [field, meta, helpers] = useField(props);
-
-  useEffect(() => {
-    if (meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
-  }, [meta]);
-
-  return (
-    <>
-      <FormGroup>
-        <label htmlFor={props.id || props.name}>
-          <Icon className="image-icon" icon="ph:image-square" />
-        </label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          {...field}
-          {...props}
-          value={undefined}
-          onChange={(event) => {
-            if (event.currentTarget.files) {
-              helpers.setValue(event.currentTarget.files);
-            }
-          }}
-        />
-      </FormGroup>
-    </>
-  );
-};
-
-const Input = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  const textareaRef = useRef(null);
-
-  const handleChange = (e) => {
-    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    textareaRef.current.addEventListener('input', (event) => {
-      event.target.style.height = 'auto';
-      event.target.style.height = `${event.target.scrollHeight}px`;
-    });
-    field.onChange(e);
-  };
-
-  useEffect(() => {
-    if (meta.touched && meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
-  }, [meta]);
-
-  return (
-    <>
-      <FormGroup>
-        <textarea ref={textareaRef} {...field} {...props} onChange={handleChange} />
-      </FormGroup>
-    </>
-  );
-};
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  flex-grow: 1;
-
-  letter-spacing: 1px;
-  border-radius: 0.25rem;
-  position: relative;
-
-  &:has(textarea:focus) {
-    border-bottom: 1px solid var(--gray-dark);
-  }
-
-  & label {
-    cursor: pointer;
-  }
-
-  & textarea {
-    background-color: transparent;
-    padding: 1rem 0.5rem;
-    resize: none;
-    font-family: 'Chirp';
-
-    color: var(--light);
-    font-weight: 400;
-    font-size: 1.7rem;
-
-    position: relative;
-    outline: none;
-    border: none;
-
-    overflow: auto;
-  }
-
-  & input[type='file'] {
-    display: none;
-  }
-`;

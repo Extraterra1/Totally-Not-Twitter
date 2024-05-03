@@ -203,7 +203,7 @@ const FormGroup = styled.div`
   }
 `;
 
-const FileInput = ({ label, ...props }) => {
+export const FileInput = ({ label, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   useEffect(() => {
@@ -233,7 +233,7 @@ const FileInput = ({ label, ...props }) => {
   );
 };
 
-const Input = ({ label, ...props }) => {
+export const Input = ({ label, ...props }) => {
   const [field, meta] = useField(props);
   const textareaRef = useRef(null);
 
@@ -268,7 +268,7 @@ const ErrorMessage = styled.span`
   letter-spacing: 0.5px;
 `;
 
-const SubmitButton = styled(ActualButton)`
+export const SubmitButton = styled(ActualButton)`
   padding: 1rem 2rem;
   width: 20%;
 
