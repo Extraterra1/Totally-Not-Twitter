@@ -6,6 +6,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAxios from 'axios-hooks';
 import { useState } from 'react';
+import { Icon } from '@iconify/react/dist/iconify.js';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Input, FileInput, SubmitButton } from './TweetForm';
@@ -15,6 +16,8 @@ const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
   const authHeader = useAuthHeader();
 
   const [isFinished, setIsFinished] = useState(false);
+
+  const closeModal = () => setIsOpen(false);
 
   const delayedFinish = () => {
     setIsFinished(true);
@@ -36,6 +39,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen }) => {
   return (
     <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
       <Wrapper>
+        <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <Formik
           initialValues={{
             tweet: ''
@@ -95,8 +99,23 @@ const Wrapper = styled.div`
   background-color: var(--black);
   min-width: 30vw;
   border-radius: 1.5rem;
+  padding: 1rem;
 
   position: relative;
+
+  & > .close-icon {
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--gray-light);
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+
+    &:hover {
+      color: var(--gray-dark);
+      transition: all 0.1s;
+    }
+  }
 
   & div:has(textarea:focus) {
     border-bottom: none;
