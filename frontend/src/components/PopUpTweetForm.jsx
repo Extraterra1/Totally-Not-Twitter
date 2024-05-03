@@ -112,7 +112,7 @@ const Wrapper = styled.div`
     left: 0.75rem;
 
     &:hover {
-      color: var(--gray-dark);
+      color: var(--gray);
       transition: all 0.1s;
     }
   }
