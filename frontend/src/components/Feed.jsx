@@ -7,23 +7,10 @@ import { ClipLoader } from 'react-spinners';
 
 import TweetForm from './TweetForm';
 import Tweet from './Tweet';
+import { useTimeline } from '../views/Timeline';
 
 const Feed = () => {
-  const authHeader = useAuthHeader();
-  const auth = useAuthUser();
-
-  const [offset, setOffset] = useState(0);
-  const [tweets, setTweets] = useState([]);
-  const [{ loading, data }, refreshTweets] = useAxios({
-    url: import.meta.env.VITE_API_URL + `/users/${auth._id}/timeline`,
-    method: 'GET',
-    data: { offset },
-    headers: { Authorization: authHeader }
-  });
-
-  useEffect(() => {
-    if (data?.tweets) setTweets(data?.tweets);
-  }, [data]);
+  const { tweets, loading } = useTimeline();
 
   return (
     <>

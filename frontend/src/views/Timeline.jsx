@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Toaster } from 'react-hot-toast';
 import useAxios from 'axios-hooks';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
@@ -9,15 +9,40 @@ import Navbar from '../components/Navbar';
 import Feed from '../components/Feed';
 import Discover from '../components/Discover';
 
+const TimelineContext = createContext();
+
+export const useTimeline = () => {
+  return useContext(TimelineContext);
+};
+
 const Timeline = () => {
+  const authHeader = useAuthHeader();
+  const auth = useAuthUser();
+
+  const [offset, setOffset] = useState(0);
+  const [tweets, setTweets] = useState([]);
+
+  const [{ loading, data }, refreshTweets] = useAxios({
+    url: import.meta.env.VITE_API_URL + `/users/${auth._id}/timeline`,
+    method: 'GET',
+    data: { offset },
+    headers: { Authorization: authHeader }
+  });
+
+  useEffect(() => {
+    if (data?.tweets) setTweets(data?.tweets);
+  }, [data]);
+
   return (
     <>
-      <Wrapper>
-        <Toaster position="top center" />
-        <Navbar />
-        <Feed />
-        <Discover />
-      </Wrapper>
+      <TimelineContext.Provider value={{ loading, tweets, setTweets, offset, setOffset, refreshTweets }}>
+        <Wrapper>
+          <Toaster position="top center" />
+          <Navbar />
+          <Feed />
+          <Discover />
+        </Wrapper>
+      </TimelineContext.Provider>
     </>
   );
 };
