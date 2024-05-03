@@ -79,7 +79,7 @@ const TweetForm = () => {
         })}
         onSubmit={handleSubmit}
       >
-        <Form className="register-form">
+        <Form className="tweet-form">
           <div className="tweet-field">
             <div className="profile-pic">
               <img src={auth.profilePic || defaultPP} alt="Profile Picture" />
@@ -111,7 +111,7 @@ export default TweetForm;
 const Wrapper = styled.div`
   border-bottom: 1px solid var(--gray-dark);
 
-  & > .register-form {
+  & > .tweet-form {
     display: flex;
     flex-direction: column;
 
