@@ -8,6 +8,7 @@ import useAxios from 'axios-hooks';
 import { useState } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { BeatLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Input, FileInput, SubmitButton } from './TweetForm';
@@ -56,6 +57,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
       delayedFinish();
       setTweets((tweets) => [res.data.tweet, ...tweets]);
       closeModal();
+      toast.success('Tweet sent');
     } catch (err) {
       console.log(err);
     }
