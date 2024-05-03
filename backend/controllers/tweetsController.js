@@ -71,7 +71,13 @@ exports.createTweet = [
 
     await User.findByIdAndUpdate(req.user._id, { $push: { tweets: newTweet._id } });
 
-    return res.json({ tweet: newTweet });
+    const populatedTweet = await newTweet.populate([
+      { path: 'replyTo', populate: { path: 'author', select: '_id displayName username profilePic' } },
+      { path: 'retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } },
+      { path: 'author', select: 'displayName username profilePic' }
+    ]);
+
+    return res.json({ tweet: populatedTweet });
   })
 ];
 
