@@ -50,6 +50,7 @@ const TweetForm = () => {
       resetForm();
       delayedFinish();
       setTweets((tweets) => [res.data.tweet, ...tweets]);
+      toast.success('Tweet sent');
     } catch (err) {
       console.log(err);
     }
