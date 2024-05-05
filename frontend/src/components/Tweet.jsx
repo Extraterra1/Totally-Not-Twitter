@@ -6,6 +6,8 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
+import { Tooltip } from 'react-tooltip';
+import moment from 'moment';
 
 import Modal from './Modal';
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
@@ -71,7 +73,10 @@ const Tweet = ({ tweet }) => {
                 <span>{tweet.author.displayName}</span>
                 <span>@{tweet.author.username}</span>
                 <span>·</span>
-                <span>{getTimeSinceTweet(tweet.createdAt)}</span>
+                <span id={`tweet-${tweet._id}`}>{getTimeSinceTweet(tweet.createdAt)}</span>
+                <Tooltip anchorSelect={`#tweet-${tweet._id}`} place="top">
+                  {moment(tweet.createdAt).format('MMM DD YYYY HH:MM')}
+                </Tooltip>
               </div>
             </Link>
           </div>
