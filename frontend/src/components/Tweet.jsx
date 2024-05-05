@@ -75,7 +75,7 @@ const Tweet = ({ tweet }) => {
                 <span>·</span>
                 <span id={`tweet-${tweet._id}`}>{getTimeSinceTweet(tweet.createdAt)}</span>
                 <Tooltip anchorSelect={`#tweet-${tweet._id}`} place="top">
-                  {moment(tweet.createdAt).format('MMM DD YYYY HH:MM')}
+                  {moment(tweet.createdAt).format('MMM DD YYYY HH:mm')}
                 </Tooltip>
               </div>
             </Link>
