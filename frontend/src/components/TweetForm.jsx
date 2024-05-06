@@ -35,8 +35,10 @@ const TweetForm = () => {
     { manual: true }
   );
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
+      if (!values.tweet) return setErrors({ tweet: 'Tweet cannot be empty' });
+
       const formData = new FormData();
       if (values.file) formData.append('img', values.file[0]);
       formData.append('content', values.tweet);
@@ -63,7 +65,7 @@ const TweetForm = () => {
           tweet: ''
         }}
         validationSchema={Yup.object({
-          tweet: Yup.string().required('Tweet cannot be empty').max(144, 'Must be less than 144 chars'),
+          tweet: Yup.string().max(144, 'Must be less than 144 chars'),
           file: Yup.mixed()
             .test('fileType', 'Bad Image Format', (value) => {
               if (value && value[0]) {
