@@ -10,12 +10,14 @@ import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
+import { useTimeline } from '../views/Timeline';
 
 import Modal from './Modal';
 import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const Tweet = ({ tweet, ...props }) => {
+  const { openTweetModal } = useTimeline();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
 
@@ -88,11 +90,9 @@ const Tweet = ({ tweet, ...props }) => {
           </div>
           <div className="text">{tweet.content}</div>
           <div className="actions">
-            <Link to={`/tweets/${tweet._id}`}>
-              <span>
-                <Icon className="replies-icon" icon="bx:message-rounded" />
-              </span>
-            </Link>
+            <span onClick={openTweetModal}>
+              <Icon className="replies-icon" icon="bx:message-rounded" />
+            </span>
             <span>
               <Icon onClick={openModal} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
 
