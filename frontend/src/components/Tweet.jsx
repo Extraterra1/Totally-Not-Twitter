@@ -67,6 +67,9 @@ const Tweet = ({ tweet, ...props }) => {
           <Link to={`/${tweet.author.username}`}>
             <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
           </Link>
+          <div className="separator-container">
+            <div className="separator"></div>
+          </div>
         </div>
 
         <div className="content">
@@ -174,15 +177,32 @@ const Container = styled.div`
 
   & .profile-pic {
     display: flex;
-    align-items: start;
     max-width: 3rem;
-    overflow: hidden;
+    flex-direction: column;
+    position: relative;
 
     & a,
     img {
       border-radius: 50%;
       max-width: inherit;
       object-fit: contain;
+      height: inherit;
+    }
+
+    & .separator-container {
+      align-self: center;
+      position: relative;
+      flex-grow: 1;
+    }
+
+    & .separator {
+      width: 1px;
+      height: calc(100% + 1rem);
+      background-color: var(--gray);
+
+      position: absolute;
+
+      display: ${(props) => (props.$reply ? 'block' : 'none')};
     }
   }
 
