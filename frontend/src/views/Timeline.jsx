@@ -27,7 +27,6 @@ const Timeline = () => {
 
   const openTweetModal = (reply) => {
     setReplyTo(reply);
-    console.log(reply);
     setModalIsOpen(true);
   };
 

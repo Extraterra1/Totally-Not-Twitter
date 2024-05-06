@@ -44,11 +44,15 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
   const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
       if (!values.tweet) return setErrors({ tweet: 'Tweet cannot be empty' });
-      const tweetType = replyTo ? 'replyTo' : 'tweet';
+      const tweetType = replyTo ? 'reply' : 'tweet';
+
       const formData = new FormData();
-      if (values.file) formData.append('img', values.file[0]);
+
       formData.append('content', values.tweet);
       formData.append('tweetType', tweetType);
+
+      if (tweetType === 'reply') formData.append('replyTo', replyTo._id);
+      if (values.file) formData.append('img', values.file[0]);
 
       const res = await sendTweet({
         data: formData,
