@@ -8,6 +8,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import Navbar from '../components/Navbar';
 import Feed from '../components/Feed';
 import Discover from '../components/Discover';
+import PopUpTweetForm from '../components/PopUpTweetForm';
 
 const TimelineContext = createContext();
 
@@ -21,6 +22,9 @@ const Timeline = () => {
 
   const [offset, setOffset] = useState(0);
   const [tweets, setTweets] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => setModalIsOpen(true);
 
   const [{ loading, data }, refreshTweets] = useAxios({
     url: import.meta.env.VITE_API_URL + `/users/${auth._id}/timeline`,
@@ -35,17 +39,13 @@ const Timeline = () => {
 
   return (
     <>
-      <TimelineContext.Provider value={{ loading, tweets, setTweets, offset, setOffset, refreshTweets }}>
+      <TimelineContext.Provider value={{ loading, tweets, setTweets, offset, setOffset, refreshTweets, openModal }}>
         <Wrapper>
-          <Toaster
-            position="top center"
-            toastOptions={{
-              success: { style: { background: 'var(--twitter-blue)', color: 'var(--light)', fontSize: '1.5rem', fontWeight: 400 }, position: 'bottom-center' }
-            }}
-          />
+          <Toaster position="top center" toastOptions={toastOptions} />
           <Navbar />
           <Feed />
           <Discover />
+          <PopUpTweetForm setIsOpen={setModalIsOpen} isOpen={modalIsOpen} />
         </Wrapper>
       </TimelineContext.Provider>
     </>
@@ -69,3 +69,7 @@ const Wrapper = styled.main`
     font-size: 1.6rem;
   }
 `;
+
+const toastOptions = {
+  success: { style: { background: 'var(--twitter-blue)', color: 'var(--light)', fontSize: '1.5rem', fontWeight: 400 }, position: 'bottom-center' }
+};
