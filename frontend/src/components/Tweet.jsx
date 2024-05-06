@@ -235,6 +235,8 @@ const Container = styled.div`
       font-size: 1.6rem;
       color: var(--gray);
 
+      visibility: ${(props) => (props.$noActions ? 'hidden' : 'visible')};
+
       & > span {
         display: flex;
         align-items: center;
