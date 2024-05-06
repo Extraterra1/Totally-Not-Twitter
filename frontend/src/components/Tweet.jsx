@@ -90,7 +90,7 @@ const Tweet = ({ tweet, ...props }) => {
           </div>
           <div className="text">{tweet.content}</div>
           <div className="actions">
-            <span onClick={openTweetModal}>
+            <span onClick={() => openTweetModal(tweet)}>
               <Icon className="replies-icon" icon="bx:message-rounded" />
             </span>
             <span>

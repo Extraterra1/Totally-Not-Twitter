@@ -22,9 +22,14 @@ const Timeline = () => {
 
   const [offset, setOffset] = useState(0);
   const [tweets, setTweets] = useState([]);
+  const [replyTo, setReplyTo] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const openTweetModal = () => setModalIsOpen(true);
+  const openTweetModal = (reply) => {
+    setReplyTo(reply);
+    console.log(reply);
+    setModalIsOpen(true);
+  };
 
   const [{ loading, data }, refreshTweets] = useAxios({
     url: import.meta.env.VITE_API_URL + `/users/${auth._id}/timeline`,
@@ -45,7 +50,7 @@ const Timeline = () => {
           <Navbar />
           <Feed />
           <Discover />
-          <PopUpTweetForm setIsOpen={setModalIsOpen} isOpen={modalIsOpen} />
+          <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} />
         </Wrapper>
       </TimelineContext.Provider>
     </>

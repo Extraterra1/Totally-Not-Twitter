@@ -42,7 +42,7 @@ const Navbar = () => {
                 <span>Profile</span>
               </div>
             </Link>
-            <Button onClick={openTweetModal} $primary>
+            <Button onClick={() => openTweetModal()} $primary>
               Post
             </Button>
             <UserCard user={auth} />

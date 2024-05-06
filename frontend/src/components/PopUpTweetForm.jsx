@@ -13,6 +13,7 @@ import toast from 'react-hot-toast';
 import defaultPP from '../assets/profilePic.jpg';
 import { Input, FileInput, SubmitButton } from './TweetForm';
 import { useTimeline } from '../views/Timeline';
+import Tweet from './Tweet';
 
 const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
   const auth = useAuthUser();
@@ -65,6 +66,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
 
   return (
     <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
+      {replyTo && <Tweet $reply tweet={replyTo} />}
       <Wrapper>
         <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <Formik
