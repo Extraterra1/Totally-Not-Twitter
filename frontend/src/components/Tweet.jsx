@@ -63,11 +63,12 @@ const Tweet = ({ tweet, ...props }) => {
     <>
       {!props.$reply && tweet.replyTo && <Reply tweet={tweet.replyTo} />}
       <Container {...props}>
-        <Link to={`/${tweet.author.username}`}>
-          <div className="profile-pic">
+        <div className="profile-pic">
+          <Link to={`/${tweet.author.username}`}>
             <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
-          </div>
-        </Link>
+          </Link>
+        </div>
+
         <div className="content">
           <div className="username">
             <Link to={`/${tweet.author.username}`}>
@@ -177,7 +178,8 @@ const Container = styled.div`
     max-width: 3rem;
     overflow: hidden;
 
-    & img {
+    & a,
+    img {
       border-radius: 50%;
       max-width: inherit;
       object-fit: contain;
