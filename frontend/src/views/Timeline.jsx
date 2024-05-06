@@ -24,7 +24,7 @@ const Timeline = () => {
   const [tweets, setTweets] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const openModal = () => setModalIsOpen(true);
+  const openTweetModal = () => setModalIsOpen(true);
 
   const [{ loading, data }, refreshTweets] = useAxios({
     url: import.meta.env.VITE_API_URL + `/users/${auth._id}/timeline`,
@@ -39,7 +39,7 @@ const Timeline = () => {
 
   return (
     <>
-      <TimelineContext.Provider value={{ loading, tweets, setTweets, offset, setOffset, refreshTweets, openModal }}>
+      <TimelineContext.Provider value={{ loading, tweets, setTweets, offset, setOffset, refreshTweets, openTweetModal }}>
         <Wrapper>
           <Toaster position="top center" toastOptions={toastOptions} />
           <Navbar />

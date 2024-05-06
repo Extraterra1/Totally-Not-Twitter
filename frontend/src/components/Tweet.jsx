@@ -9,8 +9,9 @@ import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 
-import Modal from './Modal';
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
+
+import Modal from './Modal';
 import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 

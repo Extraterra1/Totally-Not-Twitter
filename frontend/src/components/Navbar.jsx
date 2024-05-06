@@ -4,16 +4,15 @@ import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
 
+import { useTimeline } from '../views/Timeline';
+
 import TTNLogo from '../assets/ttn-logo.png';
 import UserCard from '../components/UserCard';
 import { Button as BaseButton } from '../components/Actions';
-import PopUpTweetForm from './PopUpTweetForm';
 
 const Navbar = () => {
   const auth = useAuthUser();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openModal = () => setIsOpen(true);
+  const { openTweetModal } = useTimeline();
 
   return (
     <>
@@ -43,14 +42,13 @@ const Navbar = () => {
                 <span>Profile</span>
               </div>
             </Link>
-            <Button onClick={openModal} $primary>
+            <Button onClick={openTweetModal} $primary>
               Post
             </Button>
             <UserCard user={auth} />
           </div>
         </Sidebar>
       </Wrapper>
-      <PopUpTweetForm setIsOpen={setIsOpen} isOpen={isOpen} />
     </>
   );
 };
