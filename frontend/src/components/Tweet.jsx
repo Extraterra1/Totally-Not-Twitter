@@ -13,7 +13,6 @@ import Modal from './Modal';
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
-import Reply from './Reply';
 
 const Tweet = ({ tweet, ...props }) => {
   const auth = useAuthUser();
@@ -61,7 +60,7 @@ const Tweet = ({ tweet, ...props }) => {
 
   return (
     <>
-      {!props.$reply && tweet.replyTo && <Reply tweet={tweet.replyTo} />}
+      {!props.$reply && tweet.replyTo && <Tweet $reply tweet={tweet.replyTo} />}
       <Container {...props}>
         <div className="profile-pic">
           <Link to={`/${tweet.author.username}`}>
