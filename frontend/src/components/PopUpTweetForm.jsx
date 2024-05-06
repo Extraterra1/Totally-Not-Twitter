@@ -126,12 +126,12 @@ const Wrapper = styled.div`
   background-color: var(--black);
   min-width: 30vw;
   border-radius: 1.5rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
 
   position: relative;
 
   & > .close-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     color: var(--gray-light);
     position: absolute;
@@ -154,7 +154,7 @@ const Wrapper = styled.div`
 
     & > .tweet-field {
       display: flex;
-      align-items: center;
+      align-items: start;
       padding: 1rem;
       gap: 2rem;
       & > .profile-pic {
