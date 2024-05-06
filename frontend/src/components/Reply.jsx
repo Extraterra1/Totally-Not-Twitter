@@ -1,7 +1,9 @@
+import Tweet from './Tweet';
+
 const Reply = ({ tweet }) => {
   return (
     <>
-      <h1>{tweet.content}</h1>
+      <Tweet $reply tweet={tweet} />
     </>
   );
 };

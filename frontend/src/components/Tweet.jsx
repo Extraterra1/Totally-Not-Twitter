@@ -15,7 +15,7 @@ import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 import Reply from './Reply';
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet, ...props }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
 
@@ -61,8 +61,8 @@ const Tweet = ({ tweet }) => {
 
   return (
     <>
-      {tweet.replyTo && <Reply tweet={tweet.replyTo} />}
-      <Container>
+      {!props.$reply && tweet.replyTo && <Reply tweet={tweet.replyTo} />}
+      <Container {...props}>
         <Link to={`/${tweet.author.username}`}>
           <div className="profile-pic">
             <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
@@ -162,7 +162,7 @@ const ModalContainer = styled.div`
 `;
 
 const Container = styled.div`
-  border-bottom: 1px solid var(--gray-dark);
+  border-bottom: ${(props) => (props.$reply ? 'none' : '1px solid var(--gray-dark)')};
   padding: 1rem;
 
   display: grid;
