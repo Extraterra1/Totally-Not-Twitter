@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
@@ -20,6 +20,7 @@ const Tweet = ({ tweet, ...props }) => {
   const { openTweetModal } = useTimeline();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const navigate = useNavigate();
 
   const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
   const [isRetweeted, setIsRetweeted] = useState(false);
@@ -49,12 +50,24 @@ const Tweet = ({ tweet, ...props }) => {
     closeModal();
   };
 
-  const handleLike = async () => {
+  const handleLike = async (e) => {
+    e.stopPropagation();
+
     const url = import.meta.env.VITE_API_URL + `/tweets/${tweet._id}/like`;
     const res = await executeLike({ url });
 
     setLikes(res.data.updatedTweet.likes.length);
     setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
+  };
+
+  const handleRT = (e) => {
+    e.stopPropagation();
+    openModal();
+  };
+
+  const handleReply = (e) => {
+    e.stopPropagation();
+    openTweetModal(tweet);
   };
 
   useEffect(() => {
@@ -74,7 +87,7 @@ const Tweet = ({ tweet, ...props }) => {
               {props.$RTby.displayName} retweeted
             </RTNametag>
           )}
-          <Container {...props}>
+          <Container onClick={() => navigate('/xddd')} {...props}>
             <div className="profile-pic">
               <Link to={`/${tweet.author.username}`}>
                 <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
@@ -102,15 +115,15 @@ const Tweet = ({ tweet, ...props }) => {
               </div>
               <div className="text">{tweet.content}</div>
               <div className="actions">
-                <span onClick={() => openTweetModal(tweet)}>
+                <span onClick={handleReply}>
                   <Icon className="replies-icon" icon="bx:message-rounded" />
                 </span>
                 <span>
-                  <Icon onClick={openModal} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+                  <Icon onClick={handleRT} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
 
                   {isOpen && (
                     <Modal isOpen={isOpen} setIsOpen={setIsOpen} style={modalStyles}>
-                      <ModalContainer>
+                      <ModalContainer onClick={(e) => e.stopPropagation()}>
                         <h4>Are you sure you want to retweet that?</h4>
                         <div className="buttons">
                           <Button onClick={handleRetweet}>Retweet</Button>
