@@ -69,7 +69,7 @@ const Tweet = ({ tweet, ...props }) => {
       ) : (
         <div>
           {props.$rt && (
-            <RTNametag>
+            <RTNametag to={'/' + props.$RTby.username}>
               <Icon className="rt-icon" icon="bx:repost" />
               {props.$RTby.displayName}
             </RTNametag>
