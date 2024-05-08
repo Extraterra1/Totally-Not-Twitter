@@ -298,10 +298,15 @@ const RTNametag = styled(Link)`
   gap: 1rem;
   align-items: center;
   padding: 0.5rem 0 0 0;
-  margin-left: 1rem;
+  margin-left: 3rem;
   font-weight: 700;
+  cursor: pointer;
 
   & > .rt-icon {
     font-size: 2rem;
+  }
+
+  &:hover {
+    text-decoration: underline;
   }
 `;
