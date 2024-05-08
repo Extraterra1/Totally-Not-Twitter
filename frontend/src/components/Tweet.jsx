@@ -68,7 +68,12 @@ const Tweet = ({ tweet, ...props }) => {
         <Tweet $rt tweet={tweet.retweetedTweet} $RTby={tweet.author} />
       ) : (
         <div>
-          {props.$rt && <RTNametag>{props.$RTby.displayName}</RTNametag>}
+          {props.$rt && (
+            <RTNametag>
+              <Icon className="rt-icon" icon="bx:repost" />
+              {props.$RTby.displayName}
+            </RTNametag>
+          )}
           <Container {...props}>
             <div className="profile-pic">
               <Link to={`/${tweet.author.username}`}>
@@ -287,5 +292,16 @@ const Container = styled.div`
 
 const RTNametag = styled(Link)`
   font-size: 1rem;
-  color: var(--gray);
+  color: var(--gray-light) !important;
+
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem 0 0 0;
+  margin-left: 1rem;
+  font-weight: 700;
+
+  & > .rt-icon {
+    font-size: 2rem;
+  }
 `;
