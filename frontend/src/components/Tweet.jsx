@@ -91,7 +91,9 @@ const Tweet = ({ tweet, ...props }) => {
                     <span>{tweet.author.displayName}</span>
                     <span>@{tweet.author.username}</span>
                     <span>·</span>
-                    <span id={`tweet-${tweet._id}`}>{getTimeSinceTweet(tweet.createdAt)}</span>
+                    <span id={`tweet-${tweet._id}`}>
+                      <Link to={`/${tweet.author.username}/status/${tweet._id}`}>{getTimeSinceTweet(tweet.createdAt)}</Link>
+                    </span>
                     <Tooltip anchorSelect={`#tweet-${tweet._id}`} place="top">
                       {moment(tweet.createdAt).format('MMM DD YYYY HH:mm')}
                     </Tooltip>
