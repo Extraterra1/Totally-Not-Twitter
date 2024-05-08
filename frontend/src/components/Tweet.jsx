@@ -223,6 +223,8 @@ const Container = styled.div`
   & > .content {
     margin-left: 1rem;
     & > .username {
+      width: min-content;
+      white-space: nowrap;
       & div {
         display: flex;
         gap: 0.5rem;
