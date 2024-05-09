@@ -71,6 +71,13 @@ const Tweet = ({ tweet, ...props }) => {
     openTweetModal(tweet);
   };
 
+  const handleDateClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    navigate(`/${tweet.author.username}/status/${tweet._id}`);
+  };
+
   useEffect(() => {
     setLikes(tweet.likes.length);
   }, []);
@@ -100,19 +107,19 @@ const Tweet = ({ tweet, ...props }) => {
 
             <div className="content">
               <div className="username">
-                <Link to={`/${tweet.author.username}`}>
-                  <div>
+                <div>
+                  <Link to={`/${tweet.author.username}`}>
                     <span>{tweet.author.displayName}</span>
                     <span>@{tweet.author.username}</span>
-                    <span>·</span>
-                    <span id={`tweet-${tweet._id}`}>
-                      <Link to={`/${tweet.author.username}/status/${tweet._id}`}>{getTimeSinceTweet(tweet.createdAt)}</Link>
-                    </span>
-                    <Tooltip anchorSelect={`#tweet-${tweet._id}`} place="top">
-                      {moment(tweet.createdAt).format('MMM DD YYYY HH:mm')}
-                    </Tooltip>
-                  </div>
-                </Link>
+                  </Link>
+                  <span>·</span>
+                  <span onClick={handleDateClick} id={`tweet-${tweet._id}`}>
+                    {getTimeSinceTweet(tweet.createdAt)}
+                  </span>
+                  <Tooltip anchorSelect={`#tweet-${tweet._id}`} place="top">
+                    {moment(tweet.createdAt).format('MMM DD YYYY HH:mm')}
+                  </Tooltip>
+                </div>
               </div>
               <div className="text">{tweet.content}</div>
               <div className="actions">
@@ -239,16 +246,26 @@ const Container = styled.div`
     & > .username {
       width: min-content;
       white-space: nowrap;
+
       & div {
         display: flex;
         gap: 0.5rem;
 
-        & > span:first-child {
-          font-weight: 700;
+        & > a {
+          display: flex;
+          gap: 0.5rem;
 
-          &:hover {
-            text-decoration: underline;
-            text-underline-offset: 2px;
+          & > span:first-child {
+            font-weight: 700;
+
+            &:hover {
+              text-decoration: underline;
+              text-underline-offset: 2px;
+            }
+          }
+
+          & > span:not(:first-child) {
+            color: var(--gray);
           }
         }
 
