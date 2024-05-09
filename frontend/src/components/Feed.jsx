@@ -18,7 +18,7 @@ const Feed = () => {
             <Tweet key={e._id} tweet={e} />
           ))}
           <ClipLoader loading={loading} size={35} color="var(--twitter-blue)" cssOverride={{ margin: '2rem auto' }} />
-          <Tooltip delayShow={500} id="user-popup" clickable />
+          <Tooltip style={{ padding: 0 }} delayShow={500} id="user-popup" clickable classNameArrow="user-tooltip-arrow" />
         </TweetsContainer>
       </Wrapper>
     </>
@@ -35,4 +35,8 @@ const Wrapper = styled.div`
 const TweetsContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  & .user-tooltip-arrow {
+    display: none;
+  }
 `;

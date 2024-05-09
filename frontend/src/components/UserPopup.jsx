@@ -13,8 +13,6 @@ const UserPopup = ({ user }) => {
 export default UserPopup;
 
 const Wrapper = styled.div`
-  background-color: cyan;
-
   height: 100%;
   width: 100%;
 `;
