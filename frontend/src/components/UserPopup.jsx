@@ -19,7 +19,7 @@ const UserPopup = ({ user }) => {
           </div>
           <div className="username">
             <Link to={'/' + user.username}>
-              <span>{user.displayName}</span>
+              <span className="display-name">{user.displayName}</span>
               <span>@{user.username}</span>
             </Link>
           </div>
@@ -54,6 +54,28 @@ const Wrapper = styled.div`
           object-fit: contain;
           height: inherit;
         }
+      }
+    }
+
+    & .username {
+      font-size: 1.3rem;
+
+      & > a {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        margin-top: 0.5rem;
+      }
+
+      & span.display-name {
+        font-weight: 700;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      & span:last-child {
+        color: var(--gray);
       }
     }
   }
