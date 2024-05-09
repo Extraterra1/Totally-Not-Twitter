@@ -8,10 +8,16 @@ const UserPopup = ({ user }) => {
     <>
       <Wrapper>
         <div className="header">
-          <div className="profile-pic">
-            <img src={user.profilePic || defaultPP} />
+          <div className="profile-pic-container">
+            <div className="profile-pic">
+              <img src={user.profilePic || defaultPP} />
+            </div>
+            <Button>Follow</Button>
           </div>
-          <Button>Follow</Button>
+          <div className="username">
+            <span>{user.displayName}</span>
+            <span>@{user.username}</span>
+          </div>
         </div>
       </Wrapper>
     </>
@@ -25,22 +31,24 @@ const Wrapper = styled.div`
   border-radius: 2rem;
 
   & > .header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 3rem;
-
-    & > .profile-pic {
+    & > .profile-pic-container {
       display: flex;
-      max-width: 5rem;
-      flex-direction: column;
-      position: relative;
+      justify-content: space-around;
+      align-items: center;
+      gap: 3rem;
 
-      & img {
-        border-radius: 50%;
-        max-width: inherit;
-        object-fit: contain;
-        height: inherit;
+      & > .profile-pic {
+        display: flex;
+        max-width: 5rem;
+        flex-direction: column;
+        position: relative;
+
+        & img {
+          border-radius: 50%;
+          max-width: inherit;
+          object-fit: contain;
+          height: inherit;
+        }
       }
     }
   }
@@ -50,4 +58,5 @@ const Button = styled(DefaultButton)`
   padding: 0.5rem 1rem;
   font-size: 1.2rem;
   align-self: flex-start;
+  font-weight: 700;
 `;

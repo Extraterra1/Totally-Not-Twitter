@@ -90,6 +90,9 @@ const Tweet = ({ tweet, ...props }) => {
               {props.$RTby.displayName} retweeted
             </RTNametag>
           )}
+          <Tooltip id={`user-popup-${tweet.author._id}`} style={{ padding: 0 }} delayShow={500} delayHide={500} clickable noArrow opacity={1}>
+            <UserPopup user={tweet.author} />
+          </Tooltip>
           <Container onClick={() => navigate('/xddd')} {...props}>
             <div className="profile-pic">
               <Link to={`/${tweet.author.username}`}>
@@ -104,10 +107,8 @@ const Tweet = ({ tweet, ...props }) => {
               <div className="username">
                 <div>
                   <Link className="tweet-author" to={`/${tweet.author.username}`}>
-                    <span data-tooltip-id="user-popup" data-tooltip-html={renderToStaticMarkup(<UserPopup user={tweet.author} />)}>
-                      {tweet.author.displayName}
-                    </span>
-                    <span>@{tweet.author.username}</span>
+                    <span data-tooltip-id={`user-popup-${tweet.author._id}`}>{tweet.author.displayName}</span>
+                    <span data-tooltip-id={`user-popup-${tweet.author._id}`}>@{tweet.author.username}</span>
                   </Link>
                   <span>·</span>
                   <Link className="tweet-date" to={`/${tweet.author.username}/status/${tweet._id}`}>
