@@ -8,6 +8,7 @@ import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import { useTimeline } from '../views/Timeline';
@@ -103,7 +104,9 @@ const Tweet = ({ tweet, ...props }) => {
               <div className="username">
                 <div>
                   <Link className="tweet-author" to={`/${tweet.author.username}`}>
-                    <span data-tooltip-id={`user-popup-${tweet._id}`}>{tweet.author.displayName}</span>
+                    <span data-tooltip-id="user-popup" data-tooltip-html={renderToStaticMarkup(<UserPopup user={tweet.author} />)}>
+                      {tweet.author.displayName}
+                    </span>
                     <span>@{tweet.author.username}</span>
                   </Link>
                   <span>·</span>
@@ -114,9 +117,6 @@ const Tweet = ({ tweet, ...props }) => {
                     {moment(tweet.createdAt).format('MMM DD YYYY HH:mm')}
                   </Tooltip>
                 </div>
-                <Tooltip delayShow={500} id={`user-popup-${tweet._id}`} clickable>
-                  <h1>heyy {tweet.author.username}</h1>
-                </Tooltip>
               </div>
               <div className="text">{tweet.content}</div>
               <div className="actions">

@@ -1,8 +1,5 @@
 import styled from 'styled-components';
-import useAxios from 'axios-hooks';
-import { useState, useEffect } from 'react';
-import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
-import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { Tooltip } from 'react-tooltip';
 import { ClipLoader } from 'react-spinners';
 
 import TweetForm from './TweetForm';
@@ -21,6 +18,7 @@ const Feed = () => {
             <Tweet key={e._id} tweet={e} />
           ))}
           <ClipLoader loading={loading} size={35} color="var(--twitter-blue)" cssOverride={{ margin: '2rem auto' }} />
+          <Tooltip delayShow={500} id="user-popup" clickable />
         </TweetsContainer>
       </Wrapper>
     </>
