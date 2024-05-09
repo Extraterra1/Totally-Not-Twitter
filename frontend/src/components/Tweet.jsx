@@ -94,7 +94,7 @@ const Tweet = ({ tweet, ...props }) => {
             <UserPopup user={tweet.author} />
           </Tooltip>
           <Container onClick={() => navigate('/xddd')} {...props}>
-            <div className="profile-pic">
+            <div data-tooltip-id={`user-popup-${tweet.author._id}`} className="profile-pic">
               <Link to={`/${tweet.author.username}`}>
                 <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
               </Link>
@@ -108,7 +108,7 @@ const Tweet = ({ tweet, ...props }) => {
                 <div>
                   <Link className="tweet-author" to={`/${tweet.author.username}`}>
                     <span data-tooltip-id={`user-popup-${tweet.author._id}`}>{tweet.author.displayName}</span>
-                    <span data-tooltip-id={`user-popup-${tweet.author._id}`}>@{tweet.author.username}</span>
+                    <span>@{tweet.author.username}</span>
                   </Link>
                   <span>·</span>
                   <Link className="tweet-date" to={`/${tweet.author.username}/status/${tweet._id}`}>

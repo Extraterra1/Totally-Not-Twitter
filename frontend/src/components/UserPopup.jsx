@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import { Button as DefaultButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
@@ -9,14 +10,18 @@ const UserPopup = ({ user }) => {
       <Wrapper>
         <div className="header">
           <div className="profile-pic-container">
-            <div className="profile-pic">
-              <img src={user.profilePic || defaultPP} />
-            </div>
+            <Link to={'/' + user.username}>
+              <div className="profile-pic">
+                <img src={user.profilePic || defaultPP} />
+              </div>
+            </Link>
             <Button>Follow</Button>
           </div>
           <div className="username">
-            <span>{user.displayName}</span>
-            <span>@{user.username}</span>
+            <Link to={'/' + user.username}>
+              <span>{user.displayName}</span>
+              <span>@{user.username}</span>
+            </Link>
           </div>
         </div>
       </Wrapper>
@@ -37,7 +42,7 @@ const Wrapper = styled.div`
       align-items: center;
       gap: 3rem;
 
-      & > .profile-pic {
+      & .profile-pic {
         display: flex;
         max-width: 5rem;
         flex-direction: column;
