@@ -15,6 +15,7 @@ import { useTimeline } from '../views/Timeline';
 import Modal from './Modal';
 import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
+import UserPopup from './UserPopup';
 
 const Tweet = ({ tweet, ...props }) => {
   const { openTweetModal, setTweets } = useTimeline();
