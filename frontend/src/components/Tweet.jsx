@@ -17,7 +17,7 @@ import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const Tweet = ({ tweet, ...props }) => {
-  const { openTweetModal } = useTimeline();
+  const { openTweetModal, setTweets } = useTimeline();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const navigate = useNavigate();
@@ -45,6 +45,7 @@ const Tweet = ({ tweet, ...props }) => {
 
     const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: tweet._id } });
 
+    setTweets((tweets) => [res.data.tweet, ...tweets]);
     setIsRetweeted(true);
 
     closeModal();
