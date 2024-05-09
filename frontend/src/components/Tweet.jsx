@@ -71,13 +71,6 @@ const Tweet = ({ tweet, ...props }) => {
     openTweetModal(tweet);
   };
 
-  const handleDateClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-
-    navigate(`/${tweet.author.username}/status/${tweet._id}`);
-  };
-
   useEffect(() => {
     setLikes(tweet.likes.length);
   }, []);
@@ -108,14 +101,14 @@ const Tweet = ({ tweet, ...props }) => {
             <div className="content">
               <div className="username">
                 <div>
-                  <Link to={`/${tweet.author.username}`}>
+                  <Link className="tweet-author" to={`/${tweet.author.username}`}>
                     <span>{tweet.author.displayName}</span>
                     <span>@{tweet.author.username}</span>
                   </Link>
                   <span>·</span>
-                  <span onClick={handleDateClick} id={`tweet-${tweet._id}`}>
-                    {getTimeSinceTweet(tweet.createdAt)}
-                  </span>
+                  <Link className="tweet-date" to={`/${tweet.author.username}/status/${tweet._id}`}>
+                    <span id={`tweet-${tweet._id}`}>{getTimeSinceTweet(tweet.createdAt)}</span>
+                  </Link>
                   <Tooltip anchorSelect={`#tweet-${tweet._id}`} place="top">
                     {moment(tweet.createdAt).format('MMM DD YYYY HH:mm')}
                   </Tooltip>
@@ -251,7 +244,7 @@ const Container = styled.div`
         display: flex;
         gap: 0.5rem;
 
-        & > a {
+        & > a.tweet-author {
           display: flex;
           gap: 0.5rem;
 
@@ -267,6 +260,10 @@ const Container = styled.div`
           & > span:not(:first-child) {
             color: var(--gray);
           }
+        }
+
+        & > a.tweet-date {
+          color: var(--gray);
         }
 
         & > span:not(:first-child) {
