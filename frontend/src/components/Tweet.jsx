@@ -38,7 +38,7 @@ const Tweet = ({ tweet, ...props }) => {
     { manual: true }
   );
 
-  const handleRetweet = async () => {
+  const handleRetweetModal = async () => {
     if (isRetweeted) {
       toast.error('You have already retweeted that');
       closeModal();
@@ -132,7 +132,7 @@ const Tweet = ({ tweet, ...props }) => {
                       <ModalContainer onClick={(e) => e.stopPropagation()}>
                         <h4>Are you sure you want to retweet that?</h4>
                         <div className="buttons">
-                          <Button onClick={handleRetweet}>Retweet</Button>
+                          <Button onClick={handleRetweetModal}>Retweet</Button>
                           <Button $cancel onClick={closeModal}>
                             Cancel
                           </Button>
