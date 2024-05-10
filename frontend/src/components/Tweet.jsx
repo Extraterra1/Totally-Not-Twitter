@@ -90,11 +90,11 @@ const Tweet = ({ tweet, ...props }) => {
               {props.$RTby.displayName} retweeted
             </RTNametag>
           )}
-          <Tooltip id={`user-popup-${tweet.author._id}`} style={{ padding: 0 }} delayShow={500} delayHide={500} clickable noArrow opacity={1}>
+          <Tooltip id={`user-popup-${tweet._id}`} style={{ padding: 0 }} delayShow={500} delayHide={0} clickable noArrow opacity={1}>
             <UserPopup user={tweet.author} />
           </Tooltip>
           <Container onClick={() => navigate('/xddd')} {...props}>
-            <div data-tooltip-id={`user-popup-${tweet.author._id}`} className="profile-pic">
+            <div data-tooltip-id={`user-popup-${tweet._id}`} className="profile-pic">
               <Link to={`/${tweet.author.username}`}>
                 <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
               </Link>
@@ -107,7 +107,7 @@ const Tweet = ({ tweet, ...props }) => {
               <div className="username">
                 <div>
                   <Link className="tweet-author" to={`/${tweet.author.username}`}>
-                    <span data-tooltip-id={`user-popup-${tweet.author._id}`}>{tweet.author.displayName}</span>
+                    <span data-tooltip-id={`user-popup-${tweet._id}`}>{tweet.author.displayName}</span>
                     <span>@{tweet.author.username}</span>
                   </Link>
                   <span>·</span>
