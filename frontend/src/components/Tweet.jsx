@@ -49,6 +49,7 @@ const Tweet = ({ tweet, ...props }) => {
 
     setTweets((tweets) => [res.data.tweet, ...tweets]);
     setIsRetweeted(true);
+    toast.success('Retweeted!');
 
     closeModal();
   };
