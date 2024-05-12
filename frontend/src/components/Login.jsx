@@ -7,6 +7,7 @@ import { ClipLoader } from 'react-spinners';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { Navigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import toast from 'react-hot-toast';
 
 import { useModal } from './Modal';
 import { ActualButton } from './Register';
@@ -30,6 +31,7 @@ const Login = () => {
         },
         userState: res.data.user
       });
+      toast.success('Welcome Back!');
       setSubmitting(false);
     } catch (err) {
       if (err?.response) {
