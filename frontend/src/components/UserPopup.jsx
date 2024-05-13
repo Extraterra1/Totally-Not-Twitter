@@ -2,13 +2,31 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useAxios from 'axios-hooks';
+import toast from 'react-hot-toast';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
 import { Button as DefaultButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const UserPopup = ({ user }) => {
   const auth = useAuthUser();
+  const authHeader = useAuthHeader();
   const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
+
+  const url = `${import.meta.env.VITE_API_URL}/users/${user._id}/${isFollowing ? 'unfollow' : 'follow'}`;
+
+  const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
+
+  const handleFollow = async () => {
+    try {
+      await executeFollow();
+      toast.success(`${isFollowing ? `Unfollowed @${user.username}` : `Followed @${user.username}`}`);
+      setIsFollowing(!isFollowing);
+    } catch (err) {
+      toast.error('Something went wrong');
+    }
+  };
 
   return (
     <>
@@ -20,7 +38,9 @@ const UserPopup = ({ user }) => {
                 <img src={user.profilePic || defaultPP} />
               </div>
             </Link>
-            <Button $unfollow={isFollowing}>{isFollowing ? 'Unfollow' : 'Follow'}</Button>
+            <Button onClick={handleFollow} $unfollow={isFollowing}>
+              {isFollowing ? 'Unfollow' : 'Follow'}
+            </Button>
           </div>
           <div className="username">
             <Link to={'/' + user.username}>
