@@ -6,6 +6,8 @@ const cloudinary = require('cloudinary').v2;
 const path = require('path');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const moment = require('moment');
 
 const User = require('../models/userModel');
 
@@ -26,9 +28,15 @@ exports.followUser = asyncHandler(async (req, res) => {
   if (!user) return res.status(404).json({ err: 'User not found' });
 
   const updatedUser = await User.findByIdAndUpdate(req.params.id, { $addToSet: { followers: req.user._id } }, { new: true });
-  await User.findByIdAndUpdate(req.user.id, { $addToSet: { following: req.params.id } });
 
-  return res.json({ updatedUser });
+  const follower = await User.findByIdAndUpdate(req.user.id, { $addToSet: { following: req.params.id } }, { new: true }).select(
+    'email username profilePic displayName following'
+  );
+
+  jwt.sign({ follower, exp: moment().add(3, 'days').unix(), sub: follower._id }, process.env.JWT_SECRET, (err, token) => {
+    if (err) return res.status(500).json({ err });
+    return res.json({ token, follower, updatedUser });
+  });
 });
 
 exports.unfollowUser = asyncHandler(async (req, res) => {
@@ -40,9 +48,15 @@ exports.unfollowUser = asyncHandler(async (req, res) => {
   if (!user) return res.status(404).json({ err: 'User not found' });
 
   const updatedUser = await User.findByIdAndUpdate(req.params.id, { $pull: { followers: req.user._id } }, { new: true });
-  await User.findByIdAndUpdate(req.user.id, { $pull: { following: req.params.id } });
 
-  return res.json({ updatedUser });
+  const follower = await User.findByIdAndUpdate(req.user.id, { $pull: { following: req.params.id } }, { new: true }).select(
+    'email username profilePic displayName following'
+  );
+
+  jwt.sign({ follower, exp: moment().add(3, 'days').unix(), sub: follower._id }, process.env.JWT_SECRET, (err, token) => {
+    if (err) return res.status(500).json({ err });
+    return res.json({ token, follower, updatedUser });
+  });
 });
 
 exports.updateUser = [
