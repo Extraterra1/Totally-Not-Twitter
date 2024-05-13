@@ -20,10 +20,6 @@ const UserPopup = ({ user }) => {
 
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
 
-  // useEffect(() => {
-  //   setIsFollowing(auth.following.includes(user._id));
-  // }, [auth]);
-
   const handleFollow = async () => {
     try {
       const res = await executeFollow();
@@ -51,7 +47,7 @@ const UserPopup = ({ user }) => {
                 <img src={user.profilePic || defaultPP} />
               </div>
             </Link>
-            <Button onClick={handleFollow} $unfollow={isFollowing}>
+            <Button onClick={handleFollow} $unfollow={isFollowing} $disabled={auth._id === user._id}>
               {isFollowing ? 'Unfollow' : 'Follow'}
             </Button>
           </div>
@@ -131,6 +127,8 @@ const Button = styled(DefaultButton)`
 
   background-color: ${(props) => (props.$unfollow ? 'var(--danger)' : null)};
   color: ${(props) => (props.$unfollow ? 'var(--light)' : null)};
+
+  visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
 
   &:hover {
     background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : null)};
