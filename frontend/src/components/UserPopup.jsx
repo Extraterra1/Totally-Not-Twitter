@@ -8,8 +8,7 @@ import defaultPP from '../assets/profilePic.jpg';
 
 const UserPopup = ({ user }) => {
   const auth = useAuthUser();
-  console.log(auth);
-  const [isFollowing, setIsFollowing] = useState(null);
+  const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
 
   return (
     <>
@@ -21,7 +20,7 @@ const UserPopup = ({ user }) => {
                 <img src={user.profilePic || defaultPP} />
               </div>
             </Link>
-            <Button>{isFollowing ? 'Unfollow' : 'Follow'}</Button>
+            <Button $unfollow={isFollowing}>{isFollowing ? 'Unfollow' : 'Follow'}</Button>
           </div>
           <div className="username">
             <Link to={'/' + user.username}>
@@ -96,4 +95,11 @@ const Button = styled(DefaultButton)`
   font-size: 1.2rem;
   align-self: flex-start;
   font-weight: 700;
+
+  background-color: ${(props) => (props.$unfollow ? 'var(--danger)' : null)};
+  color: ${(props) => (props.$unfollow ? 'var(--light)' : null)};
+
+  &:hover {
+    background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : null)};
+  }
 `;
