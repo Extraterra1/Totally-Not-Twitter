@@ -33,7 +33,11 @@ export default UserPopup;
 
 const Wrapper = styled.div`
   padding: 1rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
+  background-color: var(--black);
+  box-shadow:
+    rgba(255, 255, 255, 0.2) 0px 0px 15px 0px,
+    rgba(255, 255, 255, 0.15) 0px 0px 3px 1px;
 
   & > .header {
     & > .profile-pic-container {

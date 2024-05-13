@@ -91,7 +91,7 @@ const Tweet = ({ tweet, ...props }) => {
               {props.$RTby.displayName} retweeted
             </RTNametag>
           )}
-          <Tooltip id={`user-popup-${tweet._id}`} style={{ padding: 0 }} delayShow={500} delayHide={0} clickable noArrow opacity={1}>
+          <Tooltip id={`user-popup-${tweet._id}`} style={{ padding: 0, background: 'transparent' }} delayShow={500} delayHide={0} clickable noArrow opacity={1}>
             <UserPopup user={tweet.author} />
           </Tooltip>
           <Container onClick={() => navigate('/xddd')} {...props}>
