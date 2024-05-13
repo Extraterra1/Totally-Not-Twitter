@@ -69,7 +69,8 @@ exports.loginPOST = [
       username: user.username,
       _id: user._id,
       profilePic: user.profilePic,
-      displayName: user.displayName
+      displayName: user.displayName,
+      following: user.following
     };
 
     jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
@@ -102,7 +103,7 @@ exports.githubLoginPOST = [
     const { data: userData } = await axios.get('https://api.github.com/user', { headers: { Authorization: 'Bearer ' + token } });
     const githubID = userData.id;
 
-    let user = await User.findOne({ githubID }).select('email username profilePic displayName');
+    let user = await User.findOne({ githubID }).select('email username profilePic displayName following');
 
     if (!user) {
       const hashedPassword = await bcrypt.hash(githubID.toString(), 10);

@@ -1,10 +1,16 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import { Button as DefaultButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const UserPopup = ({ user }) => {
+  const auth = useAuthUser();
+  console.log(auth);
+  const [isFollowing, setIsFollowing] = useState(null);
+
   return (
     <>
       <Wrapper>
@@ -15,7 +21,7 @@ const UserPopup = ({ user }) => {
                 <img src={user.profilePic || defaultPP} />
               </div>
             </Link>
-            <Button>Follow</Button>
+            <Button>{isFollowing ? 'Unfollow' : 'Follow'}</Button>
           </div>
           <div className="username">
             <Link to={'/' + user.username}>
