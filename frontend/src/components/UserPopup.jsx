@@ -1,16 +1,18 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 import { Button as DefaultButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const UserPopup = ({ user }) => {
   const auth = useAuthUser();
+  const signIn = useSignIn();
   const authHeader = useAuthHeader();
   const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
 
@@ -18,9 +20,20 @@ const UserPopup = ({ user }) => {
 
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
 
+  // useEffect(() => {
+  //   setIsFollowing(auth.following.includes(user._id));
+  // }, [auth]);
+
   const handleFollow = async () => {
     try {
-      await executeFollow();
+      const res = await executeFollow();
+      signIn({
+        auth: {
+          token: res.data.token,
+          type: 'Bearer'
+        },
+        userState: res.data.follower
+      });
       toast.success(`${isFollowing ? `Unfollowed @${user.username}` : `Followed @${user.username}`}`);
       setIsFollowing(!isFollowing);
     } catch (err) {
