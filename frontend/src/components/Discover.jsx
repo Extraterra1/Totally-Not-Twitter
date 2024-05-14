@@ -31,9 +31,19 @@ const Wrapper = styled.div`
     min-width: 20rem;
     padding: 1rem 2rem;
     border-radius: 2rem;
+    border: 1px solid transparent;
 
     background-color: var(--gray-dark);
     position: relative;
+
+    &:has(input:focus) {
+      background-color: var(--black);
+      border: 1px solid var(--twitter-blue);
+
+      .search-icon {
+        color: var(--twitter-blue);
+      }
+    }
 
     & > .search-icon {
       position: absolute;
