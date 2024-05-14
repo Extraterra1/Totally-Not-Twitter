@@ -28,7 +28,8 @@ const Wrapper = styled.div`
 
   & > .search-box {
     margin-top: 1rem;
-    min-width: 20rem;
+    min-width: 25rem;
+    max-width: 40rem;
     padding: 1rem 2rem;
     border-radius: 2rem;
     border: 1px solid transparent;
