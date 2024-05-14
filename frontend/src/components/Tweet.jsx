@@ -8,7 +8,7 @@ import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
-import { renderToStaticMarkup } from 'react-dom/server';
+import Zoom from 'react-medium-image-zoom';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import { useTimeline } from '../views/Timeline';
@@ -121,6 +121,11 @@ const Tweet = ({ tweet, ...props }) => {
                 </div>
               </div>
               <div className="text">{tweet.content}</div>
+              {tweet.imgUrl && (
+                <div className="image">
+                  <img className="tweet-img" src={tweet.imgUrl} alt="" />
+                </div>
+              )}
               <div className="actions">
                 <span onClick={handleReply}>
                   <Icon className="replies-icon" icon="bx:message-rounded" />
@@ -242,6 +247,12 @@ const Container = styled.div`
 
   & > .content {
     margin-left: 1rem;
+
+    & img.tweet-img {
+      width: 100%;
+      border-radius: 0.5rem;
+    }
+
     & > .username {
       width: min-content;
       white-space: nowrap;
