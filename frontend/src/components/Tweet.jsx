@@ -214,6 +214,8 @@ const Container = styled.div`
   color: var(--light);
   font-size: 1.5rem;
 
+  cursor: pointer;
+
   & .profile-pic {
     display: flex;
     max-width: 3rem;
