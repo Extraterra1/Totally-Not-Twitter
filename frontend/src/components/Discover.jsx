@@ -1,18 +1,26 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Discover = () => {
-  const [search, setSearch] = useState(null);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
 
   const handleChange = (e) => setSearch(e.target.value);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/search?q=${search}`);
+    }
+  };
 
   return (
     <>
       <Wrapper>
         <div className="search-box">
           <Icon className="search-icon" icon="ph:magnifying-glass" />
-          <input type="text" name="search" value={search} placeholder="Search" />
+          <input type="text" name="search" value={search} placeholder="Search" onChange={handleChange} onKeyDown={handleKeyDown} />
         </div>
       </Wrapper>
     </>
