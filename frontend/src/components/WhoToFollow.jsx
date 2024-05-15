@@ -4,8 +4,11 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import { ClipLoader } from 'react-spinners';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useNavigate } from 'react-router-dom';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { useState } from 'react';
 
 import defaultPP from '../assets/profilePic.jpg';
+import { Button as DefaultButton } from './Actions';
 
 const WhoToFollow = () => {
   const authHeader = useAuthHeader();
@@ -50,6 +53,8 @@ const Container = styled.div`
 
 const UserCard = ({ user }) => {
   const navigate = useNavigate();
+  const auth = useAuthUser();
+  const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
 
   return (
     <UCContainer onClick={() => navigate(`/${user.username}`)}>
@@ -61,7 +66,9 @@ const UserCard = ({ user }) => {
           <span className="displayName">{user.displayName}</span>
           <span className="at">@{user.username}</span>
         </div>
-        <Icon className="more-icon" icon="ph:dots-three-bold" />
+        <Button onClick={() => console.log('xdd')} $unfollow={isFollowing} $disabled={auth._id === user._id}>
+          {isFollowing ? 'Unfollow' : 'Follow'}
+        </Button>
       </div>
     </UCContainer>
   );
@@ -95,6 +102,7 @@ const UCContainer = styled.div`
     flex-grow: 1;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
 
     & > .username {
@@ -119,5 +127,22 @@ const UCContainer = styled.div`
 
   &:hover {
     background-color: rgba(231, 233, 234, 0.1);
+  }
+`;
+
+const Button = styled(DefaultButton)`
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  align-self: flex-start;
+  font-weight: 700;
+  min-width: 8rem;
+
+  background-color: ${(props) => (props.$unfollow ? 'var(--danger)' : null)};
+  color: ${(props) => (props.$unfollow ? 'var(--light)' : null)};
+
+  visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
+
+  &:hover {
+    background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : null)};
   }
 `;
