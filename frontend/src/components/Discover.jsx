@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SearchBox from './SearchBox';
+import WhoToFollow from '../WhoToFollow';
 
 const Discover = () => {
   return (
@@ -11,9 +12,7 @@ const Discover = () => {
       <Wrapper>
         <Container>
           <SearchBox />
-          <div className="wtf">
-            <h4 className="title">Who to follow</h4>
-          </div>
+          <WhoToFollow />
         </Container>
       </Wrapper>
     </>
@@ -32,16 +31,4 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-
-  & > .wtf {
-    border: 1px solid var(--gray-dark);
-    border-radius: 2rem;
-    width: 100%;
-    padding: 1rem;
-
-    & > h4.title {
-      color: var(--light);
-      font-size: 1.8rem;
-    }
-  }
 `;
