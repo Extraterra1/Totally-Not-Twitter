@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SearchBox from './SearchBox';
-import WhoToFollow from '../WhoToFollow';
-
+import WhoToFollow from './WhoToFollow';
 const Discover = () => {
   return (
     <>
