@@ -9,7 +9,12 @@ const Discover = () => {
   return (
     <>
       <Wrapper>
-        <SearchBox />
+        <Container>
+          <SearchBox />
+          <div className="wtf">
+            <h1>hey</h1>
+          </div>
+        </Container>
       </Wrapper>
     </>
   );
@@ -21,4 +26,16 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  & > .wtf {
+    border: 1px solid var(--gray-light);
+    border-radius: 2rem;
+    width: 100%;
+  }
 `;
