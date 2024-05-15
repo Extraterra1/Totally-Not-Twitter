@@ -6,6 +6,8 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { useNavigate } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Button as DefaultButton } from './Actions';
@@ -13,7 +15,6 @@ import { Button as DefaultButton } from './Actions';
 const WhoToFollow = () => {
   const authHeader = useAuthHeader();
   const [{ loading, data }] = useAxios({ method: 'GET', url: `${import.meta.env.VITE_API_URL}/users/`, headers: { Authorization: authHeader } });
-  console.log(data);
 
   return (
     <Container>
@@ -54,7 +55,34 @@ const Container = styled.div`
 const UserCard = ({ user }) => {
   const navigate = useNavigate();
   const auth = useAuthUser();
+  const authHeader = useAuthHeader();
+  const signIn = useSignIn();
+
   const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
+
+  const url = `${import.meta.env.VITE_API_URL}/users/${user._id}/${isFollowing ? 'unfollow' : 'follow'}`;
+
+  const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
+
+  const handleFollow = async (e) => {
+    try {
+      e.stopPropagation();
+      e.preventDefault();
+      const res = await executeFollow();
+      signIn({
+        auth: {
+          token: res.data.token,
+          type: 'Bearer'
+        },
+        userState: res.data.follower
+      });
+      toast.success(`${isFollowing ? `Unfollowed @${user.username}` : `Followed @${user.username}`}`);
+      setIsFollowing(!isFollowing);
+    } catch (err) {
+      console.log(err);
+      toast.error('Something went wrong');
+    }
+  };
 
   return (
     <UCContainer onClick={() => navigate(`/${user.username}`)}>
@@ -66,7 +94,7 @@ const UserCard = ({ user }) => {
           <span className="displayName">{user.displayName}</span>
           <span className="at">@{user.username}</span>
         </div>
-        <Button onClick={() => console.log('xdd')} $unfollow={isFollowing} $disabled={auth._id === user._id}>
+        <Button onClick={handleFollow} $unfollow={isFollowing} $disabled={auth._id === user._id}>
           {isFollowing ? 'Unfollow' : 'Follow'}
         </Button>
       </div>
