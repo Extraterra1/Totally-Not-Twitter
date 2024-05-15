@@ -12,7 +12,7 @@ const Discover = () => {
         <Container>
           <SearchBox />
           <div className="wtf">
-            <h1>hey</h1>
+            <h4 className="title">Who to follow</h4>
           </div>
         </Container>
       </Wrapper>
@@ -34,8 +34,14 @@ const Container = styled.div`
   gap: 3rem;
 
   & > .wtf {
-    border: 1px solid var(--gray-light);
+    border: 1px solid var(--gray-dark);
     border-radius: 2rem;
     width: 100%;
+    padding: 1rem;
+
+    & > h4.title {
+      color: var(--light);
+      font-size: 1.8rem;
+    }
   }
 `;
