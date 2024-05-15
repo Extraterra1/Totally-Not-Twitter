@@ -5,7 +5,7 @@ import { ClipLoader } from 'react-spinners';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { useNavigate } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
@@ -64,6 +64,10 @@ const UserCard = ({ user }) => {
 
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
 
+  useEffect(() => {
+    setIsFollowing(auth.following.includes(user._id));
+  }, [auth]);
+
   const handleFollow = async (e) => {
     try {
       e.stopPropagation();
@@ -79,7 +83,7 @@ const UserCard = ({ user }) => {
       toast.success(`${isFollowing ? `Unfollowed @${user.username}` : `Followed @${user.username}`}`);
       setIsFollowing(!isFollowing);
     } catch (err) {
-      console.log(err);
+      if (err.message === 'canceled') return toast.error(isFollowing ? `You already unfollowed @${user.username}` : `You already follow @${user.username}`);
       toast.error('Something went wrong');
     }
   };
