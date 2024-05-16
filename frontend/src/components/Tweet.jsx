@@ -250,9 +250,14 @@ const Container = styled.div`
   & > .content {
     margin-left: 1rem;
 
-    & img.tweet-img {
-      width: 100%;
-      border-radius: 0.5rem;
+    & > .image {
+      max-width: ${(props) => (props.$noActions ? '50rem' : null)};
+      object-fit: contain;
+      & img.tweet-img {
+        width: 100%;
+        border-radius: 0.5rem;
+        object-fit: contain;
+      }
     }
 
     & > .username {

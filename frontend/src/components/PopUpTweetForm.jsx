@@ -70,7 +70,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
   };
 
   return (
-    <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
+    <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={{ content: { ...modalStyles.content }, overlay: { ...modalStyles.overlay } }}>
       <Wrapper>
         {replyTo && <Tweet $reply $noActions tweet={replyTo} />}
         <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
@@ -209,12 +209,12 @@ const Wrapper = styled.div`
 
 const modalStyles = {
   content: {
-    top: '15%',
+    top: '2rem',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    transform: 'translate( -50%)',
     border: 0,
     backgroundColor: 'transparent',
     padding: '0'
