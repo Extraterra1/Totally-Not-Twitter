@@ -74,6 +74,11 @@ const Tweet = ({ tweet, ...props }) => {
     openTweetModal(tweet);
   };
 
+  const handleClick = () => {
+    if (props.$noActions) return;
+    navigate(`/${tweet.author.username}/status/${tweet._id}`);
+  };
+
   useEffect(() => {
     setLikes(tweet.likes.length);
   }, []);
@@ -94,7 +99,7 @@ const Tweet = ({ tweet, ...props }) => {
           <Tooltip id={`user-popup-${tweet._id}`} style={{ padding: 0, background: 'transparent' }} delayShow={500} delayHide={0} clickable noArrow opacity={1}>
             <UserPopup user={tweet.author} />
           </Tooltip>
-          <Container onClick={() => navigate(`/${tweet.author.username}/status/${tweet._id}`)} {...props}>
+          <Container onClick={handleClick} {...props}>
             <div data-tooltip-id={`user-popup-${tweet._id}`} className="profile-pic">
               <Link to={`/${tweet.author.username}`}>
                 <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
