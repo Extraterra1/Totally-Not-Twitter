@@ -219,7 +219,7 @@ const Container = styled.div`
   color: var(--light);
   font-size: 1.5rem;
 
-  cursor: pointer;
+  cursor: ${(props) => (props.$noActions ? null : 'pointer')};
 
   & .profile-pic {
     display: flex;
