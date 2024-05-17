@@ -102,7 +102,7 @@ const Tweet = ({ tweet, ...props }) => {
           </Tooltip>
           <Container onClick={handleClick} {...props}>
             <div data-tooltip-id={`user-popup-${tweet._id}`} className="profile-pic">
-              <Link to={`/${tweet.author.username}`}>
+              <Link onClick={(e) => e.stopPropagation()} to={`/${tweet.author.username}`}>
                 <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
               </Link>
               <div className="separator-container">
@@ -113,7 +113,7 @@ const Tweet = ({ tweet, ...props }) => {
             <div className="content">
               <div className="username">
                 <div>
-                  <Link className="tweet-author" to={`/${tweet.author.username}`}>
+                  <Link onClick={(e) => e.stopPropagation()} className="tweet-author" to={`/${tweet.author.username}`}>
                     <span data-tooltip-id={`user-popup-${tweet._id}`}>{tweet.author.displayName}</span>
                     <span>@{tweet.author.username}</span>
                   </Link>
