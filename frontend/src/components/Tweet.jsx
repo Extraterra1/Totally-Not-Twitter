@@ -8,10 +8,10 @@ import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
-import Zoom from 'react-medium-image-zoom';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import { useTimeline } from '../views/Timeline';
+import { useGlobal } from '../Router';
 
 import Modal from './Modal';
 import { Button as BaseButton } from './Actions';
@@ -19,7 +19,8 @@ import defaultPP from '../assets/profilePic.jpg';
 import UserPopup from './UserPopup';
 
 const Tweet = ({ tweet, ...props }) => {
-  const { openTweetModal, setTweets } = useTimeline();
+  const { setTweets } = useTimeline();
+  const { openTweetModal } = useGlobal();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const navigate = useNavigate();

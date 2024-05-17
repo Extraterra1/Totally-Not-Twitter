@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { useState } from 'react';
 
 import { useGlobal } from '../Router';
 
