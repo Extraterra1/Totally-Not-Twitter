@@ -18,7 +18,7 @@ import Tweet from './Tweet';
 const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
-  const { setTweets } = useTimeline();
+  const { setTweets } = update ? useTimeline() : { setTweets: null };
 
   const [isFinished, setIsFinished] = useState(false);
 

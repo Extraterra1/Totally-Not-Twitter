@@ -16,7 +16,7 @@ const Profile = () => {
       <Navbar />
       <h1>{username}</h1>
       <Discover />
-      <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} />
+      <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
     </Wrapper>
   );
 };
