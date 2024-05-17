@@ -15,7 +15,7 @@ import { Input, FileInput, SubmitButton } from './TweetForm';
 import { useTimeline } from '../views/Timeline';
 import Tweet from './Tweet';
 
-const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
+const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const { setTweets } = useTimeline();
@@ -61,7 +61,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo }) => {
       setSubmitting(false);
       resetForm();
       delayedFinish();
-      setTweets((tweets) => [res.data.tweet, ...tweets]);
+      if (update) setTweets((tweets) => [res.data.tweet, ...tweets]);
       closeModal();
       toast.success('Tweet sent');
     } catch (err) {
