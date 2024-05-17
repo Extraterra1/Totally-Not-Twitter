@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import PopUpTweetForm from '../components/PopUpTweetForm';
 import { useGlobal } from '../Router';
+import { Toaster } from 'react-hot-toast';
 
 import Navbar from '../components/Navbar';
 import Discover from '../components/Discover';
@@ -17,6 +18,7 @@ const Profile = () => {
       <h1>{username}</h1>
       <Discover />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
+      <Toaster toastOptions={toastOptions} />
     </Wrapper>
   );
 };
@@ -38,3 +40,7 @@ const Wrapper = styled.main`
     font-size: 1.6rem;
   }
 `;
+
+const toastOptions = {
+  success: { style: { background: 'var(--twitter-blue)', color: 'var(--light)', fontSize: '1.5rem', fontWeight: 400 }, position: 'bottom-center' }
+};

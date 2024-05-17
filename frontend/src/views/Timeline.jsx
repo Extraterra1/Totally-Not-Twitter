@@ -40,7 +40,7 @@ const Timeline = () => {
     <>
       <TimelineContext.Provider value={{ loading, tweets, setTweets, offset, setOffset, refreshTweets }}>
         <Wrapper>
-          <Toaster position="top center" toastOptions={toastOptions} />
+          <Toaster toastOptions={toastOptions} />
           <Navbar />
           <Feed />
           <Discover />
