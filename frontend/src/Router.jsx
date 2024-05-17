@@ -3,6 +3,7 @@ import AuthOutlet from '@auth-kit/react-router/AuthOutlet';
 
 import Landing from './views/Landing';
 import Timeline from './views/Timeline';
+import Profile from './views/Profile';
 
 const Router = () => {
   const router = createBrowserRouter([
