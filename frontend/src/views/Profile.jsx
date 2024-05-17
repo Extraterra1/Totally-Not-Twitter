@@ -1,17 +1,22 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
+import PopUpTweetForm from '../components/PopUpTweetForm';
+import { useGlobal } from '../Router';
+
 import Navbar from '../components/Navbar';
 import Discover from '../components/Discover';
 
 const Profile = () => {
   const { username } = useParams();
+  const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();
 
   return (
     <Wrapper>
       <Navbar />
       <h1>{username}</h1>
       <Discover />
+      <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} />
     </Wrapper>
   );
 };
