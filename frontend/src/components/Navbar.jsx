@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
 
-import { useTimeline } from '../views/Timeline';
+import { useGlobal } from '../Router';
 
 import TTNLogo from '../assets/ttn-logo.png';
 import UserCard from '../components/UserCard';
@@ -12,7 +12,7 @@ import { Button as BaseButton } from '../components/Actions';
 
 const Navbar = () => {
   const auth = useAuthUser();
-  const { openTweetModal } = useTimeline();
+  const { openTweetModal } = useGlobal();
 
   return (
     <>
