@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 import Feed from '../components/Feed';
 import Discover from '../components/Discover';
 import PopUpTweetForm from '../components/PopUpTweetForm';
+import { useGlobal } from '../Router';
 
 const TimelineContext = createContext();
 
@@ -17,18 +18,12 @@ export const useTimeline = () => {
 };
 
 const Timeline = () => {
+  const { replyTo, openTweetModal, modalIsOpen, setModalIsOpen } = useGlobal();
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
 
   const [offset, setOffset] = useState(0);
   const [tweets, setTweets] = useState([]);
-  const [replyTo, setReplyTo] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const openTweetModal = (reply) => {
-    setReplyTo(reply);
-    setModalIsOpen(true);
-  };
 
   const [{ loading, data }, refreshTweets] = useAxios({
     url: import.meta.env.VITE_API_URL + `/users/${auth._id}/timeline`,

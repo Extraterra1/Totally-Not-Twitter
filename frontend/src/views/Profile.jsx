@@ -9,9 +9,9 @@ const Profile = () => {
 
   return (
     <Wrapper>
-      <div className=""></div>
+      <Navbar />
       <h1>{username}</h1>
-      <div className=""></div>
+      <Discover />
     </Wrapper>
   );
 };
