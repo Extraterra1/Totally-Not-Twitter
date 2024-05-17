@@ -18,6 +18,10 @@ const Router = () => {
           element: <Timeline />
         }
       ]
+    },
+    {
+      path: '/:username',
+      element: <Profile />
     }
   ]);
 
