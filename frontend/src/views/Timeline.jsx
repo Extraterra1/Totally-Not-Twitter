@@ -18,7 +18,7 @@ export const useTimeline = () => {
 };
 
 const Timeline = () => {
-  const { replyTo, openTweetModal, modalIsOpen, setModalIsOpen } = useGlobal();
+  const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();
   const authHeader = useAuthHeader();
   const auth = useAuthUser();
 
