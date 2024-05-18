@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import { ClipLoader } from 'react-spinners';
-import { Icon } from '@iconify/react/dist/iconify.js';
 import { useNavigate } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState, useEffect } from 'react';

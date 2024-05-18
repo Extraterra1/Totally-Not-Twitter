@@ -1,7 +1,4 @@
 import styled from 'styled-components';
-import { Icon } from '@iconify/react/dist/iconify.js';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import SearchBox from './SearchBox';
 import WhoToFollow from './WhoToFollow';

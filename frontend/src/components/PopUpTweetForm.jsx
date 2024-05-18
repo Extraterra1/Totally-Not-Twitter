@@ -1,6 +1,6 @@
 import Modal from './Modal';
 import styled from 'styled-components';
-import { Form, useField, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
