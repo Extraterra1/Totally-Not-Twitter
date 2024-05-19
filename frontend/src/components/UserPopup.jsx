@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
