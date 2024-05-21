@@ -143,3 +143,11 @@ exports.getUsers = asyncHandler(async (req, res) => {
 
   return res.json(users);
 });
+
+exports.getUser = asyncHandler(async (req, res) => {
+  const user = await User.find({ username: req.query.username }).select('displayName username profilePic followers following createdAt');
+
+  if (!user) return res.status(404).json({ err: 'User not found' });
+
+  return res.json({ user: { ...user, followers: user.followers.length, following: user.following.length } });
+});
