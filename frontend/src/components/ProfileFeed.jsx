@@ -34,6 +34,14 @@ const ProfileFeed = () => {
             <Icon icon="ph:calendar-blank" />
             <span>Joined {moment(data.user.createdAt).format('MMMM yyyy')}</span>
           </span>
+          <div className="follow-data">
+            <span className="number">
+              {data.user.following} <span>Following</span>
+            </span>
+            <span className="number">
+              {data.user.followers} <span>Followers</span>
+            </span>
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -92,6 +100,23 @@ const Wrapper = styled.div`
         color: var(--gray);
         font-size: 1.5rem;
         margin-top: 2rem;
+      }
+
+      & > .follow-data {
+        display: flex;
+        gap: 2rem;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+
+        & > span.number {
+          color: var(--white);
+          font-weight: 700;
+
+          & > span {
+            color: var(--gray);
+            font-weight: 400;
+          }
+        }
       }
     }
   }
