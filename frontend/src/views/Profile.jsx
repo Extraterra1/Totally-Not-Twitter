@@ -1,21 +1,25 @@
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useAxios from 'axios-hooks';
+import { Toaster } from 'react-hot-toast';
 
 import PopUpTweetForm from '../components/PopUpTweetForm';
 import { useGlobal } from '../Router';
-import { Toaster } from 'react-hot-toast';
 
 import Navbar from '../components/Navbar';
 import Discover from '../components/Discover';
+import ProfileFeed from '../components/ProfileFeed';
 
 const Profile = () => {
   const { username } = useParams();
   const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();
 
+  const [{ data, loading }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
+
   return (
     <Wrapper>
       <Navbar />
-      <h1>{username}</h1>
+      <ProfileFeed />
       <Discover />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
       <Toaster toastOptions={toastOptions} />
