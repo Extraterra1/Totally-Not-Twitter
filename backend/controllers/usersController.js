@@ -145,9 +145,9 @@ exports.getUsers = asyncHandler(async (req, res) => {
 });
 
 exports.getUser = asyncHandler(async (req, res) => {
-  const user = await User.find({ username: req.params.username }).select('displayName username profilePic followers following createdAt');
+  const user = await User.findOne({ username: req.params.username }).select('displayName username profilePic followers following createdAt');
 
   if (!user) return res.status(404).json({ err: 'User not found' });
 
-  return res.json({ user: { ...user, followers: user.followers.length, following: user.following.length } });
+  return res.json({ user: { ...user.toObject(), followers: user.followers.length, following: user.following.length } });
 });
