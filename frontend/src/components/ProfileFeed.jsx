@@ -53,6 +53,8 @@ export default ProfileFeed;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  border-left: 1px solid var(--gray-dark);
+  border-right: 1px solid var(--gray-dark);
 
   & > .spinner {
     align-self: center;
