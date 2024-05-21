@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import { useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
+import { Icon } from '@iconify/react/dist/iconify.js';
+import moment from 'moment';
 
 import profilePic from '../assets/profilePic.jpg';
 
@@ -25,6 +27,14 @@ const ProfileFeed = () => {
           <img src={data.user.profilePic || profilePic} />
           <Button>Follow</Button>
         </div>
+        <div className="user-info">
+          <span className="displayName">{data.user.displayName}</span>
+          <span className="username">@{data.user.username}</span>
+          <span className="joined">
+            <Icon icon="ph:calendar-blank" />
+            <span>Joined {moment(data.user.createdAt).format('MMMM yyyy')}</span>
+          </span>
+        </div>
       </div>
     </Wrapper>
   );
@@ -43,16 +53,45 @@ const Wrapper = styled.div`
 
   & > .header {
     padding: 2rem;
+
     & > .profile-pic {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+
+      padding: 0 1rem;
 
       & > img {
         width: 10rem;
         border-radius: 50%;
 
         object-fit: cover;
+      }
+    }
+
+    & > .user-info {
+      display: flex;
+      flex-direction: column;
+
+      & > span.displayName {
+        font-weight: 700;
+        color: var(--light);
+        font-size: 2rem;
+      }
+
+      & > span.username {
+        color: var(--gray);
+        font-size: 1.5rem;
+      }
+
+      & > span.joined {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+
+        color: var(--gray);
+        font-size: 1.5rem;
+        margin-top: 2rem;
       }
     }
   }
