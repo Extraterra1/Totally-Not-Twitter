@@ -3,6 +3,8 @@ import useAxios from 'axios-hooks';
 import { useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 
+import profilePic from '../assets/profilePic.jpg';
+
 const ProfileFeed = () => {
   const { username } = useParams();
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
@@ -14,9 +16,16 @@ const ProfileFeed = () => {
       </Wrapper>
     );
 
+  // TODO: ERROR HANDLING
+
   return (
     <Wrapper>
-      <h1>{data.user.username}</h1>
+      <div className="header">
+        <div className="profile-pic">
+          <img src={data.user.profilePic || profilePic} />
+          <Button>Follow</Button>
+        </div>
+      </div>
     </Wrapper>
   );
 };
@@ -31,4 +40,25 @@ const Wrapper = styled.div`
     align-self: center;
     margin-top: 3rem;
   }
+
+  & > .header {
+    padding: 2rem;
+    & > .profile-pic {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+
+      & > img {
+        width: 10rem;
+        border-radius: 50%;
+
+        object-fit: cover;
+      }
+    }
+  }
+`;
+
+const Button = styled.a`
+  background-color: var(--light);
+  color: var(--dark);
 `;
