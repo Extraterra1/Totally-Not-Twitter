@@ -61,4 +61,14 @@ const Wrapper = styled.div`
 const Button = styled.a`
   background-color: var(--light);
   color: var(--dark);
+  padding: 0.5rem 2rem;
+  font-weight: 700;
+  border-radius: 2rem;
+  font-size: 1.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--light-hover);
+  }
 `;
