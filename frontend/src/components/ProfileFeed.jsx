@@ -62,18 +62,21 @@ const Wrapper = styled.div`
   }
 
   & > .header {
-    padding: 2rem;
+    border-bottom: 1px solid var(--gray-dark);
 
     & > .profile-pic {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
+      background-color: var(--twitter-blue);
 
-      padding: 0 1rem;
+      padding: 2rem;
 
       & > img {
         width: 10rem;
         border-radius: 50%;
+
+        border: 4px solid black;
 
         object-fit: cover;
       }
@@ -82,6 +85,7 @@ const Wrapper = styled.div`
     & > .user-info {
       display: flex;
       flex-direction: column;
+      padding: 2rem;
 
       & > span.displayName {
         font-weight: 700;
