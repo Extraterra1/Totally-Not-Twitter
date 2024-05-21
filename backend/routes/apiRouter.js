@@ -74,4 +74,7 @@ router.patch('/users/:id', passport.authenticate('jwt', { session: false }), use
 // GET RECOMMENDED USERS
 router.get('/users/', passport.authenticate('jwt', { session: false }), usersController.getUsers);
 
+// GET USER DATA
+router.get('/users/:username', usersController.getUser);
+
 module.exports = router;
