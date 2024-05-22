@@ -58,7 +58,7 @@ const ProfileFeed = () => {
         <div className="feed">
           <div className="error-message">
             <div className="message-container">
-              <h2>{error.response.status === 404 ? "This account doesn't exist" : 'Something went wrong'}</h2>
+              <h2>{error?.response?.status === 404 ? "This account doesn't exist" : 'Something went wrong'}</h2>
               <span>Please try again.</span>
             </div>
           </div>

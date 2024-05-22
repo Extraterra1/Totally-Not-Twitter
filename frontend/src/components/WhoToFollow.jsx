@@ -13,7 +13,17 @@ import { Button as DefaultButton } from './Actions';
 
 const WhoToFollow = () => {
   const authHeader = useAuthHeader();
-  const [{ loading, data }] = useAxios({ method: 'GET', url: `${import.meta.env.VITE_API_URL}/users/`, headers: { Authorization: authHeader } });
+  const [{ loading, data, error }] = useAxios({ method: 'GET', url: `${import.meta.env.VITE_API_URL}/users/`, headers: { Authorization: authHeader } });
+
+  if (error)
+    return (
+      <Container>
+        <h4 className="title">Who to follow</h4>
+        <div className="users">
+          <ClipLoader className="spinner" loading={loading} size={30} color="var(--twitter-blue)" />
+        </div>
+      </Container>
+    );
 
   return (
     <Container>
