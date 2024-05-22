@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import moment from 'moment';
+import { useState } from 'react';
 
 import Tweet from './Tweet';
 
@@ -16,6 +17,8 @@ const ProfileFeed = () => {
     { url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' },
     { useCache: false }
   );
+
+  const [activeMenu, setActiveMenu] = useState('tweets');
 
   if (loading)
     return (
@@ -52,8 +55,8 @@ const ProfileFeed = () => {
       </div>
       <div className="feed">
         <div className="header">
-          <span className="active">Tweets</span>
-          <span>Likes</span>
+          <span className={activeMenu === 'tweets' ? 'active' : null}>Tweets</span>
+          <span className={activeMenu === 'likes' ? 'active' : null}>Likes</span>
         </div>
         <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
         {!tweetsLoading && tweetsData && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
