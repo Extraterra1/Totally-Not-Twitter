@@ -51,8 +51,13 @@ const ProfileFeed = () => {
         </div>
       </div>
       <div className="feed">
+        <div className="header">
+          <span>Tweets</span>
+          <span>Likes</span>
+        </div>
         <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
         {!tweetsLoading && tweetsData && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
+        {!tweetsLoading && tweetsData && tweetsData.tweets.length === 0 ? <h2 className="no-tweets">Nothing to see here...</h2> : null}
       </div>
     </Wrapper>
   );
@@ -140,6 +145,18 @@ const Wrapper = styled.div`
   & > .feed {
     display: flex;
     flex-direction: column;
+
+    & > .header {
+      display: flex;
+      justify-content: space-around;
+      color: var(--light);
+    }
+
+    & > h2.no-tweets {
+      color: var(--light);
+      font-size: 1.5rem;
+      margin: 5rem auto;
+    }
   }
 `;
 
