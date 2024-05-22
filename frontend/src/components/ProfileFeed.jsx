@@ -14,8 +14,6 @@ const ProfileFeed = () => {
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' });
 
-  console.log(tweetsData);
-
   if (loading)
     return (
       <Wrapper>
@@ -51,7 +49,7 @@ const ProfileFeed = () => {
       </div>
       <div className="feed">
         <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
-        {!loading && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
+        {!tweetsLoading && tweetsData && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
       </div>
     </Wrapper>
   );

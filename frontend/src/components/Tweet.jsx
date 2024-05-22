@@ -88,9 +88,9 @@ const Tweet = ({ tweet, update = true, ...props }) => {
 
   return (
     <>
-      {tweet.tweetType === 'reply' && !props.$reply && <Tweet $reply tweet={tweet.replyTo} />}
+      {tweet.tweetType === 'reply' && !props.$reply && <Tweet $reply tweet={tweet.replyTo} update={update} />}
       {tweet.tweetType === 'retweet' ? (
-        <Tweet $rt tweet={tweet.retweetedTweet} $RTby={tweet.author} />
+        <Tweet $rt tweet={tweet.retweetedTweet} $RTby={tweet.author} update={update} />
       ) : (
         <div>
           {props.$rt && (
