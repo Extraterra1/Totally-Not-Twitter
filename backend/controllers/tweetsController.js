@@ -191,13 +191,17 @@ exports.getExplore = asyncHandler(async (req, res) => {
 });
 
 exports.getLikedTweets = asyncHandler(async (req, res) => {
-  const { id: userID } = req.params;
-  if (!isValidObjectId(userID)) return res.status(404).json({ err: 'User not found' });
+  let user;
 
-  const user = await User.findById(userID);
+  if (isValidObjectId(req.params.id)) {
+    user = await User.findById(req.params.id);
+  } else {
+    user = await User.findOne({ username: req.params.id });
+  }
+
   if (!user) return res.status(404).json({ err: 'User not found' });
 
-  const tweets = await Tweet.find({ likes: userID })
+  const tweets = await Tweet.find({ likes: user._id })
     .populate({ path: 'replyTo', populate: { path: 'author', select: '_id displayName username profilePic' } })
     .populate('author', 'displayName username profilePic')
     .sort({ createdAt: -1 });
