@@ -52,7 +52,7 @@ const ProfileFeed = () => {
       </div>
       <div className="feed">
         <div className="header">
-          <span>Tweets</span>
+          <span className="active">Tweets</span>
           <span>Likes</span>
         </div>
         <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
@@ -147,9 +147,32 @@ const Wrapper = styled.div`
     flex-direction: column;
 
     & > .header {
-      display: flex;
-      justify-content: space-around;
-      color: var(--light);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      color: var(--gray);
+      font-size: 1.5rem;
+      border-bottom: 1px solid var(--gray-dark);
+
+      & > span {
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &.active {
+          color: var(--light);
+          font-weight: 700;
+          border-bottom: 2px solid var(--twitter-blue);
+        }
+
+        &:first-child {
+          border-right: 1px solid var(--gray-dark);
+        }
+
+        &:hover {
+          background-color: var(--gray);
+        }
+      }
     }
 
     & > h2.no-tweets {
