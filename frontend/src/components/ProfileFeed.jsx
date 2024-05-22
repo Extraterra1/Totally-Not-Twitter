@@ -77,6 +77,7 @@ const ProfileFeed = () => {
         </div>
         <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
         {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
+        {!likesLoading && likesData && activeMenu === 'likes' && likesData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
         {!tweetsLoading && (tweetsData?.tweets?.length === 0 || likesData?.tweets?.length === 0) && <h2 className="no-tweets">Nothing to see here...</h2>}
       </div>
     </Wrapper>
