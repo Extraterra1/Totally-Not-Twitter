@@ -40,7 +40,29 @@ const ProfileFeed = () => {
       </Wrapper>
     );
 
-  // TODO: ERROR HANDLING
+  // TODO: FOLLOW BUTTON
+
+  if (error)
+    return (
+      <Wrapper>
+        <div className="header">
+          <div className="profile-pic not-found">
+            <img src={profilePic} />
+          </div>
+          <div className="user-info">
+            <span className="displayName">@{username}</span>
+          </div>
+        </div>
+        <div className="feed">
+          <div className="error-message">
+            <div className="message-container">
+              <h2>This account doesn't exist</h2>
+              <span>Try searching for another.</span>
+            </div>
+          </div>
+        </div>
+      </Wrapper>
+    );
 
   return (
     <Wrapper>
@@ -108,6 +130,10 @@ const Wrapper = styled.div`
 
       padding: 2rem;
 
+      &.not-found {
+        background-color: var(--gray);
+      }
+
       & > img {
         width: 10rem;
         border-radius: 50%;
@@ -166,6 +192,22 @@ const Wrapper = styled.div`
   & > .feed {
     display: flex;
     flex-direction: column;
+
+    & > .error-message {
+      color: var(--light);
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      margin-top: 10rem;
+      font-size: 1.7rem;
+
+      & > .message-container {
+        grid-column: 2/3;
+
+        & > span {
+          color: var(--gray);
+        }
+      }
+    }
 
     & > .header {
       display: grid;
