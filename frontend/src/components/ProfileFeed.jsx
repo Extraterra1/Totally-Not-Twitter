@@ -22,8 +22,6 @@ const ProfileFeed = () => {
     { manual: true }
   );
 
-  console.log(error);
-
   const [activeMenu, setActiveMenu] = useState('tweets');
 
   const handleMenuClick = async () => {
@@ -236,6 +234,7 @@ const Wrapper = styled.div`
 
         &:hover {
           background-color: var(--gray);
+          color: var(--gray-light);
         }
       }
     }
