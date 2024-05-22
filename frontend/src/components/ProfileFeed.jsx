@@ -10,6 +10,7 @@ import profilePic from '../assets/profilePic.jpg';
 const ProfileFeed = () => {
   const { username } = useParams();
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
+  const [{ data: tweetsData, loading: tweetsLoading }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' });
 
   if (loading)
     return (
@@ -44,6 +45,7 @@ const ProfileFeed = () => {
           </div>
         </div>
       </div>
+      <div className="feed"></div>
     </Wrapper>
   );
 };
