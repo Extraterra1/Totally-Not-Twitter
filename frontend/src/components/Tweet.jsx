@@ -18,8 +18,10 @@ import { Button as BaseButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 import UserPopup from './UserPopup';
 
-const Tweet = ({ tweet, ...props }) => {
-  const { setTweets } = useTimeline();
+const Tweet = ({ tweet, update = true, ...props }) => {
+  let setTweets = null;
+  if (update) ({ setTweets } = useTimeline());
+
   const { openTweetModal } = useGlobal();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
@@ -48,7 +50,7 @@ const Tweet = ({ tweet, ...props }) => {
 
     const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: tweet._id } });
 
-    setTweets((tweets) => [res.data.tweet, ...tweets]);
+    if (update) setTweets((tweets) => [res.data.tweet, ...tweets]);
     setIsRetweeted(true);
     toast.success('Retweeted!');
 

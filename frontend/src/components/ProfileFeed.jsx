@@ -5,12 +5,16 @@ import { ClipLoader } from 'react-spinners';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import moment from 'moment';
 
+import Tweet from './Tweet';
+
 import profilePic from '../assets/profilePic.jpg';
 
 const ProfileFeed = () => {
   const { username } = useParams();
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' });
+
+  console.log(tweetsData);
 
   if (loading)
     return (
@@ -46,7 +50,8 @@ const ProfileFeed = () => {
         </div>
       </div>
       <div className="feed">
-        <ClipLoader className="spinner" loading={true} color="var(--twitter-blue)" size={45} />
+        <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
+        {!loading && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
       </div>
     </Wrapper>
   );
