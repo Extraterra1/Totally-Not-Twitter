@@ -17,8 +17,21 @@ const ProfileFeed = () => {
     { url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' },
     { useCache: false }
   );
+  const [{ data: likesData, loading: likesLoading }, fetchLikes] = useAxios(
+    { url: `${import.meta.env.VITE_API_URL}/users/${username}/liked`, method: 'GET' },
+    { manual: true }
+  );
 
   const [activeMenu, setActiveMenu] = useState('tweets');
+
+  const handleMenuClick = async () => {
+    if (activeMenu === 'tweets') {
+      if (!likesData) await fetchLikes();
+      setActiveMenu('likes');
+    } else {
+      setActiveMenu('tweets');
+    }
+  };
 
   if (loading)
     return (
@@ -55,12 +68,16 @@ const ProfileFeed = () => {
       </div>
       <div className="feed">
         <div className="header">
-          <span className={activeMenu === 'tweets' ? 'active' : null}>Tweets</span>
-          <span className={activeMenu === 'likes' ? 'active' : null}>Likes</span>
+          <span onClick={handleMenuClick} className={activeMenu === 'tweets' ? 'active' : null}>
+            Tweets
+          </span>
+          <span onClick={handleMenuClick} className={activeMenu === 'likes' ? 'active' : null}>
+            Likes
+          </span>
         </div>
         <ClipLoader className="spinner" loading={tweetsLoading} color="var(--twitter-blue)" size={45} />
-        {!tweetsLoading && tweetsData && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
-        {!tweetsLoading && tweetsData && tweetsData.tweets.length === 0 ? <h2 className="no-tweets">Nothing to see here...</h2> : null}
+        {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
+        {!tweetsLoading && (tweetsData?.tweets?.length === 0 || likesData?.tweets?.length === 0) && <h2 className="no-tweets">Nothing to see here...</h2>}
       </div>
     </Wrapper>
   );
