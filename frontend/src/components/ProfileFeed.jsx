@@ -22,6 +22,8 @@ const ProfileFeed = () => {
     { manual: true }
   );
 
+  console.log(error);
+
   const [activeMenu, setActiveMenu] = useState('tweets');
 
   const handleMenuClick = async () => {
@@ -56,8 +58,8 @@ const ProfileFeed = () => {
         <div className="feed">
           <div className="error-message">
             <div className="message-container">
-              <h2>This account doesn't exist</h2>
-              <span>Try searching for another.</span>
+              <h2>{error.response.status === 404 ? "This account doesn't exist" : 'Something went wrong'}</h2>
+              <span>Please try again.</span>
             </div>
           </div>
         </div>
