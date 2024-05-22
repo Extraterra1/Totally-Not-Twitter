@@ -45,7 +45,9 @@ const ProfileFeed = () => {
           </div>
         </div>
       </div>
-      <div className="feed"></div>
+      <div className="feed">
+        <ClipLoader className="spinner" loading={true} color="var(--twitter-blue)" size={45} />
+      </div>
     </Wrapper>
   );
 };
@@ -58,7 +60,7 @@ const Wrapper = styled.div`
   border-left: 1px solid var(--gray-dark);
   border-right: 1px solid var(--gray-dark);
 
-  & > .spinner {
+  & .spinner {
     align-self: center;
     margin-top: 3rem;
   }
@@ -127,6 +129,11 @@ const Wrapper = styled.div`
         }
       }
     }
+  }
+
+  & > .feed {
+    display: flex;
+    flex-direction: column;
   }
 `;
 
