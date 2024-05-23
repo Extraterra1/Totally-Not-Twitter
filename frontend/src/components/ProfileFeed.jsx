@@ -6,6 +6,9 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import toast from 'react-hot-toast';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 import Tweet from './Tweet';
 
@@ -13,8 +16,12 @@ import profilePic from '../assets/profilePic.jpg';
 
 const ProfileFeed = () => {
   const auth = useAuthUser();
+  const authHeader = useAuthHeader();
+  const signIn = useSignIn();
   const { username } = useParams();
+
   const [isFollowing, setIsFollowing] = useState(null);
+  const [activeMenu, setActiveMenu] = useState('tweets');
 
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
@@ -25,12 +32,11 @@ const ProfileFeed = () => {
     { url: `${import.meta.env.VITE_API_URL}/users/${username}/liked`, method: 'GET' },
     { manual: true }
   );
+  const [, executeFollow] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
 
   useEffect(() => {
     if (data) setIsFollowing(auth.following.includes(data.user._id));
   }, [data]);
-
-  const [activeMenu, setActiveMenu] = useState('tweets');
 
   const handleMenuClick = async () => {
     if (activeMenu === 'tweets') {
@@ -38,6 +44,25 @@ const ProfileFeed = () => {
       setActiveMenu('likes');
     } else {
       setActiveMenu('tweets');
+    }
+  };
+
+  const handleFollow = async () => {
+    try {
+      const url = `${import.meta.env.VITE_API_URL}/users/${data.user._id}/${isFollowing ? 'unfollow' : 'follow'}`;
+      const res = await executeFollow({ url });
+      signIn({
+        auth: {
+          token: res.data.token,
+          type: 'Bearer'
+        },
+        userState: res.data.follower
+      });
+      toast.success(`${isFollowing ? `Unfollowed @${user.username}` : `Followed @${user.username}`}`);
+      setIsFollowing(!isFollowing);
+    } catch (err) {
+      console.log(err);
+      toast.error('Something went wrong');
     }
   };
 
@@ -77,7 +102,7 @@ const ProfileFeed = () => {
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
-          <Button $unfollow={isFollowing} $disabled={auth._id === data.user._id}>
+          <Button onClick={handleFollow} $unfollow={isFollowing} $disabled={auth._id === data.user._id}>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         </div>
