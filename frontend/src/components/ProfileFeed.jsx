@@ -77,7 +77,9 @@ const ProfileFeed = () => {
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
-          <Button>Follow</Button>
+          <Button $unfollow={isFollowing} $disabled={auth._id === data.user._id}>
+            {isFollowing ? 'Unfollow' : 'Follow'}
+          </Button>
         </div>
         <div className="user-info">
           <span className="displayName">{data.user.displayName}</span>
@@ -256,8 +258,8 @@ const Wrapper = styled.div`
 `;
 
 const Button = styled.a`
-  background-color: var(--light);
-  color: var(--dark);
+  background-color: ${(props) => (props.$unfollow ? 'var(--danger)' : 'var(--light)')};
+  color: ${(props) => (props.$unfollow ? 'var(--light)' : 'var(--dark)')};
   padding: 0.5rem 2rem;
   font-weight: 700;
   border-radius: 2rem;
@@ -265,7 +267,9 @@ const Button = styled.a`
   transition: all 0.2s;
   cursor: pointer;
 
+  visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
+
   &:hover {
-    background-color: var(--light-hover);
+    background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : 'var(--light-hover)')};
   }
 `;
