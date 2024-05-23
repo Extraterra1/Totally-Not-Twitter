@@ -4,14 +4,18 @@ import { useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import moment from 'moment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import Tweet from './Tweet';
 
 import profilePic from '../assets/profilePic.jpg';
 
 const ProfileFeed = () => {
+  const auth = useAuthUser();
   const { username } = useParams();
+  const [isFollowing, setIsFollowing] = useState(null);
+
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' },
@@ -21,6 +25,10 @@ const ProfileFeed = () => {
     { url: `${import.meta.env.VITE_API_URL}/users/${username}/liked`, method: 'GET' },
     { manual: true }
   );
+
+  useEffect(() => {
+    if (data) setIsFollowing(auth.following.includes(data.user._id));
+  }, [data]);
 
   const [activeMenu, setActiveMenu] = useState('tweets');
 
