@@ -58,7 +58,7 @@ const ProfileFeed = () => {
         },
         userState: res.data.follower
       });
-      toast.success(`${isFollowing ? `Unfollowed @${user.username}` : `Followed @${user.username}`}`);
+      toast.success(`${isFollowing ? `Unfollowed @${data.user.username}` : `Followed @${data.user.username}`}`);
       setIsFollowing(!isFollowing);
     } catch (err) {
       console.log(err);
