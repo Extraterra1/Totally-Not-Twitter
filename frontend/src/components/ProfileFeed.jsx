@@ -102,7 +102,7 @@ const ProfileFeed = () => {
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
-          <Button onClick={selfProfile ? handleEdit : handleFollow} $unfollow={isFollowing} $edit={selfProfile}>
+          <Button onClick={selfProfile ? handleEdit : handleFollow} $unfollow={isFollowing} $edit={selfProfile} $disabled={!isAuthenticated}>
             {selfProfile ? 'Edit Profile' : isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         </div>
@@ -294,6 +294,8 @@ const Button = styled.a`
   cursor: pointer;
   border: 2px solid transparent;
   border-color: ${(props) => (props.$edit ? 'var(--light)' : null)};
+
+  visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
 
   &:hover {
     background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : 'var(--light-hover)')};
