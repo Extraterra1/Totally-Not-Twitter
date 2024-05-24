@@ -43,7 +43,7 @@ const Navbar = () => {
                 <span>Profile</span>
               </div>
             </Link>
-            <Button onClick={() => openTweetModal()} $primary>
+            <Button onClick={() => openTweetModal()} $primary $disabled={!isAuthenticated}>
               Post
             </Button>
             {isAuthenticated && <UserCard user={auth} />}
@@ -115,4 +115,6 @@ const Sidebar = styled.div`
 
 const Button = styled(BaseButton)`
   align-self: stretch;
+
+  visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
 `;
