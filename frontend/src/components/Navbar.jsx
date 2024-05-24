@@ -35,7 +35,7 @@ const Navbar = () => {
                 <span>Explore</span>
               </div>
             </Link>
-            <Link to="/profile">
+            <Link to={`/${auth.username}`}>
               <div className="item">
                 <Icon icon="ph:user-fill" />
                 <span>Profile</span>
