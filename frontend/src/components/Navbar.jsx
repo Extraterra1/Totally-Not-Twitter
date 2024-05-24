@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import { useGlobal } from '../Router';
 
@@ -11,6 +12,7 @@ import { Button as BaseButton } from '../components/Actions';
 
 const Navbar = () => {
   const auth = useAuthUser();
+  const isAuthenticated = useIsAuthenticated();
   const { openTweetModal } = useGlobal();
 
   return (
@@ -35,7 +37,7 @@ const Navbar = () => {
                 <span>Explore</span>
               </div>
             </Link>
-            <Link to={`/${auth.username}`}>
+            <Link to={isAuthenticated ? `/${auth.username}` : null}>
               <div className="item">
                 <Icon icon="ph:user-fill" />
                 <span>Profile</span>
@@ -44,7 +46,7 @@ const Navbar = () => {
             <Button onClick={() => openTweetModal()} $primary>
               Post
             </Button>
-            <UserCard user={auth} />
+            {isAuthenticated && <UserCard user={auth} />}
           </div>
         </Sidebar>
       </Wrapper>

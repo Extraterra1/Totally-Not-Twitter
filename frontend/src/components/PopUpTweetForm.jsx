@@ -104,7 +104,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
           <Form className="tweet-form">
             <div className="tweet-field">
               <div className="profile-pic">
-                <img src={auth.profilePic || defaultPP} alt="Profile Picture" />
+                <img src={auth?.profilePic || defaultPP} alt="Profile Picture" />
               </div>
               <Input label="Tweet" name="tweet" type="text" placeholder="What is happening?!" />
             </div>

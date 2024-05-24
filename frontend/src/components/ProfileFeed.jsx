@@ -9,6 +9,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import toast from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import Tweet from './Tweet';
 
@@ -17,6 +18,7 @@ import profilePic from '../assets/profilePic.jpg';
 const ProfileFeed = () => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const isAuthenticated = useIsAuthenticated();
   const signIn = useSignIn();
   const { username } = useParams();
 
@@ -32,7 +34,7 @@ const ProfileFeed = () => {
   const [, executeFollow] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
 
   useEffect(() => {
-    if (data) setIsFollowing(auth.following.includes(data.user._id));
+    if (data && isAuthenticated) setIsFollowing(auth.following.includes(data.user._id));
   }, [data]);
 
   const handleMenuClick = async () => {
@@ -71,7 +73,7 @@ const ProfileFeed = () => {
       </Wrapper>
     );
 
-  const selfProfile = auth._id === data.user._id;
+  const selfProfile = isAuthenticated ? auth._id === data.user._id : false;
 
   if (error)
     return (

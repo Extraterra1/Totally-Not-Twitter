@@ -8,6 +8,7 @@ import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 import { useTimeline } from '../views/Timeline';
@@ -25,9 +26,10 @@ const Tweet = ({ tweet, update = true, ...props }) => {
   const { openTweetModal } = useGlobal();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
 
-  const [isLiked, setIsLiked] = useState(tweet.likes.includes(auth._id));
+  const [isLiked, setIsLiked] = useState(isAuthenticated ? tweet.likes.includes(auth._id) : false);
   const [isRetweeted, setIsRetweeted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState(null);
@@ -64,7 +66,7 @@ const Tweet = ({ tweet, update = true, ...props }) => {
     const res = await executeLike({ url });
 
     setLikes(res.data.updatedTweet.likes.length);
-    setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
+    if (isAuthenticated) setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
   };
 
   const handleRT = (e) => {
