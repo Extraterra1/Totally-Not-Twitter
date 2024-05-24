@@ -7,6 +7,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Button as DefaultButton } from './Actions';
@@ -66,15 +67,16 @@ const UserCard = ({ user }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const signIn = useSignIn();
+  const isAuthenticated = useIsAuthenticated();
 
-  const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
+  const [isFollowing, setIsFollowing] = useState(isAuthenticated ? auth.following.includes(user._id) : false);
 
   const url = `${import.meta.env.VITE_API_URL}/users/${user._id}/${isFollowing ? 'unfollow' : 'follow'}`;
 
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
 
   useEffect(() => {
-    setIsFollowing(auth.following.includes(user._id));
+    setIsFollowing(isAuthenticated ? auth.following.includes(user._id) : false);
   }, [auth]);
 
   const handleFollow = async (e) => {
@@ -107,7 +109,7 @@ const UserCard = ({ user }) => {
           <span className="displayName">{user.displayName}</span>
           <span className="at">@{user.username}</span>
         </div>
-        <Button onClick={handleFollow} $unfollow={isFollowing} $disabled={auth._id === user._id}>
+        <Button onClick={handleFollow} $unfollow={isFollowing} $disabled={!isAuthenticated || auth._id === user._id}>
           {isFollowing ? 'Unfollow' : 'Follow'}
         </Button>
       </div>
