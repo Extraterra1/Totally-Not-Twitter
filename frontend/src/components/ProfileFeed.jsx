@@ -62,6 +62,8 @@ const ProfileFeed = () => {
     }
   };
 
+  const handleEdit = () => console.log('edit');
+
   if (loading)
     return (
       <Wrapper>
@@ -98,7 +100,7 @@ const ProfileFeed = () => {
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
-          <Button onClick={handleFollow} $unfollow={isFollowing} $edit={selfProfile}>
+          <Button onClick={selfProfile ? handleEdit : handleFollow} $unfollow={isFollowing} $edit={selfProfile}>
             {selfProfile ? 'Edit Profile' : isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         </div>
