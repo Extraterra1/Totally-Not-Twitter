@@ -69,7 +69,7 @@ const ProfileFeed = () => {
       </Wrapper>
     );
 
-  // TODO: FOLLOW BUTTON
+  const selfProfile = auth._id === data.user._id;
 
   if (error)
     return (
@@ -98,8 +98,8 @@ const ProfileFeed = () => {
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
-          <Button onClick={handleFollow} $unfollow={isFollowing} $disabled={auth._id === data.user._id}>
-            {isFollowing ? 'Unfollow' : 'Follow'}
+          <Button onClick={handleFollow} $unfollow={isFollowing} $edit={selfProfile}>
+            {selfProfile ? 'Edit Profile' : isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         </div>
         <div className="user-info">
@@ -132,7 +132,7 @@ const ProfileFeed = () => {
         {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
         {!likesLoading && likesData && activeMenu === 'likes' && likesData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
         {!tweetsLoading && activeMenu === 'tweets' && tweetsData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
-        {!tweetsLoading && activeMenu === 'likes' && likesData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
+        {!likesLoading && activeMenu === 'likes' && likesData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
       </div>
     </Wrapper>
   );
@@ -280,16 +280,16 @@ const Wrapper = styled.div`
 `;
 
 const Button = styled.a`
-  background-color: ${(props) => (props.$unfollow ? 'var(--danger)' : 'var(--light)')};
-  color: ${(props) => (props.$unfollow ? 'var(--light)' : 'var(--dark)')};
+  background-color: ${(props) => (props.$unfollow ? 'var(--danger)' : props.$edit ? 'var(--black)' : 'var(--light)')};
+  color: ${(props) => (props.$unfollow || props.$edit ? 'var(--light)' : 'var(--dark)')};
   padding: 0.5rem 2rem;
   font-weight: 700;
   border-radius: 2rem;
   font-size: 1.5rem;
   transition: all 0.2s;
   cursor: pointer;
-
-  visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
+  border: 2px solid transparent;
+  border-color: ${(props) => (props.$edit ? 'var(--light)' : null)};
 
   &:hover {
     background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : 'var(--light-hover)')};
