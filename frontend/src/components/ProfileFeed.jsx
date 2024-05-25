@@ -298,6 +298,6 @@ const Button = styled.a`
   visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
 
   &:hover {
-    background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : 'var(--light-hover)')};
+    background-color: ${(props) => (props.$unfollow ? 'var(--danger-hover)' : props.$edit ? '#222222' : 'var(--light-hover)')};
   }
 `;
