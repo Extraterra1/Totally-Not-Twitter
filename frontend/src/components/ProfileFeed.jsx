@@ -12,7 +12,7 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import Tweet from './Tweet';
-import EditProfileForm from './EditProfileForm';
+import EditProfile from './EditProfile';
 
 import profilePic from '../assets/profilePic.jpg';
 
