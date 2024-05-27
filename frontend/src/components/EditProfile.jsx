@@ -146,13 +146,22 @@ const FormGroup = styled.div`
 
   flex-grow: 1;
 
-  letter-spacing: 1px;
   border-radius: 0.25rem;
   position: relative;
   border-bottom: 1px solid transparent;
 
   & label {
     cursor: pointer;
+    color: var(--light);
+    font-size: 1.5rem;
+  }
+
+  & input {
+    background-color: var(--black);
+    outline: none;
+    border: 1px solid var(--gray-dark);
+    padding: 1rem;
+    border-radius: 0.5rem;
   }
 `;
 
