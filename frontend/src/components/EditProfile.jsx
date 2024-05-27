@@ -8,6 +8,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
 import { BeatLoader } from 'react-spinners';
+import toast from 'react-hot-toast';
 
 import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
@@ -48,6 +49,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
       resetForm();
       delayedFinish();
       toast.success('Saved');
+      closeModal();
     } catch (err) {
       console.log(err);
     }
