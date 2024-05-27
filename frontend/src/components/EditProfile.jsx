@@ -41,7 +41,35 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
           }}
           validationSchema={Yup.object({
             displayName: Yup.string().required('Required').max(25, 'Must be less than 25 chars'),
-            newPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+            password: Yup.string()
+              .min(6, 'Must be at least 6 characters long')
+              .test('passwordTest', 'Password is required', function (value) {
+                const { newPassword, confirmPassword } = this.parent;
+                if (value || newPassword || confirmPassword) {
+                  return !!value;
+                }
+                return true;
+              }),
+            newPassword: Yup.string()
+              .min(6, 'Must be at least 6 characters long')
+              .test('newPasswordTest', 'New Password is required', function (value) {
+                const { password, confirmPassword } = this.parent;
+                if (value || password || confirmPassword) {
+                  return !!value;
+                }
+                return true;
+              })
+              .oneOf([Yup.ref('confirmPassword'), null], 'Passwords must match'),
+            confirmPassword: Yup.string()
+              .min(6, 'Must be at least 6 characters long')
+              .test('confirmPasswordTest', 'Confirm Password is required', function (value) {
+                const { password, newPassword } = this.parent;
+                if (value || password || newPassword) {
+                  return !!value;
+                }
+                return true;
+              })
+              .oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
             file: Yup.mixed()
               .test('fileType', 'Bad Image Format', (value) => {
                 if (value && value[0]) {
@@ -76,7 +104,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
               <Input type="displayName" name="displayName" id="displayName" label="Name" />
             </div>
             <div className="password-change">
-              <h4>Change Password</h4>
+              <h4>Change Password (Optional)</h4>
               <Input type="password" name="password" id="password" label="Password" placeholder="Enter your current password" />
               <Input type="password" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
               <Input type="password" name="confirmPassword" id="confirmPassword" label="Confirm Password" placeholder="Confirm Password" />
