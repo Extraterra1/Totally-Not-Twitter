@@ -40,7 +40,8 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
             confirmPassword: ''
           }}
           validationSchema={Yup.object({
-            displayName: Yup.string().max(25, 'Must be less than 25 chars'),
+            displayName: Yup.string().required('Required').max(25, 'Must be less than 25 chars'),
+            newPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
             file: Yup.mixed()
               .test('fileType', 'Bad Image Format', (value) => {
                 if (value && value[0]) {
@@ -145,7 +146,7 @@ const Wrapper = styled.div`
     & > .name-change {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 2rem;
 
       & > h4 {
         font-size: 2rem;
@@ -187,7 +188,7 @@ const FormGroup = styled.div`
 
 const ErrorMessage = styled.span`
   color: var(--danger);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
   position: absolute;
   top: calc(100% + 3px);
