@@ -38,7 +38,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
     { manual: true }
   );
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
       const formData = new FormData();
       if (values.file) formData.append('img', values.file[0]);
@@ -59,6 +59,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
       toast.success('Saved');
       closeModal();
     } catch (err) {
+      if (err?.response?.status === 401) setErrors({ password: 'Incorrect Password' });
       console.log(err);
     }
   };
