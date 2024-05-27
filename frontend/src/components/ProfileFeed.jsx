@@ -66,7 +66,7 @@ const ProfileFeed = () => {
     }
   };
 
-  const handleEdit = () => console.log('edit');
+  const handleEdit = () => setIsOpen(true);
 
   if (loading)
     return (
@@ -101,7 +101,7 @@ const ProfileFeed = () => {
 
   return (
     <Wrapper>
-      {selfProfile ? <EditProfile /> : null}
+      {selfProfile ? <EditProfile setIsOpen={setIsOpen} isOpen={isOpen} /> : null}
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
