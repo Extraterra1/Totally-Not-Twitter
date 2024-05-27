@@ -185,6 +185,15 @@ const FormGroup = styled.div`
   }
 `;
 
+const ErrorMessage = styled.span`
+  color: var(--danger);
+  font-size: 1.2rem;
+  font-weight: 500;
+  position: absolute;
+  top: calc(100% + 3px);
+  letter-spacing: 0.5px;
+`;
+
 const Input = ({ label, ...props }) => {
   const [field, meta] = useField(props);
 
@@ -193,6 +202,7 @@ const Input = ({ label, ...props }) => {
       <FormGroup>
         <label>{label}</label>
         <input {...field} {...props} />
+        {meta.touched && meta.error ? <ErrorMessage>{meta.error}</ErrorMessage> : null}
       </FormGroup>
     </>
   );
