@@ -219,7 +219,7 @@ export const FileInput = ({ label, ...props }) => {
 
   return (
     <>
-      <FormGroup>
+      <FormGroup style={props.hidden ? { display: 'none' } : null}>
         <label htmlFor={props.id || props.name}>
           <Icon className="image-icon" icon="ph:image-square" />
         </label>

@@ -9,6 +9,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
 
 import { FileInput, SubmitButton } from './TweetForm';
+import { Button } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const EditProfile = ({ setIsOpen, isOpen }) => {
@@ -64,7 +65,10 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
               <div className="profile-pic">
                 <img src={auth?.profilePic || defaultPP} alt="Profile Picture" />
               </div>
-              <FileInput name="file" id="file" />
+              <label htmlFor="file">
+                <Button>Change Picture</Button>
+              </label>
+              <FileInput name="file" id="file" hidden />
             </div>
             <Input type="password" name="password" id="password" label="Password" placeholder="Enter your current password" />
             <Input type="newPassword" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
@@ -108,6 +112,25 @@ const Wrapper = styled.div`
     &:hover {
       color: var(--gray);
       transition: all 0.1s;
+    }
+  }
+
+  & > .user-form {
+    display: flex;
+    flex-direction: column;
+
+    & > .user-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      & > .profile-pic img {
+        width: 10rem;
+        border-radius: 50%;
+
+        border: 4px solid var(--gray-light);
+
+        object-fit: cover;
+      }
     }
   }
 `;
