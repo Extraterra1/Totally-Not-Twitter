@@ -172,7 +172,6 @@ const FormGroup = styled.div`
   border-bottom: 1px solid transparent;
 
   & label {
-    cursor: pointer;
     color: var(--light);
     font-size: 1.5rem;
   }
