@@ -7,6 +7,7 @@ import useAxios from 'axios-hooks';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
+import { BeatLoader } from 'react-spinners';
 
 import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
@@ -27,6 +28,30 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
     },
     { manual: true }
   );
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const formData = new FormData();
+      if (values.file) formData.append('img', values.file[0]);
+      formData.append('displayName', values.displayName);
+      if (values.password) {
+        formData.append('password', values.password);
+        formData.append('newPassword', values.newPassword);
+        formData.append('confirmPassword', values.confirmPassword);
+      }
+
+      const res = await updateUser({
+        data: formData,
+        headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`, Authorization: authHeader, Accept: 'application/json' }
+      });
+      setSubmitting(false);
+      resetForm();
+      delayedFinish();
+      toast.success('Saved');
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Modal setIsOpen={setIsOpen} style={modalStyles} isOpen={isOpen}>
@@ -87,7 +112,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
                 }
               })
           })}
-          onSubmit={() => console.log('submit')}
+          onSubmit={handleSubmit}
         >
           <Form className="user-form">
             <div className="user-field">
