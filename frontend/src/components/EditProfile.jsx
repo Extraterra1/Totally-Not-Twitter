@@ -1,14 +1,14 @@
 import Modal from './Modal';
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useField } from 'formik';
 import * as Yup from 'yup';
 import useAxios from 'axios-hooks';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
 
-import { Input, FileInput, SubmitButton } from './TweetForm';
+import { FileInput, SubmitButton } from './TweetForm';
 import defaultPP from '../assets/profilePic.jpg';
 
 const EditProfile = ({ setIsOpen, isOpen }) => {
@@ -66,6 +66,9 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
               </div>
               <FileInput name="file" id="file" />
             </div>
+            <Input type="password" name="password" id="password" label="Password" placeholder="Enter your current password" />
+            <Input type="newPassword" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
+            <Input type="confirmPassword" name="confirmPassword" id="confirmPassword" label="Confirm Password" placeholder="Confirm Password" />
             <div className="buttons">
               <SubmitButton $primary type="submit">
                 {loading ? (
@@ -108,6 +111,35 @@ const Wrapper = styled.div`
     }
   }
 `;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  flex-grow: 1;
+
+  letter-spacing: 1px;
+  border-radius: 0.25rem;
+  position: relative;
+  border-bottom: 1px solid transparent;
+
+  & label {
+    cursor: pointer;
+  }
+`;
+
+const Input = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+
+  return (
+    <>
+      <FormGroup>
+        <label>{label}</label>
+        <input {...field} {...props} />
+      </FormGroup>
+    </>
+  );
+};
 
 const modalStyles = {
   content: {
