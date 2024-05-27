@@ -21,6 +21,14 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
 
   const closeModal = () => setIsOpen(false);
 
+  const delayedFinish = () => {
+    setIsFinished(true);
+
+    setTimeout(() => {
+      setIsFinished(false);
+    }, 1000);
+  };
+
   const [{ loading }, updateUser] = useAxios(
     {
       url: `${import.meta.env.VITE_API_URL}/users/${auth._id}`,

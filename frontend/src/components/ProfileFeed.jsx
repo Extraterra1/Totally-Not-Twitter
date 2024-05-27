@@ -25,7 +25,7 @@ const ProfileFeed = () => {
 
   const [isFollowing, setIsFollowing] = useState(null);
   const [activeMenu, setActiveMenu] = useState('tweets');
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
