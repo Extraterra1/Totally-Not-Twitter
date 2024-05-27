@@ -152,6 +152,11 @@ const Wrapper = styled.div`
         color: var(--white);
       }
     }
+
+    & > .buttons {
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 
