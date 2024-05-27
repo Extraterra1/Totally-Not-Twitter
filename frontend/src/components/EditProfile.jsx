@@ -70,13 +70,15 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
               </label>
               <FileInput name="file" id="file" hidden />
             </div>
-            <div className="display-name">
+            <div className="name-change">
+              <h4>Change Name</h4>
               <Input type="displayName" name="displayName" id="displayName" label="Name" />
             </div>
             <div className="password-change">
+              <h4>Change Password</h4>
               <Input type="password" name="password" id="password" label="Password" placeholder="Enter your current password" />
-              <Input type="newPassword" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
-              <Input type="confirmPassword" name="confirmPassword" id="confirmPassword" label="Confirm Password" placeholder="Confirm Password" />
+              <Input type="password" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
+              <Input type="password" name="confirmPassword" id="confirmPassword" label="Confirm Password" placeholder="Confirm Password" />
             </div>
             <div className="buttons">
               <SubmitButton $primary type="submit">
@@ -102,7 +104,7 @@ const Wrapper = styled.div`
   background-color: var(--black);
   min-width: 30vw;
   border-radius: 1.5rem;
-  padding: 2rem 1rem;
+  padding: 2rem 3rem;
 
   position: relative;
 
@@ -123,6 +125,7 @@ const Wrapper = styled.div`
   & > .user-form {
     display: flex;
     flex-direction: column;
+    gap: 2rem;
 
     & > .user-field {
       display: flex;
@@ -135,6 +138,18 @@ const Wrapper = styled.div`
         border: 4px solid var(--gray-light);
 
         object-fit: cover;
+      }
+    }
+
+    & > .password-change,
+    & > .name-change {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      & > h4 {
+        font-size: 2rem;
+        color: var(--white);
       }
     }
   }
