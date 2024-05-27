@@ -25,6 +25,7 @@ const ProfileFeed = () => {
 
   const [isFollowing, setIsFollowing] = useState(null);
   const [activeMenu, setActiveMenu] = useState('tweets');
+  const [isOpen, setIsOpen] = useState(false);
 
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
@@ -100,6 +101,7 @@ const ProfileFeed = () => {
 
   return (
     <Wrapper>
+      {selfProfile ? <EditProfile /> : null}
       <div className="header">
         <div className="profile-pic">
           <img src={data.user.profilePic || profilePic} />
