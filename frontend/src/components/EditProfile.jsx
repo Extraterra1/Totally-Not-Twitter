@@ -34,7 +34,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
         <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <Formik
           initialValues={{
-            displayName: '',
+            displayName: auth.displayName,
             password: '',
             newPassword: '',
             confirmPassword: ''
@@ -70,9 +70,14 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
               </label>
               <FileInput name="file" id="file" hidden />
             </div>
-            <Input type="password" name="password" id="password" label="Password" placeholder="Enter your current password" />
-            <Input type="newPassword" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
-            <Input type="confirmPassword" name="confirmPassword" id="confirmPassword" label="Confirm Password" placeholder="Confirm Password" />
+            <div className="display-name">
+              <Input type="displayName" name="displayName" id="displayName" label="Name" />
+            </div>
+            <div className="password-change">
+              <Input type="password" name="password" id="password" label="Password" placeholder="Enter your current password" />
+              <Input type="newPassword" name="newPassword" id="newPassword" label="New Password" placeholder="Enter your new password" />
+              <Input type="confirmPassword" name="confirmPassword" id="confirmPassword" label="Confirm Password" placeholder="Confirm Password" />
+            </div>
             <div className="buttons">
               <SubmitButton $primary type="submit">
                 {loading ? (
