@@ -5,6 +5,7 @@ import PopUpTweetForm from '../components/PopUpTweetForm';
 import { useGlobal } from '../Router';
 
 import Navbar from '../components/Navbar';
+import SearchFeed from '../components/SearchFeed';
 import Discover from '../components/Discover';
 
 const Search = () => {
@@ -12,9 +13,7 @@ const Search = () => {
   return (
     <Wrapper>
       <Navbar />
-      <div>
-        <h1>test</h1>
-      </div>
+      <SearchFeed />
       <Discover />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
       <Toaster toastOptions={toastOptions} />
