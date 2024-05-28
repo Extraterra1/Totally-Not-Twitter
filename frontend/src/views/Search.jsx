@@ -14,7 +14,7 @@ const Search = () => {
     <Wrapper>
       <Navbar />
       <SearchFeed />
-      <Discover />
+      <Discover search={false} />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
       <Toaster toastOptions={toastOptions} />
     </Wrapper>

@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 import SearchBox from './SearchBox';
 import WhoToFollow from './WhoToFollow';
-const Discover = () => {
+const Discover = ({ search = true }) => {
   return (
     <>
       <Wrapper>
-        <Container>
-          <SearchBox />
+        <Container $search={search}>
+          {search ? <SearchBox /> : null}
           <WhoToFollow />
         </Container>
       </Wrapper>
@@ -27,4 +27,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+
+  padding-top: ${(props) => (props.$search ? null : '3rem')};
 `;
