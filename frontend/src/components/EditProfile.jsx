@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
@@ -18,8 +19,8 @@ import defaultPP from '../assets/profilePic.jpg';
 const EditProfile = ({ setIsOpen, isOpen }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const navigate = useNavigate();
   const [isFinished, setIsFinished] = useState(false);
-
   const [cookies, setCookie] = useCookies(['_auth_state']);
 
   const closeModal = () => setIsOpen(false);
@@ -62,7 +63,9 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
       resetForm();
       delayedFinish();
       toast.success('Saved', { duration: 1000 });
-      closeModal();
+      setTimeout(() => {
+        navigate(0);
+      }, 1000);
     } catch (err) {
       if (err?.response?.status === 401) setErrors({ password: 'Incorrect Password' });
       console.log(err);
