@@ -27,6 +27,8 @@ const SearchFeed = () => {
     method: 'GET'
   });
 
+  console.log(usersData);
+
   const handleMenuClick = async () => {
     if (activeMenu === 'tweets') {
       setActiveMenu('users');

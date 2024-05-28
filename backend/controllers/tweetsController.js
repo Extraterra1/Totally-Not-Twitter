@@ -141,7 +141,7 @@ exports.searchUsers = [
     const { q: query } = req.query;
 
     const users = await User.find({ $or: [{ username: { $regex: query, $options: 'i' } }, { displayName: { $regex: query, $options: 'i' } }] }).select(
-      'username displayName ProfilePic'
+      'username displayName profilePic'
     );
     return res.json({ users });
   })
