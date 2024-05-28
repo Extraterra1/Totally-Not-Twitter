@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import Discover from '../components/Discover';
 
 const Search = () => {
+  const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();
   return (
     <Wrapper>
       <Navbar />
@@ -15,6 +16,8 @@ const Search = () => {
         <h1>test</h1>
       </div>
       <Discover />
+      <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
+      <Toaster toastOptions={toastOptions} />
     </Wrapper>
   );
 };
