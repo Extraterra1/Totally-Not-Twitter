@@ -1,13 +1,27 @@
 import { BeatLoader } from 'react-spinners';
 import styled from 'styled-components';
 import { useState } from 'react';
+import useAxios from 'axios-hooks';
+import { useLocation } from 'react-router-dom';
 
 import Tweet from './Tweet';
 import SearchBox from './SearchBox';
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 const SearchFeed = () => {
+  const query = useQuery();
+  const searchTerm = query.get('q');
   const [activeMenu, setActiveMenu] = useState('tweets');
 
+  const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
+    { url: `${import.meta.env.VITE_API_URL}/tweets/search?q=${searchTerm}`, method: 'GET' },
+    { useCache: false }
+  );
+
+  console.log(tweetsData);
   const handleMenuClick = async () => {
     if (activeMenu === 'tweets') {
       setActiveMenu('likes');
