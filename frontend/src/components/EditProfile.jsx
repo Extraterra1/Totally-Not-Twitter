@@ -9,6 +9,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useState } from 'react';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
+import { useCookies } from 'react-cookie';
 
 import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
@@ -18,6 +19,8 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const [isFinished, setIsFinished] = useState(false);
+
+  const [cookies, setCookie] = useCookies(['_auth_state']);
 
   const closeModal = () => setIsOpen(false);
 
@@ -48,15 +51,17 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
         formData.append('newPassword', values.newPassword);
         formData.append('confirmPassword', values.confirmPassword);
       }
-
       const res = await updateUser({
         data: formData,
         headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`, Authorization: authHeader, Accept: 'application/json' }
       });
+      const { email, displayName, followers, following, username, profilePic, _id } = res.data.updatedUser;
+      setCookie('_auth_state', { email, displayName, followers, following, username, profilePic, _id });
+
       setSubmitting(false);
       resetForm();
       delayedFinish();
-      toast.success('Saved');
+      toast.success('Saved', { duration: 1000 });
       closeModal();
     } catch (err) {
       if (err?.response?.status === 401) setErrors({ password: 'Incorrect Password' });
