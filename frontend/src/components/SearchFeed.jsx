@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 import Tweet from './Tweet';
 import SearchBox from './SearchBox';
+import { UserCard } from './WhoToFollow';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -21,10 +22,14 @@ const SearchFeed = () => {
     { useCache: false }
   );
 
-  console.log(tweetsData);
+  const [{ data: usersData, loading: usersLoading }, searchUsers] = useAxios({
+    url: `${import.meta.env.VITE_API_URL}/tweets/search/users?q=${searchTerm}`,
+    method: 'GET'
+  });
+
   const handleMenuClick = async () => {
     if (activeMenu === 'tweets') {
-      setActiveMenu('likes');
+      setActiveMenu('users');
     } else {
       setActiveMenu('tweets');
     }
@@ -40,15 +45,15 @@ const SearchFeed = () => {
           <span onClick={handleMenuClick} className={activeMenu === 'tweets' ? 'active' : null}>
             Tweets
           </span>
-          <span onClick={handleMenuClick} className={activeMenu === 'likes' ? 'active' : null}>
-            Likes
+          <span onClick={handleMenuClick} className={activeMenu === 'users' ? 'active' : null}>
+            Users
           </span>
         </div>
         <ClipLoader className="spinner" loading={activeMenu === 'tweets' && tweetsLoading} color="var(--twitter-blue)" size={45} />
         {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
-        {/* {!likesLoading && likesData && activeMenu === 'likes' && likesData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)} */}
+        {!usersLoading && usersData && activeMenu === 'users' && usersData.users.map((e) => <UserCard key={e._id} user={e} />)}
         {!tweetsLoading && activeMenu === 'tweets' && tweetsData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
-        {/* {!likesLoading && activeMenu === 'likes' && likesData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>} */}
+        {!usersLoading && activeMenu === 'users' && usersData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
       </div>
       ;
     </Wrapper>

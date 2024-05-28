@@ -62,7 +62,7 @@ const Container = styled.div`
   }
 `;
 
-const UserCard = ({ user }) => {
+export const UserCard = ({ user }) => {
   const navigate = useNavigate();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();

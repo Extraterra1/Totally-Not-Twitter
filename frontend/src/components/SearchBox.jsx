@@ -10,7 +10,7 @@ const SearchBox = () => {
   const handleChange = (e) => setSearch(e.target.value);
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && search) {
       navigate(`/search?q=${search}`);
     }
   };
