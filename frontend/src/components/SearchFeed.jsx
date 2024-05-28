@@ -27,8 +27,6 @@ const SearchFeed = () => {
     method: 'GET'
   });
 
-  console.log(usersData);
-
   const handleMenuClick = async () => {
     if (activeMenu === 'tweets') {
       setActiveMenu('users');
@@ -40,7 +38,7 @@ const SearchFeed = () => {
   return (
     <Wrapper>
       <div className="search-box">
-        <SearchBox />
+        <SearchBox value={searchTerm} />
       </div>
       <div className="feed">
         <div className="header">
@@ -52,10 +50,12 @@ const SearchFeed = () => {
           </span>
         </div>
         <ClipLoader className="spinner" loading={activeMenu === 'tweets' && tweetsLoading} color="var(--twitter-blue)" size={45} />
-        {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
-        {!usersLoading && usersData && activeMenu === 'users' && usersData.users.map((e) => <UserCard key={e._id} user={e} />)}
-        {!tweetsLoading && activeMenu === 'tweets' && tweetsData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
-        {!usersLoading && activeMenu === 'users' && usersData?.tweets?.length === 0 && <h2 className="no-tweets">Nothing to see here...</h2>}
+        <div className="content">
+          {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
+          {!usersLoading && usersData && activeMenu === 'users' && usersData.users.map((e) => <UserCard key={e._id} user={e} />)}
+        </div>
+        {!tweetsLoading && activeMenu === 'tweets' && tweetsData?.tweets?.length === 0 && <h2 className="no-tweets">No results for "{searchTerm}"</h2>}
+        {!usersLoading && activeMenu === 'users' && usersData?.users?.length === 0 && <h2 className="no-tweets">No results for "{searchTerm}"</h2>}
       </div>
       ;
     </Wrapper>
@@ -148,6 +148,10 @@ const Wrapper = styled.div`
       color: var(--light);
       font-size: 1.5rem;
       margin: 5rem auto;
+    }
+
+    & > .content {
+      color: var(--light);
     }
   }
 `;

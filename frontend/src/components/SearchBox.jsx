@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SearchBox = () => {
+const SearchBox = ({ value = '' }) => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(value);
 
   const handleChange = (e) => setSearch(e.target.value);
 
