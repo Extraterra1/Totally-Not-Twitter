@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 
 import Tweet from './Tweet';
+import SearchBox from './SearchBox';
 
 const SearchFeed = () => {
   const [activeMenu, setActiveMenu] = useState('tweets');
@@ -17,6 +18,9 @@ const SearchFeed = () => {
 
   return (
     <Wrapper>
+      <div className="search-box">
+        <SearchBox />
+      </div>
       <div className="feed">
         <div className="header">
           <span onClick={handleMenuClick} className={activeMenu === 'tweets' ? 'active' : null}>
@@ -48,6 +52,20 @@ const Wrapper = styled.div`
   & .spinner {
     align-self: center;
     margin-top: 3rem;
+  }
+
+  & > .search-box {
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    width: 100%;
+    padding: 1rem;
+
+    & > div {
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+    }
   }
 
   & > .feed {
