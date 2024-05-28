@@ -87,6 +87,11 @@ const Wrapper = styled.div`
           color: var(--light);
           font-weight: 700;
           border-bottom: 2px solid var(--twitter-blue);
+
+          &:hover {
+            color: var(--light);
+            background-color: var(--gray-dark);
+          }
         }
 
         &:first-child {
