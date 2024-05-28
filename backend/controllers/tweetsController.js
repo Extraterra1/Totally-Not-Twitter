@@ -122,7 +122,10 @@ exports.searchTweets = [
     if (!errors.isEmpty()) return res.status(400).json({ err: errors.array(), type: 'bodyValidation' });
 
     const { q: query } = req.query;
-    const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } }).sort({ createdAt: -1 });
+    const tweets = await Tweet.find({ tweetType: 'tweet', content: { $regex: query, $options: 'i' } })
+      .sort({ createdAt: -1 })
+      .populate({ path: 'replyTo retweetedTweet', populate: { path: 'author', select: '_id displayName username profilePic' } })
+      .populate('author', 'displayName username profilePic');
 
     return res.json({ count: tweets.length, tweets });
   })
