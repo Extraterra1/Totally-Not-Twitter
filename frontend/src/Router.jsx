@@ -5,6 +5,7 @@ import { useContext, createContext, useState } from 'react';
 import Landing from './views/Landing';
 import Timeline from './views/Timeline';
 import Profile from './views/Profile';
+import Search from './views/Search';
 
 const GlobalContext = createContext();
 
@@ -34,6 +35,10 @@ const Router = () => {
           element: <Timeline />
         }
       ]
+    },
+    {
+      path: '/search',
+      element: <Search />
     },
     {
       path: '/:username',
