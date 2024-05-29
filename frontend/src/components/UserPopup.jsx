@@ -1,24 +1,35 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAxios from 'axios-hooks';
 import toast from 'react-hot-toast';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import { useCookies } from 'react-cookie';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import { Button as DefaultButton } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
 const UserPopup = ({ user }) => {
+  const [cookies] = useCookies(['_auth_state']);
+  const isAuthenticated = useIsAuthenticated();
   const auth = useAuthUser();
   const signIn = useSignIn();
   const authHeader = useAuthHeader();
   const [isFollowing, setIsFollowing] = useState(auth.following.includes(user._id));
+  const [authData, setAuthData] = useState(auth);
 
   const url = `${import.meta.env.VITE_API_URL}/users/${user._id}/${isFollowing ? 'unfollow' : 'follow'}`;
 
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
+
+  // Update data whenever cookie changes
+  useEffect(() => {
+    setAuthData(cookies._auth_state);
+    setIsFollowing(isAuthenticated ? cookies._auth_state.following.includes(user._id) : false);
+  }, [cookies._auth_state]);
 
   const handleFollow = async () => {
     try {

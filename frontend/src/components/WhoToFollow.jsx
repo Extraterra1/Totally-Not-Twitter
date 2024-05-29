@@ -8,13 +8,18 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useCookies } from 'react-cookie';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Button as DefaultButton } from './Actions';
 
 const WhoToFollow = () => {
   const authHeader = useAuthHeader();
-  const [{ loading, data, error }] = useAxios({ method: 'GET', url: `${import.meta.env.VITE_API_URL}/users/`, headers: { Authorization: authHeader } });
+  const [{ loading, data, error }, refetchUsers] = useAxios({
+    method: 'GET',
+    url: `${import.meta.env.VITE_API_URL}/users/`,
+    headers: { Authorization: authHeader }
+  });
 
   if (error)
     return (
@@ -31,7 +36,7 @@ const WhoToFollow = () => {
       <h4 className="title">Who to follow</h4>
       <div className="users">
         <ClipLoader className="spinner" loading={loading} size={30} color="var(--twitter-blue)" />
-        {!loading && data.map((e) => <UserCard key={e._id} user={e} />)}
+        {!loading && data.map((e) => <UserCard key={e._id} user={e} refetchUsers={refetchUsers} />)}
       </div>
     </Container>
   );
@@ -62,7 +67,8 @@ const Container = styled.div`
   }
 `;
 
-export const UserCard = ({ user }) => {
+export const UserCard = ({ user, refetchUsers }) => {
+  const [cookies] = useCookies(['_auth_state']);
   const navigate = useNavigate();
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
@@ -70,14 +76,18 @@ export const UserCard = ({ user }) => {
   const isAuthenticated = useIsAuthenticated();
 
   const [isFollowing, setIsFollowing] = useState(isAuthenticated ? auth.following.includes(user._id) : false);
+  const [authData, setAuthData] = useState(auth);
 
   const url = `${import.meta.env.VITE_API_URL}/users/${user._id}/${isFollowing ? 'unfollow' : 'follow'}`;
 
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
 
+  // Update data whenever cookie changes
   useEffect(() => {
-    setIsFollowing(isAuthenticated ? auth.following.includes(user._id) : false);
-  }, [auth]);
+    setAuthData(cookies._auth_state);
+    console.log('rerender');
+    setIsFollowing(isAuthenticated ? cookies._auth_state.following.includes(user._id) : false);
+  }, [cookies._auth_state]);
 
   const handleFollow = async (e) => {
     try {
