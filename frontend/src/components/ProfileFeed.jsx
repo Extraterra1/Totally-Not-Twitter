@@ -10,6 +10,7 @@ import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import toast from 'react-hot-toast';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useCookies } from 'react-cookie';
 
 import Tweet from './Tweet';
 import EditProfile from './EditProfile';
@@ -22,10 +23,17 @@ const ProfileFeed = () => {
   const isAuthenticated = useIsAuthenticated();
   const signIn = useSignIn();
   const { username } = useParams();
+  const [cookies] = useCookies(['_auth_state']);
 
   const [isFollowing, setIsFollowing] = useState(null);
   const [activeMenu, setActiveMenu] = useState('tweets');
   const [isOpen, setIsOpen] = useState(false);
+  const [authData, setAuthData] = useState(auth);
+
+  // Update data whenever cookie changes
+  useEffect(() => {
+    setAuthData(cookies._auth_state);
+  }, [cookies._auth_state]);
 
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
   const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
@@ -104,13 +112,13 @@ const ProfileFeed = () => {
       {selfProfile ? <EditProfile setIsOpen={setIsOpen} isOpen={isOpen} /> : null}
       <div className="header">
         <div className="profile-pic">
-          <img src={data.user.profilePic || profilePic} />
+          <img src={selfProfile ? authData.profilePic || profilePic : data.user.profilePic || profilePic} />
           <Button onClick={selfProfile ? handleEdit : handleFollow} $unfollow={isFollowing} $edit={selfProfile} $disabled={!isAuthenticated}>
             {selfProfile ? 'Edit Profile' : isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         </div>
         <div className="user-info">
-          <span className="displayName">{data.user.displayName}</span>
+          <span className="displayName">{selfProfile ? authData.displayName : data.user.displayName}</span>
           <span className="username">@{data.user.username}</span>
           <span className="joined">
             <Icon icon="ph:calendar-blank" />
@@ -118,7 +126,7 @@ const ProfileFeed = () => {
           </span>
           <div className="follow-data">
             <span className="number">
-              {data.user.following} <span>Following</span>
+              {selfProfile ? authData.following.length : data.user.following} <span>Following</span>
             </span>
             <span className="number">
               {data.user.followers} <span>Followers</span>
