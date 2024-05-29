@@ -36,7 +36,7 @@ const WhoToFollow = () => {
       <h4 className="title">Who to follow</h4>
       <div className="users">
         <ClipLoader className="spinner" loading={loading} size={30} color="var(--twitter-blue)" />
-        {!loading && data.map((e) => <UserCard key={e._id} user={e} refetchUsers={refetchUsers} />)}
+        {!loading && data.map((e) => <UserCard key={e._id} user={e} />)}
       </div>
     </Container>
   );
@@ -67,7 +67,7 @@ const Container = styled.div`
   }
 `;
 
-export const UserCard = ({ user, refetchUsers }) => {
+export const UserCard = ({ user }) => {
   const [cookies] = useCookies(['_auth_state']);
   const navigate = useNavigate();
   const auth = useAuthUser();
