@@ -18,6 +18,12 @@ const Navbar = () => {
   const isAuthenticated = useIsAuthenticated();
   const { openTweetModal } = useGlobal();
 
+  const [authData, setAuthData] = useState(auth);
+
+  useEffect(() => {
+    setAuthData(cookies._auth_state);
+  }, [cookies._auth_state]);
+
   return (
     <>
       <Wrapper>
@@ -40,7 +46,7 @@ const Navbar = () => {
                 <span>Explore</span>
               </div>
             </Link>
-            <Link to={isAuthenticated ? `/${auth.username}` : null}>
+            <Link to={isAuthenticated ? `/${authData.username}` : null}>
               <div className="item">
                 <Icon icon="ph:user-fill" />
                 <span>Profile</span>
@@ -49,7 +55,7 @@ const Navbar = () => {
             <Button onClick={() => openTweetModal()} $primary $disabled={!isAuthenticated}>
               Post
             </Button>
-            {isAuthenticated && <UserCard user={cookies._auth_state} />}
+            {isAuthenticated && <UserCard user={authData} />}
           </div>
         </Sidebar>
       </Wrapper>
