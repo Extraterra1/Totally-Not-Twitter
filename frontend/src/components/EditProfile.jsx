@@ -64,7 +64,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
       delayedFinish();
       toast.success('Saved', { duration: 1000 });
       setTimeout(() => {
-        navigate(0);
+        closeModal();
       }, 1000);
     } catch (err) {
       if (err?.response?.status === 401) setErrors({ password: 'Incorrect Password' });

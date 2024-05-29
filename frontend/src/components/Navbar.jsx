@@ -3,6 +3,8 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { Link } from 'react-router-dom';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useCookies } from 'react-cookie';
+import { useEffect, useState } from 'react';
 
 import { useGlobal } from '../Router';
 
@@ -12,6 +14,7 @@ import { Button as BaseButton } from '../components/Actions';
 
 const Navbar = () => {
   const auth = useAuthUser();
+  const [cookies] = useCookies(['_auth_state']);
   const isAuthenticated = useIsAuthenticated();
   const { openTweetModal } = useGlobal();
 
@@ -46,7 +49,7 @@ const Navbar = () => {
             <Button onClick={() => openTweetModal()} $primary $disabled={!isAuthenticated}>
               Post
             </Button>
-            {isAuthenticated && <UserCard user={auth} />}
+            {isAuthenticated && <UserCard user={cookies._auth_state} />}
           </div>
         </Sidebar>
       </Wrapper>
