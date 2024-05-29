@@ -6,11 +6,10 @@ import * as Yup from 'yup';
 import useAxios from 'axios-hooks';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
 
 import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
@@ -19,9 +18,15 @@ import defaultPP from '../assets/profilePic.jpg';
 const EditProfile = ({ setIsOpen, isOpen }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
-  const navigate = useNavigate();
   const [isFinished, setIsFinished] = useState(false);
   const [cookies, setCookie] = useCookies(['_auth_state']);
+
+  const [authData, setAuthData] = useState(auth);
+
+  // Update data whenever cookie changes
+  useEffect(() => {
+    setAuthData(cookies._auth_state);
+  }, [cookies._auth_state]);
 
   const closeModal = () => setIsOpen(false);
 
@@ -35,7 +40,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
 
   const [{ loading }, updateUser] = useAxios(
     {
-      url: `${import.meta.env.VITE_API_URL}/users/${auth._id}`,
+      url: `${import.meta.env.VITE_API_URL}/users/${authData._id}`,
       method: 'PATCH',
       headers: { Authorization: authHeader }
     },
@@ -60,7 +65,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
       setCookie('_auth_state', { email, displayName, followers, following, username, profilePic, _id });
 
       setSubmitting(false);
-      resetForm();
+      resetForm({ values: { displayName: values.displayName } });
       delayedFinish();
       toast.success('Saved', { duration: 1000 });
       setTimeout(() => {
@@ -78,7 +83,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
         <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <Formik
           initialValues={{
-            displayName: auth.displayName,
+            displayName: authData.displayName,
             password: '',
             newPassword: '',
             confirmPassword: ''
