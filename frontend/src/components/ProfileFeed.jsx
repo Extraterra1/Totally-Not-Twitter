@@ -30,18 +30,18 @@ const ProfileFeed = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [authData, setAuthData] = useState(auth);
 
-  // Update data whenever cookie changes
-  useEffect(() => {
-    setAuthData(cookies._auth_state);
-  }, [cookies._auth_state]);
-
   const [{ data, loading, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}`, method: 'GET' });
-  const [{ data: tweetsData, loading: tweetsLoading }] = useAxios(
+  const [{ data: tweetsData, loading: tweetsLoading }, refetchTweets] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/users/${username}/tweets`, method: 'GET' },
     { useCache: false }
   );
   const [{ data: likesData, loading: likesLoading }, fetchLikes] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}/liked`, method: 'GET' });
   const [, executeFollow] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
+
+  // Update data whenever cookie changes
+  useEffect(() => {
+    setAuthData(cookies._auth_state);
+  }, [cookies._auth_state]);
 
   useEffect(() => {
     if (data && isAuthenticated) setIsFollowing(auth.following.includes(data.user._id));
@@ -83,8 +83,6 @@ const ProfileFeed = () => {
       </Wrapper>
     );
 
-  const selfProfile = isAuthenticated ? auth._id === data.user._id : false;
-
   if (error)
     return (
       <Wrapper>
@@ -107,9 +105,11 @@ const ProfileFeed = () => {
       </Wrapper>
     );
 
+  const selfProfile = isAuthenticated ? auth._id === data.user._id : false;
+
   return (
     <Wrapper>
-      {selfProfile ? <EditProfile setIsOpen={setIsOpen} isOpen={isOpen} /> : null}
+      {selfProfile ? <EditProfile setIsOpen={setIsOpen} isOpen={isOpen} refetchTweets={refetchTweets} /> : null}
       <div className="header">
         <div className="profile-pic">
           <img src={selfProfile ? authData.profilePic || profilePic : data.user.profilePic || profilePic} />

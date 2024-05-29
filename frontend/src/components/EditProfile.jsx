@@ -15,7 +15,7 @@ import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
 import defaultPP from '../assets/profilePic.jpg';
 
-const EditProfile = ({ setIsOpen, isOpen }) => {
+const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
   const [isFinished, setIsFinished] = useState(false);
@@ -61,7 +61,12 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
         data: formData,
         headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}`, Authorization: authHeader, Accept: 'application/json' }
       });
+
       const { email, displayName, followers, following, username, profilePic, _id } = res.data.updatedUser;
+
+      // Refetch tweets if name or picture changed
+      if (displayName !== authData.displayName || profilePic !== authData.profilePic) refetchTweets();
+      // Update auth state
       setCookie('_auth_state', { email, displayName, followers, following, username, profilePic, _id });
 
       setSubmitting(false);
@@ -70,7 +75,7 @@ const EditProfile = ({ setIsOpen, isOpen }) => {
       toast.success('Saved', { duration: 1000 });
       setTimeout(() => {
         closeModal();
-      }, 1000);
+      }, 500);
     } catch (err) {
       if (err?.response?.status === 401) setErrors({ password: 'Incorrect Password' });
       console.log(err);
