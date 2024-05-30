@@ -17,6 +17,12 @@ const Feed = () => {
           {tweets.map((e) => (
             <Tweet key={e._id} tweet={e} />
           ))}
+          {!loading && tweets.length === 0 ? (
+            <div className="error-message">
+              <h2>Nothing to see here...</h2>
+              <span>Maybe try following some of our recommended users</span>
+            </div>
+          ) : null}
           <ClipLoader loading={loading} size={35} color="var(--twitter-blue)" cssOverride={{ margin: '2rem auto' }} />
         </TweetsContainer>
       </Wrapper>
@@ -34,4 +40,18 @@ const Wrapper = styled.div`
 const TweetsContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  & > .error-message {
+    color: var(--light);
+    padding: 1rem;
+    text-align: center;
+    margin-top: 5rem;
+
+    & > h2 {
+      font-size: 3rem;
+    }
+    & > span {
+      font-size: 1.5rem;
+    }
+  }
 `;
