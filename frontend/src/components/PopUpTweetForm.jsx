@@ -74,7 +74,7 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
   return (
     <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={{ content: { ...modalStyles.content }, overlay: { ...modalStyles.overlay } }}>
       <Wrapper>
-        {replyTo && <Tweet $reply $noActions tweet={replyTo} />}
+        {replyTo && <Tweet $reply $noActions tweet={replyTo} update={false} />}
         <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <Formik
           initialValues={{
