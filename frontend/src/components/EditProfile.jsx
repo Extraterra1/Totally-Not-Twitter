@@ -218,13 +218,20 @@ const Wrapper = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: end;
-      & > .profile-pic img {
+      & > .profile-pic {
         width: 10rem;
+        height: 10rem;
         border-radius: 50%;
-
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         border: 4px solid var(--gray-light);
-
-        object-fit: cover;
+        & > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
 

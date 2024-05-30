@@ -167,15 +167,18 @@ const Wrapper = styled.div`
       padding: 1rem;
       gap: 2rem;
       & > .profile-pic {
-        display: flex;
-        align-items: center;
-        max-width: 3rem;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         & img {
-          border-radius: 50%;
-          max-width: inherit;
-          object-fit: contain;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
     }

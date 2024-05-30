@@ -109,7 +109,7 @@ const Tweet = ({ tweet, update = true, ...props }) => {
           </Tooltip>
           <Container onClick={handleClick} {...props}>
             <div data-tooltip-id={`user-popup-${tweet._id}`} className="profile-pic">
-              <Link onClick={(e) => e.stopPropagation()} to={`/${tweet.author.username}`}>
+              <Link className="image-container" onClick={(e) => e.stopPropagation()} to={`/${tweet.author.username}`}>
                 <img src={tweet.author.profilePic || defaultPP} alt={`${tweet.author.displayName} Profile Picture`} />
               </Link>
               <div className="separator-container">
@@ -235,12 +235,19 @@ const Container = styled.div`
     flex-direction: column;
     position: relative;
 
-    & a,
-    img {
+    & > .image-container {
+      width: 3rem;
+      height: 3rem;
       border-radius: 50%;
-      max-width: inherit;
-      object-fit: contain;
-      height: inherit;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     & .separator-container {
@@ -253,6 +260,7 @@ const Container = styled.div`
       width: 1px;
       height: calc(100% + 1rem);
       background-color: var(--gray);
+      top: 5px;
 
       position: absolute;
 

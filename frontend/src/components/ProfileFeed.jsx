@@ -116,7 +116,9 @@ const ProfileFeed = () => {
       {selfProfile ? <EditProfile setIsOpen={setIsOpen} isOpen={isOpen} refetchTweets={refetchTweets} /> : null}
       <div className="header">
         <div className="profile-pic">
-          <img src={selfProfile ? authData.profilePic || profilePic : data.user.profilePic || profilePic} />
+          <div className="image-container">
+            <img src={selfProfile ? authData.profilePic || profilePic : data.user.profilePic || profilePic} />
+          </div>
           <Button onClick={selfProfile ? handleEdit : handleFollow} $unfollow={isFollowing} $edit={selfProfile} $disabled={!isAuthenticated}>
             {selfProfile ? 'Edit Profile' : isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
@@ -185,13 +187,20 @@ const Wrapper = styled.div`
         background-color: var(--gray);
       }
 
-      & > img {
+      & > .image-container {
         width: 10rem;
+        height: 10rem;
         border-radius: 50%;
-
-        border: 4px solid black;
-
-        object-fit: cover;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 4px solid var(--black);
+        & > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
 

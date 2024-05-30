@@ -83,7 +83,7 @@ export const UserCard = ({ user }) => {
   const [, executeFollow] = useAxios({ method: 'PATCH', url, headers: { Authorization: authHeader } }, { manual: true });
 
   useEffect(() => {
-    setAuthData(auth);
+    if (cookies._auth_state?.username !== auth.username) setAuthData(auth);
   });
 
   // Update data whenever cookie changes
