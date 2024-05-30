@@ -93,22 +93,6 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
 
-    & > .error-message {
-      color: var(--light);
-      display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      margin-top: 10rem;
-      font-size: 1.7rem;
-
-      & > .message-container {
-        grid-column: 2/3;
-
-        & > span {
-          color: var(--gray);
-        }
-      }
-    }
-
     & > .header {
       display: grid;
       grid-template-columns: 1fr 1fr;
