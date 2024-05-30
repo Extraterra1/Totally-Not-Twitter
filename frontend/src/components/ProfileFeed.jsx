@@ -38,6 +38,10 @@ const ProfileFeed = () => {
   const [{ data: likesData, loading: likesLoading }, fetchLikes] = useAxios({ url: `${import.meta.env.VITE_API_URL}/users/${username}/liked`, method: 'GET' });
   const [, executeFollow] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
 
+  useEffect(() => {
+    if (cookies._auth_state?.username !== auth.username) setAuthData(auth);
+  });
+
   // Update data whenever cookie changes
   useEffect(() => {
     setAuthData(cookies._auth_state);

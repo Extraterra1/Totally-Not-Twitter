@@ -23,9 +23,13 @@ const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
 
   const [authData, setAuthData] = useState(auth);
 
+  useEffect(() => {
+    if (cookies._auth_state?.username !== auth.username) setAuthData(auth);
+  });
+
   // Update data whenever cookie changes
   useEffect(() => {
-    setAuthData(cookies._auth_state);
+    if (cookies._auth_state) setAuthData(cookies._auth_state);
   }, [cookies._auth_state]);
 
   const closeModal = () => setIsOpen(false);
@@ -146,7 +150,7 @@ const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
           <Form className="user-form">
             <div className="user-field">
               <div className="profile-pic">
-                <img src={auth?.profilePic || defaultPP} alt="Profile Picture" />
+                <img src={authData?.profilePic || defaultPP} alt="Profile Picture" />
               </div>
               <label htmlFor="file">
                 <Button>Change Picture</Button>
