@@ -85,7 +85,7 @@ export const UserCard = ({ user }) => {
   // Update data whenever cookie changes
   useEffect(() => {
     setAuthData(cookies._auth_state);
-    setIsFollowing(isAuthenticated ? cookies._auth_state.following.includes(user._id) : false);
+    if (cookies._auth_state) setIsFollowing(isAuthenticated ? cookies._auth_state.following.includes(user._id) : false);
   }, [cookies._auth_state]);
 
   const handleFollow = async (e) => {

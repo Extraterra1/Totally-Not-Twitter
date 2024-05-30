@@ -22,7 +22,7 @@ const Navbar = () => {
 
   //Update data whenever cookie changes
   useEffect(() => {
-    setAuthData(cookies._auth_state);
+    if (cookies._auth_state) setAuthData(cookies._auth_state);
   }, [cookies._auth_state]);
 
   return (
