@@ -188,7 +188,7 @@ exports.tweetDetail = asyncHandler(async (req, res) => {
 });
 
 exports.getExplore = asyncHandler(async (req, res) => {
-  const tweets = await Tweet.find({ tweetType: 'tweet' }).limit(100).sort({ createdAt: -1 });
+  const tweets = await Tweet.find({ tweetType: 'tweet' }).limit(30).sort({ createdAt: -1 }).populate('author', 'displayName username profilePic');
 
   return res.json({ tweets });
 });
