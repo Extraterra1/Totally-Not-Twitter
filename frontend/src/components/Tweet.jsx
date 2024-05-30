@@ -61,6 +61,7 @@ const Tweet = ({ tweet, update = true, ...props }) => {
 
   const handleLike = async (e) => {
     e.stopPropagation();
+    if (!isAuthenticated) return;
 
     const url = import.meta.env.VITE_API_URL + `/tweets/${tweet._id}/like`;
     const res = await executeLike({ url });
@@ -71,11 +72,13 @@ const Tweet = ({ tweet, update = true, ...props }) => {
 
   const handleRT = (e) => {
     e.stopPropagation();
+    if (!isAuthenticated) return;
     openModal();
   };
 
   const handleReply = (e) => {
     e.stopPropagation();
+    if (!isAuthenticated) return;
     openTweetModal(tweet);
   };
 
