@@ -92,16 +92,18 @@ const Wrapper = styled.div`
       gap: 3rem;
 
       & .profile-pic {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 50%;
+        overflow: hidden;
         display: flex;
-        max-width: 5rem;
-        flex-direction: column;
-        position: relative;
+        justify-content: center;
+        align-items: center;
 
         & img {
-          border-radius: 50%;
-          max-width: inherit;
-          object-fit: contain;
-          height: inherit;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
     }
