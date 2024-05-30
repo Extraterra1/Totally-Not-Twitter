@@ -86,15 +86,18 @@ const Container = styled.div`
   position: relative;
 
   & > .profile-pic {
-    display: flex;
-    align-items: center;
-    max-width: 3rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     & img {
-      border-radius: 50%;
-      max-width: inherit;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
