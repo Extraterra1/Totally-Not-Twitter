@@ -6,6 +6,7 @@ import Landing from './views/Landing';
 import Timeline from './views/Timeline';
 import Profile from './views/Profile';
 import Search from './views/Search';
+import Explore from './views/Explore';
 
 const GlobalContext = createContext();
 
@@ -33,6 +34,10 @@ const Router = () => {
         {
           path: '/timeline',
           element: <Timeline />
+        },
+        {
+          path: '/explore',
+          element: <Explore />
         }
       ]
     },
