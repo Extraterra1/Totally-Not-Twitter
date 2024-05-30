@@ -1,8 +1,15 @@
 import styled from 'styled-components';
+import useAxios from 'axios-hooks';
 
 import SearchBox from './SearchBox';
+import Tweet from './Tweet';
 
 const ExploreFeed = () => {
+  const [{ data, loading, error }, refetchTweets] = useAxios({
+    url: `${import.meta.env.VITE_API_URL}/explore`,
+    method: 'GET'
+  });
+
   return (
     <Wrapper>
       <div className="search-box">
@@ -12,6 +19,8 @@ const ExploreFeed = () => {
         <div className="header">
           <h1>Explore the latest tweets</h1>
         </div>
+        <div className="content">{!loading && data && data.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}</div>
+        {error && <h2 className="no-tweets">Something went wrong</h2>}
       </div>
     </Wrapper>
   );
@@ -49,6 +58,9 @@ const Wrapper = styled.div`
     flex-direction: column;
 
     & > .header {
+      color: var(--light);
+      padding: 1rem;
+      border-bottom: 1px solid var(--gray-dark);
     }
 
     & > h2.no-tweets {
