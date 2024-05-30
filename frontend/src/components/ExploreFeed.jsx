@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useAxios from 'axios-hooks';
+import { ClipLoader } from 'react-spinners';
 
 import SearchBox from './SearchBox';
 import Tweet from './Tweet';
@@ -19,6 +20,7 @@ const ExploreFeed = () => {
         <div className="header">
           <h1>Explore the latest tweets</h1>
         </div>
+        <ClipLoader className="spinner" loading={loading} color="var(--twitter-blue)" size={45} />
         <div className="content">{!loading && data && data.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}</div>
         {error && <h2 className="no-tweets">Something went wrong</h2>}
       </div>
