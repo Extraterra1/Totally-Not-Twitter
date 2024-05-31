@@ -6,6 +6,7 @@ import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
+import moment from 'moment';
 
 import UserPopup from './UserPopup';
 
@@ -62,8 +63,8 @@ const TweetShowcase = () => {
           {loading ? (
             <ClipLoader className="spinner" loading={loading} color="var(--twitter-blue)" size={45} />
           ) : (
-            <div className="tweet" data-tooltip-id={`user-popup-${data.tweet._id}`}>
-              <div className="header">
+            <div className="tweet">
+              <div className="header" data-tooltip-id={`user-popup-${data.tweet._id}`}>
                 <div className="profile-pic">
                   <img src={data.tweet.author.profilePic || defaultPP} />
                 </div>
@@ -71,6 +72,20 @@ const TweetShowcase = () => {
                   <span>{data.tweet.author.displayName}</span>
                   <span>@{data.tweet.author.username}</span>
                 </div>
+              </div>
+              <div className="content">
+                <div className="text">
+                  <span>{data.tweet.content}</span>
+                </div>
+                {data.tweet.imgUrl && (
+                  <div className="image">
+                    <img className="tweet-img" src={data.tweet.imgUrl} alt="" />
+                  </div>
+                )}
+                <div className="date">
+                  <span>{moment(data.tweet.createdAt).format('h:mm A · MMM D, YYYY')}</span>
+                </div>
+                <div className="actions"></div>
               </div>
             </div>
           )}
@@ -118,11 +133,15 @@ const Container = styled.div`
     }
 
     & > .tweet {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
       padding: 1rem;
       & > .header {
         display: grid;
         grid-template-columns: auto 1fr;
         cursor: pointer;
+        padding-left: 1rem;
 
         & > .profile-pic {
           width: 5rem;
@@ -153,6 +172,35 @@ const Container = styled.div`
             color: var(--gray);
             font-size: 1.3rem;
           }
+        }
+      }
+
+      & > .content {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+
+        & > .text {
+          font-size: 1.8rem;
+        }
+
+        & > .image {
+          width: 100%;
+          max-height: 40rem;
+          overflow: hidden;
+          border-radius: 1rem;
+
+          & > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        & > .date {
+          color: var(--gray);
+          font-size: 1.3rem;
         }
       }
     }
