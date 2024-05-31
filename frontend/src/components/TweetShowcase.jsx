@@ -4,9 +4,13 @@ import useAxios from 'axios-hooks';
 import { useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const TweetShowcase = () => {
   const { tweetID } = useParams();
+  const navigate = useNavigate();
+
+  const handleBackClick = () => navigate(-1);
 
   const [{ loading, data, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/tweets/${tweetID}`, method: 'GET' });
 
@@ -14,7 +18,7 @@ const TweetShowcase = () => {
     return (
       <Container>
         <div className="header">
-          <Icon className="back-icon" icon="ph:arrow-bend-up-left-bold" />
+          <Icon onClick={handleBackClick} className="back-icon" icon="ph:arrow-bend-up-left-bold" />
           <span>Tweet</span>
         </div>
         <div className="content">
@@ -31,7 +35,7 @@ const TweetShowcase = () => {
   return (
     <Container>
       <div className="header">
-        <Icon className="back-icon" icon="ph:arrow-bend-up-left-bold" />
+        <Icon onClick={handleBackClick} className="back-icon" icon="ph:arrow-bend-up-left-bold" />
         <span>Tweet</span>
       </div>
       <div className="content">{tweetID}</div>
@@ -61,6 +65,7 @@ const Container = styled.div`
 
     & > .back-icon {
       font-size: 2rem;
+      cursor: pointer;
     }
   }
 
