@@ -32,7 +32,7 @@ const TweetShowcase = () => {
   const handleBackClick = () => navigate(-1);
 
   const [{ loading, data, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/tweets/${tweetID}`, method: 'GET' });
-
+  const [, executeLike] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
   const [, executeRetweet] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/tweets`, method: 'POST', headers: { Authorization: authHeader } },
     { manual: true }
@@ -75,6 +75,17 @@ const TweetShowcase = () => {
     setIsRetweeted(true);
     toast.success('Retweeted!');
     closeModal();
+  };
+
+  const handleLike = async (e) => {
+    e.stopPropagation();
+    if (!isAuthenticated) return;
+
+    const url = import.meta.env.VITE_API_URL + `/tweets/${data.tweet._id}/like`;
+    const res = await executeLike({ url });
+
+    setLikes(res.data.updatedTweet.likes.length);
+    if (isAuthenticated) setIsLiked(res.data.updatedTweet.likes.includes(auth._id));
   };
 
   if (error)
@@ -163,7 +174,7 @@ const TweetShowcase = () => {
                     )}
                   </span>
                   <span>
-                    <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
+                    <Icon onClick={handleLike} className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
                     <span className="like-count">{likes || null}</span>
                   </span>
                 </div>
