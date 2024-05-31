@@ -7,6 +7,9 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
+import { useState, useEffect } from 'react';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 import UserPopup from './UserPopup';
 
@@ -14,11 +17,24 @@ import defaultPP from '../assets/profilePic.jpg';
 
 const TweetShowcase = () => {
   const { tweetID } = useParams();
+  const auth = useAuthUser();
+  const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
 
   const handleBackClick = () => navigate(-1);
 
   const [{ loading, data, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/tweets/${tweetID}`, method: 'GET' });
+
+  const [isLiked, setIsLiked] = useState(isAuthenticated && data ? data.tweet.likes.includes(auth._id) : false);
+  const [isRetweeted, setIsRetweeted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [likes, setLikes] = useState(null);
+
+  useEffect(() => {
+    if (data) {
+      setLikes(data.tweet.likes.length);
+    }
+  }, [data]);
 
   if (error)
     return (
@@ -85,7 +101,18 @@ const TweetShowcase = () => {
                 <div className="date">
                   <span>{moment(data.tweet.createdAt).format('h:mm A · MMM D, YYYY')}</span>
                 </div>
-                <div className="actions"></div>
+                <div className="actions">
+                  <span>
+                    <Icon className="replies-icon icon" icon="bx:message-rounded" />
+                  </span>
+                  <span>
+                    <Icon className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+                  </span>
+                  <span>
+                    <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
+                    <span className="like-count">{likes || null}</span>
+                  </span>
+                </div>
               </div>
             </div>
           )}
@@ -201,6 +228,53 @@ const Container = styled.div`
         & > .date {
           color: var(--gray);
           font-size: 1.3rem;
+        }
+
+        & > .actions {
+          display: flex;
+          justify-content: space-around;
+          padding: 1rem 0;
+          border-top: 1px solid var(--gray-dark);
+          border-bottom: 1px solid var(--gray-dark);
+          font-size: 1.6rem;
+
+          & > span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+
+            & > span {
+              font-size: 1.4rem;
+            }
+          }
+
+          & .like-count {
+            min-width: 3ch;
+          }
+
+          & .replies-icon,
+          .retweet-icon,
+          .like-icon {
+            transition: all 0.3s;
+            cursor: pointer;
+          }
+
+          & .like-icon.fill {
+            color: var(--like-red);
+          }
+          & .retweet-icon.fill {
+            color: var(--success);
+          }
+
+          & .replies-icon:hover {
+            color: var(--twitter-blue);
+          }
+          & .retweet-icon:hover {
+            color: var(--success);
+          }
+          & .like-icon:hover {
+            color: var(--like-red);
+          }
         }
       }
     }
