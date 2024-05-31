@@ -35,6 +35,31 @@ const SearchFeed = () => {
     }
   };
 
+  if (!searchTerm)
+    return (
+      <Wrapper>
+        <div className="search-box">
+          <SearchBox value={searchTerm} />
+        </div>
+        <div className="feed">
+          <div className="header">
+            <span onClick={handleMenuClick} className={activeMenu === 'tweets' ? 'active' : null}>
+              Tweets
+            </span>
+            <span onClick={handleMenuClick} className={activeMenu === 'users' ? 'active' : null}>
+              Users
+            </span>
+          </div>
+          <ClipLoader className="spinner" loading={activeMenu === 'tweets' && tweetsLoading} color="var(--twitter-blue)" size={45} />
+          <div className="content">
+            {!tweetsLoading && tweetsData && activeMenu === 'tweets' && tweetsData.tweets.map((e) => <Tweet key={e._id} tweet={e} update={false} />)}
+            {!usersLoading && usersData && activeMenu === 'users' && usersData.users.map((e) => <UserCard key={e._id} user={e} />)}
+          </div>
+          <h2 className="no-tweets">Try searching for something above...</h2>
+        </div>
+      </Wrapper>
+    );
+
   return (
     <Wrapper>
       <div className="search-box">
@@ -57,7 +82,6 @@ const SearchFeed = () => {
         {!tweetsLoading && activeMenu === 'tweets' && tweetsData?.tweets?.length === 0 && <h2 className="no-tweets">No results for "{searchTerm}"</h2>}
         {!usersLoading && activeMenu === 'users' && usersData?.users?.length === 0 && <h2 className="no-tweets">No results for "{searchTerm}"</h2>}
       </div>
-      ;
     </Wrapper>
   );
 };
