@@ -186,9 +186,13 @@ const TweetShowcase = () => {
                   </div>
                 </div>
               </div>
-              <div className="replies">
-                {data.replies ? data.replies.map((e) => <Tweet tweet={{ ...e, tweetType: 'tweet' }} update={false} key={e._id} />) : null}
-              </div>
+              {data.replies.length > 0 ? (
+                <div className="replies">
+                  {data.replies.map((e) => (
+                    <Tweet tweet={{ ...e, tweetType: 'tweet' }} update={false} key={e._id} />
+                  ))}
+                </div>
+              ) : null}
             </>
           )}
         </div>
