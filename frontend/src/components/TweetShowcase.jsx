@@ -17,7 +17,7 @@ import { useGlobal } from '../Router';
 
 import Modal from './Modal';
 import UserPopup from './UserPopup';
-import { ModalContainer, modalStyles, Button } from './Tweet';
+import Tweet, { ModalContainer, modalStyles, Button } from './Tweet';
 
 import defaultPP from '../assets/profilePic.jpg';
 
@@ -131,55 +131,62 @@ const TweetShowcase = () => {
           {loading ? (
             <ClipLoader className="spinner" loading={loading} color="var(--twitter-blue)" size={45} />
           ) : (
-            <div className="tweet">
-              <div className="header" data-tooltip-id={`user-popup-${data.tweet._id}`}>
-                <div className="profile-pic">
-                  <img src={data.tweet.author.profilePic || defaultPP} />
+            <>
+              {data.tweet.tweetType === 'reply' ? (
+                <div style={{ paddingLeft: '2rem' }}>
+                  <Tweet $reply tweet={data.tweet.replyTo} update={false} />
                 </div>
-                <div className="user">
-                  <span>{data.tweet.author.displayName}</span>
-                  <span>@{data.tweet.author.username}</span>
-                </div>
-              </div>
-              <div className="content">
-                <div className="text">
-                  <span>{data.tweet.content}</span>
-                </div>
-                {data.tweet.imgUrl && (
-                  <div className="image">
-                    <img className="tweet-img" src={data.tweet.imgUrl} alt="" />
+              ) : null}
+              <div className="tweet">
+                <div className="header" data-tooltip-id={`user-popup-${data.tweet._id}`}>
+                  <div className="profile-pic">
+                    <img src={data.tweet.author.profilePic || defaultPP} />
                   </div>
-                )}
-                <div className="date">
-                  <span>{moment(data.tweet.createdAt).format('h:mm A · MMM D, YYYY')}</span>
+                  <div className="user">
+                    <span>{data.tweet.author.displayName}</span>
+                    <span>@{data.tweet.author.username}</span>
+                  </div>
                 </div>
-                <div className="actions">
-                  <span onClick={handleReply}>
-                    <Icon className="replies-icon icon" icon="bx:message-rounded" />
-                  </span>
-                  <span>
-                    <Icon onClick={handleRTClick} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
-                    {isOpen && (
-                      <Modal isOpen={isOpen} setIsOpen={setIsOpen} style={modalStyles}>
-                        <ModalContainer onClick={(e) => e.stopPropagation()}>
-                          <h4>Are you sure you want to retweet that?</h4>
-                          <div className="buttons">
-                            <Button onClick={handleRetweetModal}>Retweet</Button>
-                            <Button $cancel onClick={closeModal}>
-                              Cancel
-                            </Button>
-                          </div>
-                        </ModalContainer>
-                      </Modal>
-                    )}
-                  </span>
-                  <span>
-                    <Icon onClick={handleLike} className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
-                    <span className="like-count">{likes || null}</span>
-                  </span>
+                <div className="content">
+                  <div className="text">
+                    <span>{data.tweet.content}</span>
+                  </div>
+                  {data.tweet.imgUrl && (
+                    <div className="image">
+                      <img className="tweet-img" src={data.tweet.imgUrl} alt="" />
+                    </div>
+                  )}
+                  <div className="date">
+                    <span>{moment(data.tweet.createdAt).format('h:mm A · MMM D, YYYY')}</span>
+                  </div>
+                  <div className="actions">
+                    <span onClick={handleReply}>
+                      <Icon className="replies-icon icon" icon="bx:message-rounded" />
+                    </span>
+                    <span>
+                      <Icon onClick={handleRTClick} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+                      {isOpen && (
+                        <Modal isOpen={isOpen} setIsOpen={setIsOpen} style={modalStyles}>
+                          <ModalContainer onClick={(e) => e.stopPropagation()}>
+                            <h4>Are you sure you want to retweet that?</h4>
+                            <div className="buttons">
+                              <Button onClick={handleRetweetModal}>Retweet</Button>
+                              <Button $cancel onClick={closeModal}>
+                                Cancel
+                              </Button>
+                            </div>
+                          </ModalContainer>
+                        </Modal>
+                      )}
+                    </span>
+                    <span>
+                      <Icon onClick={handleLike} className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />
+                      <span className="like-count">{likes || null}</span>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </Container>
