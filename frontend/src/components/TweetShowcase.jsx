@@ -186,6 +186,9 @@ const TweetShowcase = () => {
                   </div>
                 </div>
               </div>
+              <div className="replies">
+                {data.replies ? data.replies.map((e) => <Tweet tweet={{ ...e, tweetType: 'tweet' }} update={false} key={e._id} />) : null}
+              </div>
             </>
           )}
         </div>
@@ -349,6 +352,10 @@ const Container = styled.div`
           }
         }
       }
+    }
+
+    & > .replies {
+      border-top: 1px solid var(--gray-dark);
     }
 
     & > .error-message {
