@@ -13,6 +13,8 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import toast from 'react-hot-toast';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
+import { useGlobal } from '../Router';
+
 import Modal from './Modal';
 import UserPopup from './UserPopup';
 import { ModalContainer, modalStyles, Button } from './Tweet';
@@ -25,10 +27,12 @@ const TweetShowcase = () => {
   const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
   const authHeader = useAuthHeader();
+  const { openTweetModal } = useGlobal();
 
   const handleBackClick = () => navigate(-1);
 
   const [{ loading, data, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/tweets/${tweetID}`, method: 'GET' });
+
   const [, executeRetweet] = useAxios(
     { url: `${import.meta.env.VITE_API_URL}/tweets`, method: 'POST', headers: { Authorization: authHeader } },
     { manual: true }
@@ -49,6 +53,12 @@ const TweetShowcase = () => {
   const openModal = () => (isRetweeted ? toast.error('You have already retweeted that') : setIsOpen(true));
   const closeModal = () => setIsOpen(false);
 
+  const handleReply = (e) => {
+    e.stopPropagation();
+    if (!isAuthenticated) return;
+    openTweetModal(data.tweet);
+  };
+
   const handleRTClick = (e) => {
     e.stopPropagation();
     if (!isAuthenticated) return;
@@ -61,11 +71,9 @@ const TweetShowcase = () => {
       closeModal();
       return;
     }
-
     const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: data.tweet._id } });
     setIsRetweeted(true);
     toast.success('Retweeted!');
-
     closeModal();
   };
 
@@ -135,7 +143,7 @@ const TweetShowcase = () => {
                   <span>{moment(data.tweet.createdAt).format('h:mm A · MMM D, YYYY')}</span>
                 </div>
                 <div className="actions">
-                  <span>
+                  <span onClick={handleReply}>
                     <Icon className="replies-icon icon" icon="bx:message-rounded" />
                   </span>
                   <span>
