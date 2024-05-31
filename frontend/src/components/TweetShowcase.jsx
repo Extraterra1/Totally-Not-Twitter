@@ -1,13 +1,21 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import useAxios from 'axios-hooks';
+import { useParams } from 'react-router-dom';
+import { ClipLoader } from 'react-spinners';
 
 const TweetShowcase = () => {
+  const { tweetID } = useParams();
+
+  const [{ loading, data, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/tweets/${tweetID}`, method: 'GET' });
+
   return (
     <Container>
       <div className="header">
         <Icon className="back-icon" icon="ph:arrow-bend-up-left-bold" />
         <span>Tweet</span>
       </div>
+      <div className="content">{tweetID}</div>
     </Container>
   );
 };
