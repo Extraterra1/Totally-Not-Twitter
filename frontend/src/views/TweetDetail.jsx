@@ -6,13 +6,14 @@ import { useGlobal } from '../Router';
 
 import Navbar from '../components/Navbar';
 import Discover from '../components/Discover';
+import TweetShowcase from '../components/TweetShowcase';
 
 const TweetDetail = () => {
   const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();
   return (
     <Wrapper>
       <Navbar />
-      <div></div>
+      <TweetShowcase />
       <Discover search={false} />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
       <Toaster toastOptions={toastOptions} />
