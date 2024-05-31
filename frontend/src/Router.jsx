@@ -7,6 +7,7 @@ import Timeline from './views/Timeline';
 import Profile from './views/Profile';
 import Search from './views/Search';
 import Explore from './views/Explore';
+import TweetDetail from './views/TweetDetail';
 
 const GlobalContext = createContext();
 
@@ -48,6 +49,10 @@ const Router = () => {
     {
       path: '/:username',
       element: <Profile />
+    },
+    {
+      path: '/:username/:tweetID',
+      element: <TweetDetail />
     }
   ]);
 
