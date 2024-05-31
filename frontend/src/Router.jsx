@@ -51,7 +51,7 @@ const Router = () => {
       element: <Profile />
     },
     {
-      path: '/:username/:tweetID',
+      path: '/:username/status/:tweetID',
       element: <TweetDetail />
     }
   ]);

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Toaster } from 'react-hot-toast';
 
 import PopUpTweetForm from '../components/PopUpTweetForm';
 import { useGlobal } from '../Router';
@@ -11,7 +12,7 @@ const TweetDetail = () => {
   return (
     <Wrapper>
       <Navbar />
-      <ExploreFeed />
+      <div></div>
       <Discover search={false} />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
       <Toaster toastOptions={toastOptions} />
