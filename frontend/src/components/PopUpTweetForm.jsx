@@ -167,8 +167,8 @@ const Wrapper = styled.div`
       padding: 1rem;
       gap: 2rem;
       & > .profile-pic {
-        width: 4rem;
-        height: 4rem;
+        width: 3rem;
+        height: 3rem;
         border-radius: 50%;
         overflow: hidden;
         display: flex;
