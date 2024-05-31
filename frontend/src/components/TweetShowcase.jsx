@@ -10,8 +10,12 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import toast from 'react-hot-toast';
+import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 
+import Modal from './Modal';
 import UserPopup from './UserPopup';
+import { ModalContainer, modalStyles, Button } from './Tweet';
 
 import defaultPP from '../assets/profilePic.jpg';
 
@@ -20,12 +24,17 @@ const TweetShowcase = () => {
   const auth = useAuthUser();
   const isAuthenticated = useIsAuthenticated();
   const navigate = useNavigate();
+  const authHeader = useAuthHeader();
 
   const handleBackClick = () => navigate(-1);
 
   const [{ loading, data, error }] = useAxios({ url: `${import.meta.env.VITE_API_URL}/tweets/${tweetID}`, method: 'GET' });
+  const [, executeRetweet] = useAxios(
+    { url: `${import.meta.env.VITE_API_URL}/tweets`, method: 'POST', headers: { Authorization: authHeader } },
+    { manual: true }
+  );
 
-  const [isLiked, setIsLiked] = useState(isAuthenticated && data ? data.tweet.likes.includes(auth._id) : false);
+  const [isLiked, setIsLiked] = useState(false);
   const [isRetweeted, setIsRetweeted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [likes, setLikes] = useState(null);
@@ -33,8 +42,32 @@ const TweetShowcase = () => {
   useEffect(() => {
     if (data) {
       setLikes(data.tweet.likes.length);
+      setIsLiked(data.tweet.likes.includes(auth._id));
     }
   }, [data]);
+
+  const openModal = () => (isRetweeted ? toast.error('You have already retweeted that') : setIsOpen(true));
+  const closeModal = () => setIsOpen(false);
+
+  const handleRTClick = (e) => {
+    e.stopPropagation();
+    if (!isAuthenticated) return;
+    openModal();
+  };
+
+  const handleRetweetModal = async () => {
+    if (isRetweeted) {
+      toast.error('You have already retweeted that');
+      closeModal();
+      return;
+    }
+
+    const res = await executeRetweet({ data: { tweetType: 'retweet', retweetedTweet: data.tweet._id } });
+    setIsRetweeted(true);
+    toast.success('Retweeted!');
+
+    closeModal();
+  };
 
   if (error)
     return (
@@ -106,7 +139,20 @@ const TweetShowcase = () => {
                     <Icon className="replies-icon icon" icon="bx:message-rounded" />
                   </span>
                   <span>
-                    <Icon className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+                    <Icon onClick={handleRTClick} className={`retweet-icon ${isRetweeted ? 'fill' : null}`} icon="bx:repost" />
+                    {isOpen && (
+                      <Modal isOpen={isOpen} setIsOpen={setIsOpen} style={modalStyles}>
+                        <ModalContainer onClick={(e) => e.stopPropagation()}>
+                          <h4>Are you sure you want to retweet that?</h4>
+                          <div className="buttons">
+                            <Button onClick={handleRetweetModal}>Retweet</Button>
+                            <Button $cancel onClick={closeModal}>
+                              Cancel
+                            </Button>
+                          </div>
+                        </ModalContainer>
+                      </Modal>
+                    )}
                   </span>
                   <span>
                     <Icon className={`like-icon ${isLiked ? 'fill' : null}`} icon={isLiked ? 'bxs-heart' : 'bx:heart'} />

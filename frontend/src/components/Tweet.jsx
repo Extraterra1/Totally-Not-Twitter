@@ -175,7 +175,7 @@ const Tweet = ({ tweet, update = true, ...props }) => {
 
 export default Tweet;
 
-const Button = styled(BaseButton)`
+export const Button = styled(BaseButton)`
   background-color: ${(props) => (props.$cancel ? 'var(--danger)' : 'var(--twitter-blue)')};
   color: var(--light);
 
@@ -184,7 +184,7 @@ const Button = styled(BaseButton)`
   }
 `;
 
-const modalStyles = {
+export const modalStyles = {
   content: {
     top: '50%',
     left: '50%',
@@ -202,7 +202,7 @@ const modalStyles = {
   }
 };
 
-const ModalContainer = styled.div`
+export const ModalContainer = styled.div`
   padding: 3rem;
   background-color: var(--black);
   font-size: 2rem;
