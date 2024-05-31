@@ -6,6 +6,8 @@ import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import Tweet from './Tweet';
+
 const TweetShowcase = () => {
   const { tweetID } = useParams();
   const navigate = useNavigate();
@@ -38,7 +40,13 @@ const TweetShowcase = () => {
         <Icon onClick={handleBackClick} className="back-icon" icon="ph:arrow-bend-up-left-bold" />
         <span>Tweet</span>
       </div>
-      <div className="content">{tweetID}</div>
+      <div className="content">
+        {loading ? (
+          <ClipLoader className="spinner" loading={loading} color="var(--twitter-blue)" size={45} />
+        ) : (
+          <div className="tweet">{data.tweet.content}</div>
+        )}
+      </div>
     </Container>
   );
 };
@@ -70,7 +78,15 @@ const Container = styled.div`
   }
 
   & > .content {
+    display: flex;
+    flex-direction: column;
+
     color: var(--light);
+
+    & .spinner {
+      align-self: center;
+      margin-top: 3rem;
+    }
 
     & > .error-message {
       display: flex;
