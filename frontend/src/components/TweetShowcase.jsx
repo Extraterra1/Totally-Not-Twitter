@@ -5,8 +5,11 @@ import { useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 
-import Tweet from './Tweet';
+import UserPopup from './UserPopup';
+
+import defaultPP from '../assets/profilePic.jpg';
 
 const TweetShowcase = () => {
   const { tweetID } = useParams();
@@ -35,19 +38,45 @@ const TweetShowcase = () => {
     );
 
   return (
-    <Container>
-      <div className="header">
-        <Icon onClick={handleBackClick} className="back-icon" icon="ph:arrow-bend-up-left-bold" />
-        <span>Tweet</span>
-      </div>
-      <div className="content">
-        {loading ? (
-          <ClipLoader className="spinner" loading={loading} color="var(--twitter-blue)" size={45} />
-        ) : (
-          <div className="tweet">{data.tweet.content}</div>
-        )}
-      </div>
-    </Container>
+    <>
+      {!loading ? (
+        <Tooltip
+          id={`user-popup-${data.tweet._id}`}
+          style={{ padding: 0, background: 'transparent', marginLeft: '2rem' }}
+          delayShow={500}
+          delayHide={0}
+          clickable
+          noArrow
+          opacity={1}
+          place="bottom-start"
+        >
+          <UserPopup user={data.tweet.author} />
+        </Tooltip>
+      ) : null}
+      <Container>
+        <div className="header">
+          <Icon onClick={handleBackClick} className="back-icon" icon="ph:arrow-bend-up-left-bold" />
+          <span>Tweet</span>
+        </div>
+        <div className="content">
+          {loading ? (
+            <ClipLoader className="spinner" loading={loading} color="var(--twitter-blue)" size={45} />
+          ) : (
+            <div className="tweet" data-tooltip-id={`user-popup-${data.tweet._id}`}>
+              <div className="header">
+                <div className="profile-pic">
+                  <img src={data.tweet.author.profilePic || defaultPP} />
+                </div>
+                <div className="user">
+                  <span>{data.tweet.author.displayName}</span>
+                  <span>@{data.tweet.author.username}</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </Container>
+    </>
   );
 };
 
@@ -86,6 +115,46 @@ const Container = styled.div`
     & .spinner {
       align-self: center;
       margin-top: 3rem;
+    }
+
+    & > .tweet {
+      padding: 1rem;
+      & > .header {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        cursor: pointer;
+
+        & > .profile-pic {
+          width: 5rem;
+          height: 5rem;
+          border-radius: 50%;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          & > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        & > .user {
+          display: flex;
+          flex-direction: column;
+          margin-left: 1rem;
+          justify-content: center;
+
+          & > span:first-child {
+            font-weight: 700;
+            font-size: 1.5rem;
+          }
+          & > span:last-child {
+            color: var(--gray);
+            font-size: 1.3rem;
+          }
+        }
+      }
     }
 
     & > .error-message {
