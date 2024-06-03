@@ -21,6 +21,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
+
+  @media screen and (max-width: 700px) {
+    display: none;
+  }
 `;
 
 const Container = styled.div`

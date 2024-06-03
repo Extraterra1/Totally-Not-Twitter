@@ -36,6 +36,15 @@ export default Feed;
 const Wrapper = styled.div`
   border-left: 1px solid var(--gray-dark);
   border-right: 1px solid var(--gray-dark);
+
+  @media screen and (max-width: 700px) {
+    grid-column: span 2;
+    margin-right: 3rem;
+  }
+
+  @media screen and (max-width: 600px) {
+    margin-right: 0;
+  }
 `;
 
 const TweetsContainer = styled.div`
