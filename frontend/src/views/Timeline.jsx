@@ -63,6 +63,12 @@ const Wrapper = styled.main`
     color: var(--light);
     font-size: 1.6rem;
   }
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    gap: 0;
+  }
 `;
 
 const toastOptions = {

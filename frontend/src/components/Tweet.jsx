@@ -228,6 +228,10 @@ const Container = styled.div`
   color: var(--light);
   font-size: 1.5rem;
 
+  @media screen and (max-width: 500px) {
+    font-size: 2rem;
+  }
+
   cursor: ${(props) => (props.$noActions ? null : 'pointer')};
 
   & .profile-pic {

@@ -45,6 +45,9 @@ const Wrapper = styled.div`
   @media screen and (max-width: 600px) {
     margin-right: 0;
   }
+  @media screen and (max-width: 500px) {
+    border: 0;
+  }
 `;
 
 const TweetsContainer = styled.div`

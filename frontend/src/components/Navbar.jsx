@@ -86,6 +86,13 @@ const Sidebar = styled.div`
   gap: 1rem;
   height: 100vh;
 
+  @media screen and (max-width: 500px) {
+    border-top: 1px solid var(--gray-dark);
+    width: 100%;
+    z-index: 10;
+    padding: 1rem 0;
+  }
+
   & > .sidebar {
     display: flex;
     flex-direction: column;
@@ -125,10 +132,32 @@ const Sidebar = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 500px) {
+    position: fixed;
+    bottom: 0;
+    height: auto;
+    align-items: center;
+    background-color: var(--black);
+
+    & > .sidebar {
+      flex-direction: row;
+      min-width: auto;
+
+      & .logo,
+      & > div {
+        display: none;
+      }
+    }
+  }
 `;
 
 const Button = styled(BaseButton)`
   align-self: stretch;
 
   visibility: ${(props) => (props.$disabled ? 'hidden' : null)};
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
