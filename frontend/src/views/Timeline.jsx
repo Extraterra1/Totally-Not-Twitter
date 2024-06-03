@@ -11,11 +11,7 @@ import Discover from '../components/Discover';
 import PopUpTweetForm from '../components/PopUpTweetForm';
 import { useGlobal } from '../Router';
 
-const TimelineContext = createContext();
-
-export const useTimeline = () => {
-  return useContext(TimelineContext);
-};
+import { TimelineContext } from '../context/TimelineContext';
 
 const Timeline = () => {
   const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();

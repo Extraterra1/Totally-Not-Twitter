@@ -11,7 +11,8 @@ import { BeatLoader } from 'react-spinners';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { ActualButton } from './Register';
-import { useTimeline } from '../views/Timeline';
+// import { useTimeline } from '../views/Timeline';
+import { useTimeline } from '../context/TimelineContext';
 
 const TweetForm = () => {
   const auth = useAuthUser();

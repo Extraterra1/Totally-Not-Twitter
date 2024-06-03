@@ -4,7 +4,8 @@ import { ClipLoader } from 'react-spinners';
 
 import TweetForm from './TweetForm';
 import Tweet from './Tweet';
-import { useTimeline } from '../views/Timeline';
+// import { useTimeline } from '../views/Timeline';
+import { useTimeline } from '../context/TimelineContext';
 
 const Feed = () => {
   const { tweets, loading } = useTimeline();

@@ -11,7 +11,8 @@ import moment from 'moment';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
-import { useTimeline } from '../views/Timeline';
+// import { useTimeline } from '../views/Timeline';
+import { useTimeline } from '../context/TimelineContext';
 import { useGlobal } from '../Router';
 
 import Modal from './Modal';
