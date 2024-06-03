@@ -67,6 +67,16 @@ const Wrapper = styled.main`
     color: var(--light);
     font-size: 1.6rem;
   }
+
+  @media screen and (max-width: 700px) {
+    & > div:nth-child(3) {
+      grid-column: span 2;
+      margin-right: 3rem;
+    }
+    & > div:last-child {
+      display: none;
+    }
+  }
 `;
 
 const toastOptions = {
