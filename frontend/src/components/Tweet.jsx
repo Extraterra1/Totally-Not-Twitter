@@ -239,6 +239,9 @@ const Container = styled.div`
     max-width: 3rem;
     flex-direction: column;
     position: relative;
+    @media screen and (max-width: 500px) {
+      max-width: 5rem;
+    }
 
     & > .image-container {
       width: 3rem;
@@ -248,6 +251,11 @@ const Container = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+
+      @media screen and (max-width: 500px) {
+        width: 5rem;
+        height: 5rem;
+      }
       & > img {
         width: 100%;
         height: 100%;
