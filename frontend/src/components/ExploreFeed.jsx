@@ -36,6 +36,10 @@ const Wrapper = styled.div`
   border-left: 1px solid var(--gray-dark);
   border-right: 1px solid var(--gray-dark);
 
+  @media screen and (max-width: 500px) {
+    border: 0;
+  }
+
   & .spinner {
     align-self: center;
     margin-top: 3rem;
