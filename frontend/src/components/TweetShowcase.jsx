@@ -209,6 +209,10 @@ const Container = styled.div`
   border-left: 1px solid var(--gray-dark);
   border-right: 1px solid var(--gray-dark);
 
+  @media screen and (max-width: 500px) {
+    border: none;
+  }
+
   & > .header {
     display: flex;
     align-items: center;
@@ -243,6 +247,11 @@ const Container = styled.div`
       flex-direction: column;
       gap: 1rem;
       padding: 1rem;
+
+      @media screen and (max-width: 500px) {
+        padding: 0;
+      }
+
       & > .header {
         display: grid;
         grid-template-columns: auto 1fr;
@@ -287,8 +296,15 @@ const Container = styled.div`
         padding: 1rem;
         gap: 1rem;
 
+        @media screen and (max-width: 500px) {
+          padding: 0;
+        }
+
         & > .text {
           font-size: 1.8rem;
+          @media screen and (max-width: 500px) {
+            padding: 1rem;
+          }
         }
 
         & > .image {
@@ -316,6 +332,10 @@ const Container = styled.div`
           border-top: 1px solid var(--gray-dark);
           border-bottom: 1px solid var(--gray-dark);
           font-size: 1.6rem;
+
+          @media screen and (max-width: 500px) {
+            border-bottom: none;
+          }
 
           & > span {
             display: flex;
