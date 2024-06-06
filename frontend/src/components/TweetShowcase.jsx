@@ -133,7 +133,7 @@ const TweetShowcase = () => {
           ) : (
             <>
               {data.tweet.tweetType === 'reply' ? (
-                <div style={{ paddingLeft: '2rem' }}>
+                <div className="reply">
                   <Tweet $reply tweet={data.tweet.replyTo} update={false} />
                 </div>
               ) : null}
@@ -240,6 +240,13 @@ const Container = styled.div`
     & .spinner {
       align-self: center;
       margin-top: 3rem;
+    }
+
+    & > .reply {
+      padding-left: 2rem;
+      @media screen and (max-width: 500px) {
+        padding-left: 0;
+      }
     }
 
     & > .tweet {
