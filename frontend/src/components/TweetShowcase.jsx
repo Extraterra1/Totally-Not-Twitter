@@ -12,6 +12,8 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import toast from 'react-hot-toast';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 import { useGlobal } from '../Router';
 
@@ -153,7 +155,9 @@ const TweetShowcase = () => {
                   </div>
                   {data.tweet.imgUrl && (
                     <div className="image">
-                      <img className="tweet-img" src={data.tweet.imgUrl} alt="" />
+                      <Zoom>
+                        <img className="tweet-img" src={data.tweet.imgUrl} alt="" />
+                      </Zoom>
                     </div>
                   )}
                   <div className="date">
@@ -320,7 +324,7 @@ const Container = styled.div`
           overflow: hidden;
           border-radius: 1rem;
 
-          & > img {
+          & img {
             width: 100%;
             height: 100%;
             object-fit: cover;

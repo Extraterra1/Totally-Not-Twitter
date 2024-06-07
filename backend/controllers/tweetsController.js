@@ -63,6 +63,9 @@ exports.createTweet = [
         })
       : null;
 
+    console.log(req.file);
+    console.log(image);
+
     const { content, tweetType, replyTo, retweetedTweet } = req.body;
     const author = req.user._id;
 
