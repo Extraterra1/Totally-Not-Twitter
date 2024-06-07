@@ -9,6 +9,8 @@ import toast from 'react-hot-toast';
 import { Tooltip } from 'react-tooltip';
 import moment from 'moment';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
 // import { useTimeline } from '../views/Timeline';
@@ -136,8 +138,17 @@ const Tweet = ({ tweet, update = true, ...props }) => {
               </div>
               <div className="text">{tweet.content}</div>
               {tweet.imgUrl && (
-                <div className="image">
-                  <img className="tweet-img" src={tweet.imgUrl} alt="" />
+                <div
+                  className="image"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log('xdd');
+                  }}
+                >
+                  <Zoom classDialog="zoom">
+                    <img className="tweet-img" src={tweet.imgUrl} alt="" />
+                  </Zoom>
                 </div>
               )}
               <div className="actions">
