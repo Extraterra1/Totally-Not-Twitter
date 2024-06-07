@@ -155,7 +155,7 @@ const TweetShowcase = () => {
                   </div>
                   {data.tweet.imgUrl && (
                     <div className="image">
-                      <Zoom>
+                      <Zoom classDialog="zoom">
                         <img className="tweet-img" src={data.tweet.imgUrl} alt="" />
                       </Zoom>
                     </div>
