@@ -138,14 +138,7 @@ const Tweet = ({ tweet, update = true, ...props }) => {
               </div>
               <div className="text">{tweet.content}</div>
               {tweet.imgUrl && (
-                <div
-                  className="image"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    console.log('xdd');
-                  }}
-                >
+                <div className="image" onClick={(e) => e.stopPropagation()}>
                   <Zoom classDialog="zoom">
                     <img className="tweet-img" src={tweet.imgUrl} alt="" />
                   </Zoom>
