@@ -51,12 +51,14 @@ const Navbar = () => {
                 <span>Explore</span>
               </div>
             </Link>
-            <Link to={isAuthenticated ? `/${authData.username}` : null}>
-              <div className="item">
-                <Icon icon="ph:user-fill" />
-                <span>Profile</span>
-              </div>
-            </Link>
+            {isAuthenticated ? (
+              <Link to={isAuthenticated ? `/${authData.username}` : null}>
+                <div className="item">
+                  <Icon icon="ph:user-fill" />
+                  <span>Profile</span>
+                </div>
+              </Link>
+            ) : null}
             <Button onClick={() => openTweetModal()} $primary $disabled={!isAuthenticated}>
               Post
             </Button>
