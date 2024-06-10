@@ -1,13 +1,27 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { isAuthenticated } from 'react-auth-kit/utils/utils';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import Modal from './Modal';
+import { useState } from 'react';
 
 const FloatingLogout = () => {
+  const isAuthenticated = useIsAuthenticated();
+  const signOut = useSignOut();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => (isAuthenticated ? setIsOpen(true) : null);
+
   return (
-    <Button>
-      <Icon icon="ph:sign-out" />
-    </Button>
+    <>
+      <Modal setIsOpen={setIsOpen} isOpen={isOpen}>
+        <h1>heyyyyyyy</h1>
+      </Modal>
+      <Button onClick={handleClick}>
+        <Icon icon="ph:sign-out" />
+      </Button>
+    </>
   );
 };
 
