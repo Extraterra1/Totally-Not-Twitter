@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import { isAuthenticated } from 'react-auth-kit/utils/utils';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
 const FloatingLogout = () => {
   return (
@@ -12,6 +14,9 @@ const FloatingLogout = () => {
 export default FloatingLogout;
 
 const Button = styled.a`
+  visibility: hidden;
+  display: none;
+
   position: fixed;
   width: 7rem;
   height: 7rem;
@@ -26,4 +31,14 @@ const Button = styled.a`
   right: 5vw;
 
   font-size: 4rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--twitter-blue-hover);
+  }
+
+  @media screen and (max-width: 800px) {
+    visibility: visible;
+    display: auto;
+  }
 `;
