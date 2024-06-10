@@ -13,8 +13,8 @@ export default FloatingLogout;
 
 const Button = styled.a`
   position: fixed;
-  width: 5rem;
-  height: 5rem;
+  width: 7rem;
+  height: 7rem;
   border-radius: 50%;
   color: var(--light);
   background-color: var(--twitter-blue);
@@ -22,4 +22,8 @@ const Button = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
+  bottom: 10vh;
+  right: 5vw;
+
+  font-size: 4rem;
 `;
