@@ -19,6 +19,8 @@ const FloatingLogout = () => {
   };
   const closeModal = () => setIsOpen(false);
 
+  if (!isAuthenticated) return;
+
   return (
     <>
       <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
