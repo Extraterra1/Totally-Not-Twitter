@@ -7,6 +7,7 @@ import { useGlobal } from '../Router';
 import Navbar from '../components/Navbar';
 import Discover from '../components/Discover';
 import ProfileFeed from '../components/ProfileFeed';
+import FloatingLogout from '../components/FloatingLogout';
 
 const Profile = () => {
   const { replyTo, modalIsOpen, setModalIsOpen } = useGlobal();
@@ -18,6 +19,7 @@ const Profile = () => {
       <Discover />
       <PopUpTweetForm replyTo={replyTo} setIsOpen={setModalIsOpen} isOpen={modalIsOpen} update={false} />
       <Toaster toastOptions={toastOptions} />
+      <FloatingLogout />
     </Wrapper>
   );
 };
