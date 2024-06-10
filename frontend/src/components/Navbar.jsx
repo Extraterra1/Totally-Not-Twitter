@@ -21,7 +21,7 @@ const Navbar = () => {
   const [authData, setAuthData] = useState(auth);
 
   useEffect(() => {
-    if (cookies._auth_state?.username !== auth.username) setAuthData(auth);
+    if (cookies._auth_state?.username !== auth?.username) setAuthData(auth);
   });
 
   //Update data whenever cookie changes

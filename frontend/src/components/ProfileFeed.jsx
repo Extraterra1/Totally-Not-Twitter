@@ -39,7 +39,7 @@ const ProfileFeed = () => {
   const [, executeFollow] = useAxios({ method: 'PATCH', headers: { Authorization: authHeader } }, { manual: true });
 
   useEffect(() => {
-    if (cookies._auth_state?.username !== auth.username) setAuthData(auth);
+    if (cookies._auth_state?.username !== auth?.username) setAuthData(auth);
   });
 
   // Update data whenever cookie changes
