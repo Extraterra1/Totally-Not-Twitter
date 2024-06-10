@@ -14,6 +14,11 @@ const FloatingLogout = () => {
 
   const handleClick = () => (isAuthenticated ? setIsOpen(true) : null);
 
+  const handleSignOut = () => {
+    if (isAuthenticated) signOut();
+  };
+  const closeModal = () => setIsOpen(false);
+
   return (
     <>
       <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
@@ -22,8 +27,12 @@ const FloatingLogout = () => {
             <h4>Sign Out?</h4>
           </div>
           <div className="actions">
-            <button className="accept btn">Confirm</button>
-            <button className="cancel btn">Cancel</button>
+            <button onClick={handleSignOut} className="accept btn">
+              Confirm
+            </button>
+            <button onClick={closeModal} className="cancel btn">
+              Cancel
+            </button>
           </div>
         </Container>
       </Modal>
