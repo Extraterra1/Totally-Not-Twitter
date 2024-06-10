@@ -4,6 +4,7 @@ import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import Modal from './Modal';
 import { useState } from 'react';
+import { modalStyles } from './Tweet';
 
 const FloatingLogout = () => {
   const isAuthenticated = useIsAuthenticated();
@@ -15,8 +16,16 @@ const FloatingLogout = () => {
 
   return (
     <>
-      <Modal setIsOpen={setIsOpen} isOpen={isOpen}>
-        <h1>heyyyyyyy</h1>
+      <Modal setIsOpen={setIsOpen} isOpen={isOpen} style={modalStyles}>
+        <Container>
+          <div className="title">
+            <h4>Sign Out?</h4>
+          </div>
+          <div className="actions">
+            <button className="accept btn">Confirm</button>
+            <button className="cancel btn">Cancel</button>
+          </div>
+        </Container>
       </Modal>
       <Button onClick={handleClick}>
         <Icon icon="ph:sign-out" />
@@ -54,5 +63,30 @@ const Button = styled.a`
   @media screen and (max-width: 800px) {
     visibility: visible;
     display: auto;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: var(--light);
+  padding: 2rem;
+  gap: 2rem;
+
+  & > .title {
+    font-size: 5rem;
+    margin: 0 auto;
+  }
+
+  & > .actions {
+    display: flex;
+    gap: 2rem;
+    margin: 0 auto;
+    & .btn {
+      font-size: 2rem;
+    }
+    & .accept {
+      background-color: var(--danger);
+    }
   }
 `;
