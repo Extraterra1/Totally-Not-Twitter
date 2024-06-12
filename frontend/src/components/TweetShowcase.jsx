@@ -140,15 +140,17 @@ const TweetShowcase = () => {
                 </div>
               ) : null}
               <div className="tweet">
-                <div className="header" data-tooltip-id={`user-popup-${data.tweet._id}`}>
-                  <div className="profile-pic">
-                    <img src={data.tweet.author.profilePic || defaultPP} />
+                <Link to={`/${data.tweet.author.username}`}>
+                  <div className="header" data-tooltip-id={`user-popup-${data.tweet._id}`}>
+                    <div className="profile-pic">
+                      <img src={data.tweet.author.profilePic || defaultPP} />
+                    </div>
+                    <div className="user">
+                      <span>{data.tweet.author.displayName}</span>
+                      <span>@{data.tweet.author.username}</span>
+                    </div>
                   </div>
-                  <div className="user">
-                    <span>{data.tweet.author.displayName}</span>
-                    <span>@{data.tweet.author.username}</span>
-                  </div>
-                </div>
+                </Link>
                 <div className="content">
                   <div className="text">
                     <span>{data.tweet.content}</span>
