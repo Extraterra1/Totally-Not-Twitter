@@ -265,7 +265,7 @@ const Container = styled.div`
         padding: 0;
       }
 
-      & > .header {
+      & .header {
         display: grid;
         grid-template-columns: auto 1fr;
         cursor: pointer;
