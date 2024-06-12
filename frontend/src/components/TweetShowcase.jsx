@@ -113,7 +113,7 @@ const TweetShowcase = () => {
       {!loading ? (
         <Tooltip
           id={`user-popup-${data.tweet._id}`}
-          style={{ padding: 0, background: 'transparent', marginLeft: '2rem' }}
+          style={{ padding: 0, background: 'transparent', marginLeft: '2rem', zIndex: 10 }}
           delayShow={500}
           delayHide={0}
           clickable
