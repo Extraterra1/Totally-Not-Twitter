@@ -15,7 +15,7 @@ import { Line } from './Actions';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
-const Login = () => {
+const Login = ({ openRegisterModal }) => {
   const { closeModal } = useModal();
   const [{ loading }, executeLogin] = useAxios({ url: `${import.meta.env.VITE_API_URL}/login`, method: 'POST' }, { manual: true });
   const signIn = useSignIn();
@@ -40,6 +40,11 @@ const Login = () => {
       }
       console.log(err);
     }
+  };
+
+  const handleSignUpClick = () => {
+    closeModal();
+    openRegisterModal();
   };
 
   return (
@@ -79,7 +84,7 @@ const Login = () => {
             </Form>
           </Formik>
           <span className="register-link">
-            Don't have an account? <a onClick={closeModal}>Sign up</a>
+            Don't have an account? <a onClick={handleSignUpClick}>Sign up</a>
           </span>
         </Content>
       </Wrapper>

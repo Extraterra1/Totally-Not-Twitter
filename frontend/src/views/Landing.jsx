@@ -55,7 +55,7 @@ const Landing = () => {
         <Register />
       </Modal>
       <Modal isOpen={loginModalIsOpen} setIsOpen={setLoginModalIsOpen} shouldCloseOnOverlayClick={false}>
-        <Login />
+        <Login openRegisterModal={openRegisterModal} />
       </Modal>
       <Wrapper>
         <div className="logo-container">
