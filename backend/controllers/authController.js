@@ -38,7 +38,14 @@ exports.registerPOST = [
     });
     await newUser.save();
 
-    const cleanUser = { _id: newUser._id, email: newUser.email, username: newUser.username, displayName: newUser.displayName };
+    const cleanUser = {
+      _id: newUser._id,
+      email: newUser.email,
+      username: newUser.username,
+      displayName: newUser.displayName,
+      following: newUser.following,
+      profilePic: newUser.profilePic
+    };
 
     jwt.sign({ user: cleanUser, exp: moment().add(3, 'days').unix(), sub: cleanUser._id }, process.env.JWT_SECRET, (err, token) => {
       if (err) return res.status(500).json({ err });
@@ -116,7 +123,14 @@ exports.githubLoginPOST = [
       });
       await newUser.save();
 
-      user = { _id: newUser._id, email: newUser.email, username: newUser.username, displayName: newUser.displayName, profilePic: newUser.profilePic };
+      user = {
+        _id: newUser._id,
+        email: newUser.email,
+        username: newUser.username,
+        displayName: newUser.displayName,
+        profilePic: newUser.profilePic,
+        following: newUser.following
+      };
     }
 
     jwt.sign({ user, exp: moment().add(3, 'days').unix(), sub: user._id }, process.env.JWT_SECRET, (err, token) => {
