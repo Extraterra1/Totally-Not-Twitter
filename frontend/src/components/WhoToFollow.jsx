@@ -75,7 +75,7 @@ export const UserCard = ({ user }) => {
   const signIn = useSignIn();
   const isAuthenticated = useIsAuthenticated();
 
-  const [isFollowing, setIsFollowing] = useState(isAuthenticated ? auth.following.includes(user._id) : false);
+  const [isFollowing, setIsFollowing] = useState(isAuthenticated ? auth?.following.includes(user._id) : false);
   const [authData, setAuthData] = useState(auth);
 
   const url = `${import.meta.env.VITE_API_URL}/users/${user._id}/${isFollowing ? 'unfollow' : 'follow'}`;

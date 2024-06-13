@@ -48,7 +48,7 @@ const TweetShowcase = () => {
   useEffect(() => {
     if (data) {
       setLikes(data.tweet.likes.length);
-      setIsLiked(data.tweet.likes.includes(auth._id));
+      if (isAuthenticated) setIsLiked(data.tweet.likes.includes(auth._id));
     }
   }, [data]);
 
