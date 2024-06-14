@@ -134,7 +134,10 @@ exports.updateUser = [
 
     const updatedUser = await User.findByIdAndUpdate(req.user._id, itemsToUpdate, { new: true });
 
-    return res.json({ updatedUser });
+    jwt.sign({ updatedUser, exp: moment().add(3, 'days').unix(), sub: updatedUser._id }, process.env.JWT_SECRET, (err, token) => {
+      if (err) return res.status(500).json({ err });
+      return res.json({ token, updatedUser });
+    });
   })
 ];
 

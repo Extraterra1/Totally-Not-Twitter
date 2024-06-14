@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 import { useCookies } from 'react-cookie';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
 
 import { FileInput, SubmitButton } from './TweetForm';
 import { Button } from './Actions';
@@ -18,13 +19,14 @@ import defaultPP from '../assets/profilePic.jpg';
 const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
   const auth = useAuthUser();
   const authHeader = useAuthHeader();
+  const signIn = useSignIn();
   const [isFinished, setIsFinished] = useState(false);
   const [cookies, setCookie] = useCookies(['_auth_state']);
 
   const [authData, setAuthData] = useState(auth);
 
   useEffect(() => {
-    if (cookies._auth_state?.username !== auth.username) setAuthData(auth);
+    if (cookies._auth_state?.username !== auth?.username) setAuthData(auth);
   });
 
   // Update data whenever cookie changes
@@ -71,7 +73,13 @@ const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
       // Refetch tweets if name or picture changed
       if (displayName !== authData.displayName || profilePic !== authData.profilePic) refetchTweets();
       // Update auth state
-      setCookie('_auth_state', { email, displayName, followers, following, username, profilePic, _id });
+      signIn({
+        auth: {
+          token: res.data.token,
+          type: 'Bearer'
+        },
+        userState: res.data.updatedUser
+      });
 
       setSubmitting(false);
       resetForm({ values: { displayName: values.displayName } });
