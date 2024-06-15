@@ -285,7 +285,6 @@ const Content = styled.div`
   }
 
   & > .separator {
-    margin-bottom: 3rem;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -300,6 +299,5 @@ const Content = styled.div`
   }
 `;
 const SubmitButton = styled(ActualButton)`
-  margin: 4rem 0;
   padding: 1.5rem 5rem;
 `;
