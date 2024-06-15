@@ -48,6 +48,8 @@ const Login = ({ openRegisterModal }) => {
     openRegisterModal();
   };
 
+  const redirectToGithub = () => window.location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
+
   return (
     <>
       {isAuthenticated && <Navigate to="/timeline" />}
@@ -62,7 +64,7 @@ const Login = ({ openRegisterModal }) => {
           <div className="title">
             <h1>Sign in to TTN</h1>
           </div>
-          <Button>
+          <Button onClick={redirectToGithub}>
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
             Log in with GitHub
           </Button>
