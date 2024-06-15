@@ -64,7 +64,7 @@ const Login = ({ openRegisterModal }) => {
           </div>
           <Button>
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
-            Sign up with GitHub
+            Log in with GitHub
           </Button>
           <div className="separator">
             <Line />
