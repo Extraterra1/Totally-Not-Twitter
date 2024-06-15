@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import { useModal } from './Modal';
 import { ActualButton } from './Register';
 import { Line } from './Actions';
+import { Button } from './Actions';
 
 import TNTLogo from '../assets/ttn-logo.png';
 
@@ -61,6 +62,10 @@ const Login = ({ openRegisterModal }) => {
           <div className="title">
             <h1>Sign in to TTN</h1>
           </div>
+          <Button>
+            <Icon className="btn-icon" icon="ph:github-logo-fill" />
+            Sign up with GitHub
+          </Button>
           <div className="separator">
             <Line />
             <span>or</span>
@@ -254,6 +259,9 @@ const Header = styled.div`
 
 const Content = styled.div`
   padding: 0 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   & > .title {
     font-size: 1.4rem;
