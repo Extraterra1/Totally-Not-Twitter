@@ -343,6 +343,10 @@ const Container = styled.div`
 
       visibility: ${(props) => (props.$noActions ? 'hidden' : 'visible')};
 
+      @media screen and (max-width: 500px) {
+        font-size: 2rem;
+      }
+
       & > span {
         display: flex;
         align-items: center;
