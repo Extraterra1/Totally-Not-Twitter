@@ -265,6 +265,10 @@ const Content = styled.div`
   flex-direction: column;
   gap: 2rem;
 
+  @media screen and (max-width: 500px) {
+    padding: 0 4rem;
+  }
+
   & > .title {
     font-size: 1.4rem;
     margin-bottom: 2rem;
