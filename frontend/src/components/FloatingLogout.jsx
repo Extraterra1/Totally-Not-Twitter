@@ -5,9 +5,11 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import Modal from './Modal';
 import { useState } from 'react';
 import { modalStyles } from './Tweet';
+import { useNavigate } from 'react-router-dom';
 
 const FloatingLogout = () => {
   const isAuthenticated = useIsAuthenticated();
+  const navigate = useNavigate();
   const signOut = useSignOut();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +18,7 @@ const FloatingLogout = () => {
 
   const handleSignOut = () => {
     if (isAuthenticated) signOut();
+    navigate('/');
   };
   const closeModal = () => setIsOpen(false);
 
