@@ -348,6 +348,7 @@ const Container = styled.div`
 
           @media screen and (max-width: 500px) {
             border-bottom: none;
+            font-size: 2.5rem;
           }
 
           & > span {
