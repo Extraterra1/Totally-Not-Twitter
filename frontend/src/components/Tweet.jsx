@@ -13,7 +13,6 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 
 import getTimeSinceTweet from '../utils/getTimeSinceTweet';
-// import { useTimeline } from '../views/Timeline';
 import { useTimeline } from '../context/TimelineContext';
 import { useGlobal } from '../Router';
 

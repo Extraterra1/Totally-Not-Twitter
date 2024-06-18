@@ -223,8 +223,7 @@ const modalStyles = {
     transform: 'translate( -50%)',
     border: 0,
     backgroundColor: 'transparent',
-    padding: '0',
-    maxWidth: '80vw'
+    padding: '0'
   },
   overlay: {
     backgroundColor: 'var(--modal-overlay-bg)'
