@@ -12,7 +12,6 @@ import toast from 'react-hot-toast';
 
 import defaultPP from '../assets/profilePic.jpg';
 import { Input, FileInput, SubmitButton } from './TweetForm';
-// import { useTimeline } from '../views/Timeline';
 import { useTimeline } from '../context/TimelineContext';
 import Tweet from './Tweet';
 
