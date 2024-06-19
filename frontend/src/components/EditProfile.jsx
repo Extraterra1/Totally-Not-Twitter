@@ -106,7 +106,7 @@ const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
             confirmPassword: ''
           }}
           validationSchema={Yup.object({
-            displayName: Yup.string().required('Required').max(25, 'Must be less than 25 chars'),
+            displayName: Yup.string().required('Required').max(30, 'Must be less than 30 chars'),
             password: Yup.string()
               .min(6, 'Must be at least 6 characters long')
               .test('passwordTest', 'Password is required', function (value) {

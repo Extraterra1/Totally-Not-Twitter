@@ -67,8 +67,8 @@ exports.updateUser = [
     .isString()
     .notEmpty()
     .withMessage('Display name cannot be empty')
-    .isLength({ max: 15 })
-    .withMessage('Display Name cannot be longer than 15 characters'),
+    .isLength({ max: 30 })
+    .withMessage('Display Name cannot be longer than 30 characters'),
 
   body('newPassword').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
   body('confirmPassword')
