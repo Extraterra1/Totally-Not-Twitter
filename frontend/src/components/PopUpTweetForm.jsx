@@ -11,6 +11,7 @@ import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 
 import defaultPP from '../assets/profilePic.jpg';
+import { FileInput, Input, SubmitButton } from './TweetForm';
 import { useTimeline } from '../context/TimelineContext';
 import { ActualButton } from './Register';
 import Tweet from './Tweet';
@@ -228,110 +229,3 @@ const modalStyles = {
     backgroundColor: 'var(--modal-overlay-bg)'
   }
 };
-
-const FileInput = ({ label, ...props }) => {
-  const [field, meta, helpers] = useField(props);
-
-  useEffect(() => {
-    if (meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
-  }, [meta]);
-
-  return (
-    <>
-      <FormGroup style={props.hidden ? { display: 'none' } : null}>
-        <label htmlFor={props.id || props.name}>
-          <Icon className="image-icon" icon="ph:image-square" />
-        </label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          {...field}
-          {...props}
-          value={undefined}
-          onChange={(event) => {
-            if (event.currentTarget.files) {
-              helpers.setValue(event.currentTarget.files);
-            }
-          }}
-        />
-      </FormGroup>
-    </>
-  );
-};
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  flex-grow: 1;
-
-  letter-spacing: 1px;
-  border-radius: 0.25rem;
-  position: relative;
-  border-bottom: 1px solid transparent;
-
-  &:has(textarea:focus) {
-    border-bottom: 1px solid var(--gray-dark);
-  }
-
-  & label {
-    cursor: pointer;
-  }
-
-  & textarea {
-    background-color: transparent;
-    padding: 1rem 0.5rem;
-    resize: none;
-    font-family: 'Chirp';
-
-    color: var(--light);
-    font-weight: 400;
-    font-size: 1.7rem;
-
-    position: relative;
-    outline: none;
-    border: none;
-
-    overflow: auto;
-  }
-
-  & input[type='file'] {
-    display: none;
-  }
-`;
-
-const Input = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  const textareaRef = useRef(null);
-
-  const handleChange = (e) => {
-    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    textareaRef.current.addEventListener('input', (event) => {
-      event.target.style.height = 'auto';
-      event.target.style.height = `${event.target.scrollHeight}px`;
-    });
-    field.onChange(e);
-  };
-
-  useEffect(() => {
-    if (meta.touched && meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
-  }, [meta]);
-
-  return (
-    <>
-      <FormGroup>
-        <textarea ref={textareaRef} {...field} {...props} onChange={handleChange} />
-      </FormGroup>
-    </>
-  );
-};
-
-const SubmitButton = styled(ActualButton)`
-  padding: 1rem 2rem;
-  width: 20%;
-
-  & .done-icon {
-    font-size: 2rem;
-  }
-  /* max-width: 20rem; */
-`;
