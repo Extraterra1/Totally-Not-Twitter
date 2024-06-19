@@ -16,7 +16,7 @@ const { strategy } = require('./config/passport');
 const app = express();
 
 // Connect to DB
-mongoose.connect(process.env.DB_URL);
+mongoose.connect(process.env.DB_URL, { autoIndex: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongo connection error'));
 
