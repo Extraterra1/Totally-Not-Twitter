@@ -69,7 +69,7 @@ const Register = () => {
               username: Yup.string()
                 .required('Required')
                 .min(3, 'Username must be at least 3 characters long')
-                .max(20, 'Username must be less than 20 characters long'),
+                .max(15, 'Username must be less than 15 characters long'),
               email: Yup.string().required('Required').email('Must be a valid email address'),
               password: Yup.string().required('Required').min(6, 'Must be at least 6 characters long'),
               confirmPassword: Yup.string()
