@@ -36,11 +36,12 @@ const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
 
   const closeModal = () => setIsOpen(false);
 
-  const delayedFinish = () => {
+  const delayedFinish = (resetForm) => {
     setIsFinished(true);
 
     setTimeout(() => {
       setIsFinished(false);
+      resetForm();
     }, 1000);
   };
 
@@ -82,8 +83,8 @@ const EditProfile = ({ setIsOpen, isOpen, refetchTweets }) => {
       });
 
       setSubmitting(false);
-      resetForm({ values: { displayName: values.displayName } });
-      delayedFinish();
+
+      delayedFinish(resetForm);
       toast.success('Saved', { duration: 1000 });
       setTimeout(() => {
         closeModal();
