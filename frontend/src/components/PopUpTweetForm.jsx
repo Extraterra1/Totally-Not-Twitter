@@ -1,18 +1,18 @@
 import Modal from './Modal';
 import styled from 'styled-components';
-import { Form, Formik } from 'formik';
+import { Form, Formik, useField } from 'formik';
 import * as Yup from 'yup';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import useAuthHeader from 'react-auth-kit/hooks/useAuthHeader';
 import useAxios from 'axios-hooks';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { BeatLoader } from 'react-spinners';
 import toast from 'react-hot-toast';
 
 import defaultPP from '../assets/profilePic.jpg';
-import { Input, FileInput, SubmitButton } from './TweetForm';
 import { useTimeline } from '../context/TimelineContext';
+import { ActualButton } from './Register';
 import Tweet from './Tweet';
 
 const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
@@ -45,16 +45,16 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm, setErrors }) => {
     try {
-      if (!values.tweet) return setErrors({ tweet: 'Tweet cannot be empty' });
+      if (!values.popUpTweet) return setErrors({ popUpTweet: 'Tweet cannot be empty' });
       const tweetType = replyTo ? 'reply' : 'tweet';
 
       const formData = new FormData();
 
-      formData.append('content', values.tweet);
+      formData.append('content', values.popUpTweet);
       formData.append('tweetType', tweetType);
 
       if (tweetType === 'reply') formData.append('replyTo', replyTo._id);
-      if (values.file) formData.append('img', values.file[0]);
+      if (values.popUpFile) formData.append('img', values.popUpFile[0]);
 
       const res = await sendTweet({
         data: formData,
@@ -78,11 +78,11 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
         <Icon onClick={closeModal} className="close-icon" icon="ph:x-bold" />
         <Formik
           initialValues={{
-            tweet: ''
+            popUpTweet: ''
           }}
           validationSchema={Yup.object({
-            tweet: Yup.string().max(144, 'Must be less than 144 chars'),
-            file: Yup.mixed()
+            popUpTweet: Yup.string().max(144, 'Must be less than 144 chars'),
+            popUpFile: Yup.mixed()
               .test('fileType', 'Bad Image Format', (value) => {
                 if (value && value[0]) {
                   return value[0].type === 'image/jpeg' || value[0].type === 'image/jpg' || value[0].type === 'image/png';
@@ -106,11 +106,11 @@ const PopUpTweetForm = ({ setIsOpen, isOpen, replyTo, update = true }) => {
               <div className="profile-pic">
                 <img src={auth?.profilePic || defaultPP} alt="Profile Picture" />
               </div>
-              <Input label="Tweet" name="tweet" type="text" placeholder="What is happening?!" />
+              <Input label="Tweet" name="popUpTweet" type="text" placeholder="What is happening?!" />
             </div>
             <div className="buttons">
               <div>
-                <FileInput name="file" id="file" />
+                <FileInput name="popUpFile" id="popUpFile" />
               </div>
               <SubmitButton $primary type="submit">
                 {loading ? (
@@ -228,3 +228,110 @@ const modalStyles = {
     backgroundColor: 'var(--modal-overlay-bg)'
   }
 };
+
+const FileInput = ({ label, ...props }) => {
+  const [field, meta, helpers] = useField(props);
+
+  useEffect(() => {
+    if (meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
+  }, [meta]);
+
+  return (
+    <>
+      <FormGroup style={props.hidden ? { display: 'none' } : null}>
+        <label htmlFor={props.id || props.name}>
+          <Icon className="image-icon" icon="ph:image-square" />
+        </label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          {...field}
+          {...props}
+          value={undefined}
+          onChange={(event) => {
+            if (event.currentTarget.files) {
+              helpers.setValue(event.currentTarget.files);
+            }
+          }}
+        />
+      </FormGroup>
+    </>
+  );
+};
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  flex-grow: 1;
+
+  letter-spacing: 1px;
+  border-radius: 0.25rem;
+  position: relative;
+  border-bottom: 1px solid transparent;
+
+  &:has(textarea:focus) {
+    border-bottom: 1px solid var(--gray-dark);
+  }
+
+  & label {
+    cursor: pointer;
+  }
+
+  & textarea {
+    background-color: transparent;
+    padding: 1rem 0.5rem;
+    resize: none;
+    font-family: 'Chirp';
+
+    color: var(--light);
+    font-weight: 400;
+    font-size: 1.7rem;
+
+    position: relative;
+    outline: none;
+    border: none;
+
+    overflow: auto;
+  }
+
+  & input[type='file'] {
+    display: none;
+  }
+`;
+
+const Input = ({ label, ...props }) => {
+  const [field, meta] = useField(props);
+  const textareaRef = useRef(null);
+
+  const handleChange = (e) => {
+    textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    textareaRef.current.addEventListener('input', (event) => {
+      event.target.style.height = 'auto';
+      event.target.style.height = `${event.target.scrollHeight}px`;
+    });
+    field.onChange(e);
+  };
+
+  useEffect(() => {
+    if (meta.touched && meta.error) toast.error(meta.error, { className: 'error-toast', id: 'error' });
+  }, [meta]);
+
+  return (
+    <>
+      <FormGroup>
+        <textarea ref={textareaRef} {...field} {...props} onChange={handleChange} />
+      </FormGroup>
+    </>
+  );
+};
+
+const SubmitButton = styled(ActualButton)`
+  padding: 1rem 2rem;
+  width: 20%;
+
+  & .done-icon {
+    font-size: 2rem;
+  }
+  /* max-width: 20rem; */
+`;
