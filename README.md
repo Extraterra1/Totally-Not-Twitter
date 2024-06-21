@@ -1,6 +1,6 @@
 # Totally Not Twitter
 
-![website snapshot](https://raw.githubusercontent.com/Extraterra1/Totally-Not-Twitter/main/website-snapshot.png)
+![website snapshot](https://raw.githubusercontent.com/Extraterra1/Totally-Not-Twitter/main/website-banner.png)
 
 ## Description:
 
@@ -10,7 +10,6 @@ Deployed on Netlify
 
 ## Table of Contents:
 
-- [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
 - [Dependencies](#dependencies)
