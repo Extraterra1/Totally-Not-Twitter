@@ -6,7 +6,7 @@
 
 Totally Not Twitter is a social media platform built as part of The Odin Project curriculum. This educational project is a playful Twitter clone that allows users to tweet, follow users, and explore content. The app utilizes React for the frontend, Express for the backend, and MongoDB for the database.
 
-Deployed on Netlify
+Deployed on [Netlify](https://totally-not-twitter.netlify.app/timeline)
 
 ## Table of Contents:
 
