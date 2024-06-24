@@ -119,6 +119,7 @@ exports.githubLoginPOST = [
         email: `${githubID}@gmail.com`,
         password: hashedPassword,
         username: userData.login,
+        profilePic: userData.avatar_url,
         githubID
       });
       await newUser.save();
