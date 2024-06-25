@@ -26,7 +26,9 @@ const Actions = ({ openRegisterModal, openLoginModal }) => {
       userState: res.data.user
     });
 
-    navigate('/timeline');
+    setTimeout(() => {
+      navigate('/timeline');
+    }, 1000);
   };
 
   return (
