@@ -1,9 +1,36 @@
 import styled from 'styled-components';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import useAxios from 'axios-hooks';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import toast from 'react-hot-toast';
 
 const redirectToGithub = () => window.location.assign(`https://github.com/login/oauth/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}`);
 
 const Actions = ({ openRegisterModal, openLoginModal }) => {
+  const signIn = useSignIn();
+  const [{ loading }, executeLogin] = useAxios(
+    { data: { username: 'DemoMan', password: 'thisisademo' }, url: `${import.meta.env.VITE_API_URL}/login`, method: 'POST' },
+    { manual: true }
+  );
+  const demoLogin = async () => {
+    try {
+      const res = await executeLogin();
+      signIn({
+        auth: {
+          token: res.data.token,
+          type: 'Bearer'
+        },
+        userState: res.data.user
+      });
+      toast.success('Welcome Back!');
+    } catch (err) {
+      if (err?.response) {
+        toast.error('Wrong Username/Password');
+      }
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
       <div className="cta">
@@ -29,7 +56,9 @@ const Actions = ({ openRegisterModal, openLoginModal }) => {
             <Button onClick={openLoginModal} $negative>
               Sign in
             </Button>
-            <Button $negative>Try the demo account</Button>
+            <Button onClick={demoLogin} $negative>
+              Try the demo account
+            </Button>
           </div>
         </div>
       </div>
