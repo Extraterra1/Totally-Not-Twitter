@@ -16,7 +16,6 @@ const Actions = ({ openRegisterModal, openLoginModal }) => {
             <Icon className="btn-icon" icon="ph:github-logo-fill" />
             Sign up with GitHub
           </Button>
-
           <div className="separator">
             <Line />
             <span>or</span>
@@ -30,6 +29,7 @@ const Actions = ({ openRegisterModal, openLoginModal }) => {
             <Button onClick={openLoginModal} $negative>
               Sign in
             </Button>
+            <Button $negative>Try the demo account</Button>
           </div>
         </div>
       </div>
